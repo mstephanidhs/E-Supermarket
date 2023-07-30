@@ -1,0 +1,92 @@
+import { Link as RouterLink } from "react-router-dom";
+import { useState } from "react";
+
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+} from "@mui/material";
+import AppShortcutIcon from "@mui/icons-material/AppShortcut";
+import Person2Icon from "@mui/icons-material/Person2";
+import EditIcon from "@mui/icons-material/Edit";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+function Navbar() {
+  const [anchor, setAnchor] = useState(null);
+
+  const open = Boolean(anchor);
+  const handleClick = (event) => {
+    setAnchor(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchor(null);
+  };
+
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton size="large" edge="start" color="inherit" aria-label="logo">
+          <AppShortcutIcon />
+        </IconButton>
+        <Typography
+          variant="h6"
+          sx={{
+            flexGrow: 1,
+            textDecoration: "none",
+            boxShadow: "none",
+            color: "white",
+          }}
+        >
+          E-Supermarket
+        </Typography>
+
+        <div>
+          <Button
+            startIcon={<Person2Icon />}
+            id="basic-button"
+            color="inherit"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            sx={{
+              fontWeight: "500",
+              letterSpacing: "1px",
+            }}
+          >
+            mstephanidhs
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchor}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <EditIcon />
+              </ListItemIcon>
+              Profile
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </Menu>
+        </div>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+export default Navbar;
