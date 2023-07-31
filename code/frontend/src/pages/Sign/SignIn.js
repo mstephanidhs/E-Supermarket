@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 import { Alert, Snackbar } from "@mui/material";
 
 import SignInForm from "../../components/SignForms/SignInForm";
 
 function SignIn() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({ flag: false, message: "" });
@@ -42,6 +47,23 @@ function SignIn() {
       return setError({
         flag: true,
         message: "Invalid Form, Password field cannot be empty!",
+      });
+
+    axios
+      .post("http://localhost:5000/auth/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        if (res.status === 200) navigate("/main");
+      })
+      .catch((error) => {
+        if (error.response) {
+          return setError({
+            flag: true,
+            message: error.response.data.message,
+          });
+        }
       });
   };
 

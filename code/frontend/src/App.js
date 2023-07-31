@@ -1,15 +1,11 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import SignIn from "./pages/Sign/SignIn";
 import SignUp from "./pages/Sign/SignUp";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/Sign/ChangePassword";
+import Main from "./pages/Main";
 
 function App() {
   return (
@@ -17,10 +13,11 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/signIn" element={<SignIn />} />
-          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<SignUp />} />
           <Route path="/myProfile" element={<Profile />} />
-          <Route path="/ChangePassword" element={<ChangePassword />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/main" element={<Main />} />
         </Routes>
       </Router>
     </div>

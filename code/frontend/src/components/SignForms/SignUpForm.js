@@ -127,7 +127,7 @@ function SignUpForm(props) {
         <Typography
           sx={{ textAlign: "left", marginTop: "24px", fontSize: "14px" }}
         >
-          <Link href="/signIn">Have already an account?</Link>
+          <Link href="/login">Have already an account?</Link>
         </Typography>
       </Paper>
     </div>

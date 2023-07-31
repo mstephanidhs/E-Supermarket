@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import axios from "axios";
+
 import { Alert, Grid, Snackbar, Paper, Chip } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
@@ -15,7 +17,11 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
-  const [error, setError] = useState({ flag: false, message: "" });
+  const [alert, setAlert] = useState({
+    flag: false,
+    message: "",
+    severity: "error",
+  });
   const [openAlert, setOpenAlert] = useState(true);
 
   const handleClose = (event, reason) => {
@@ -25,18 +31,41 @@ function Profile() {
   };
 
   const validateUsername = () => {
-    setError({ flag: false, message: "" });
+    setAlert({ flag: false, message: "", severity: "error" });
     setOpenAlert(true);
 
     if (username.length === 0)
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "You must fill the Username field!",
+      });
+
+    axios
+      .post("http://localhost:5000/profile/changeUsername", {
+        newName: username,
+      })
+      .then((res) => {
+        if (res.status === 200)
+          return setAlert({
+            flag: true,
+            message: res.data.message,
+            severity: "success",
+          });
+      })
+      .catch((error) => {
+        if (error.response) {
+          return setAlert({
+            ...alert,
+            flag: true,
+            message: error.response.data.message,
+          });
+        }
       });
   };
 
   const validatePassword = () => {
-    setError({ flag: false, message: "" });
+    setAlert({ flag: false, message: "", severity: "error" });
     setOpenAlert(true);
 
     if (
@@ -44,48 +73,78 @@ function Profile() {
       newPassword.length === 0 &&
       rePassword.length === 0
     )
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "Invalid Form, you must fill the fields!",
       });
 
     if (oldPassword.length === 0)
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "Invalid Form, Old Password field cannot be empty!",
       });
 
     if (newPassword.length === 0)
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "Invalid Form, New Password field cannot be empty!",
       });
 
     if (rePassword.length === 0)
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "Invalid Form, Re-Password field cannot be empty!",
       });
 
     if (passwordStrength(newPassword) !== 4)
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "Password is not strong enough!",
       });
 
     if (newPassword !== rePassword)
-      return setError({
+      return setAlert({
+        ...alert,
         flag: true,
         message: "Passwords do not match!",
+      });
+
+    axios
+      .post("http://localhost:5000/profile/changePassword", {
+        oldPass: oldPassword,
+        newPass: newPassword,
+        rePass: rePassword,
+      })
+      .then((res) => {
+        if (res.status === 200)
+          return setAlert({
+            flag: true,
+            message: res.data.message,
+            severity: "success",
+          });
+      })
+      .catch((error) => {
+        if (error.response) {
+          return setAlert({
+            ...alert,
+            flag: true,
+            message: error.response.data.message,
+          });
+        }
       });
   };
 
   return (
     <>
-      {error.flag ? (
+      {alert.flag ? (
         <Snackbar open={openAlert} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
-            {error.message}
+          <Alert onClose={handleClose} severity={alert.severity}>
+            {alert.message}
           </Alert>
         </Snackbar>
       ) : null}

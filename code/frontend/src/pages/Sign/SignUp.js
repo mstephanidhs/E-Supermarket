@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 import { Alert, Snackbar } from "@mui/material";
 
@@ -6,6 +9,8 @@ import SignUpForm from "../../components/SignForms/SignUpForm";
 import { passwordStrength } from "../../util/checkPassword";
 
 function SignUp() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +24,7 @@ function SignUp() {
     setOpenAlert(false);
   };
 
-  const validateForm = () => {
+  const validateForm = async () => {
     setError({ flag: false, message: "" });
     setOpenAlert(true);
 
@@ -74,6 +79,25 @@ function SignUp() {
       return setError({
         flag: true,
         message: "Passwords do not match!",
+      });
+
+    axios
+      .post("http://localhost:5000/auth/register", {
+        username,
+        email,
+        password,
+        rePassword,
+      })
+      .then((res) => {
+        if (res.status === 200) navigate("/main");
+      })
+      .catch((error) => {
+        if (error.response) {
+          return setError({
+            flag: true,
+            message: error.response.data.message,
+          });
+        }
       });
   };
 

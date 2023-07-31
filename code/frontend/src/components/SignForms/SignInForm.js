@@ -92,7 +92,7 @@ function SignInForm(props) {
         >
           <Grid item xs={3}>
             <Typography sx={{ marginTop: "24px", fontSize: "14px" }}>
-              <Link href="/signUp">Create an Account now!</Link>
+              <Link href="/register">Create an Account now!</Link>
             </Typography>
           </Grid>
           <Grid item xs={3}>
