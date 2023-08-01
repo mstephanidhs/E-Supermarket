@@ -3,7 +3,7 @@
 CREATE TABLE store (
 store_id INT NOT NULL auto_increment,
 store_name VARCHAR(250),
-longtitude FLOAT,
+longitude FLOAT,
 latitude FLOAT,
 CONSTRAINT pk_store PRIMARY KEY (store_id)
 );
@@ -12,18 +12,18 @@ CONSTRAINT pk_store PRIMARY KEY (store_id)
 -------- category --------
 
 CREATE TABLE category (
-category_id INT auto_increment,
-category_name VARCHAR(250),
+category_id VARCHAR(250) NOT NULL,
+category_name VARCHAR(250) NOT NULL,
 CONSTRAINT pk_category PRIMARY KEY (category_id)
 );
 
 
-----------subcategory-----------
+---------- subcategory -----------
 
 CREATE TABLE subcategory (
-subcategory_id INT not null auto_increment,
-subcategory_name VARCHAR(250),
-parent_id INT,
+subcategory_id VARCHAR(250) NOT NULL,
+subcategory_name VARCHAR(250) NOT NULL,
+parent_id VARCHAR(250),
 PRIMARY KEY (subcategory_id),
 FOREIGN KEY (parent_id) REFERENCES category(category_id)
 ON DELETE CASCADE
@@ -37,6 +37,7 @@ product_id INT NOT NULL auto_increment,
 product_name VARCHAR(250),
 category VARCHAR(250),
 subcategory VARCHAR(250),
+img  TEXT,
 PRIMARY KEY (product_id)
 );
 
@@ -86,7 +87,7 @@ FOREIGN KEY (user_id) REFERENCES user(user_id)
 ON DELETE CASCADE
 );
 
-------insert into user-------------
+-------- insert into user --------
 -- insert into user (score, tokens)
 -- select current_score, current_tokens
 -- from score, tokens
@@ -110,7 +111,7 @@ ON DELETE CASCADE
 );
 
 
---------reaction-------------------
+-------- reaction --------
 
 create table reaction (
 user_id INT,
