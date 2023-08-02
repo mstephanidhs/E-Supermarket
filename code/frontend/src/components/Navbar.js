@@ -12,7 +12,7 @@ import {
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
-import AppShortcutIcon from "@mui/icons-material/AppShortcut";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Person2Icon from "@mui/icons-material/Person2";
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -44,7 +44,7 @@ function Navbar() {
     <AppBar position="static">
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit" aria-label="logo">
-          <AppShortcutIcon />
+          <ShoppingCartIcon />
         </IconButton>
         <Typography
           variant="h6"

@@ -1,5 +1,7 @@
+import Map from "../components/Map/Map";
+
 function Main() {
-  return <div>Welcome</div>;
+  return <Map />;
 }
 
 export default Main;
