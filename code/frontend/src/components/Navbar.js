@@ -1,5 +1,6 @@
-import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/Auth";
+import { useNavigate } from "react-router-dom";
 
 import {
   AppBar,
@@ -18,10 +19,22 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 function Navbar() {
   const [anchor, setAnchor] = useState(null);
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   const open = Boolean(anchor);
   const handleClick = (event) => {
     setAnchor(event.currentTarget);
+  };
+
+  const handleCloseProfile = () => {
+    setAnchor(null);
+    navigate("/myProfile");
+  };
+  const handleCloseLogout = () => {
+    setAnchor(null);
+    auth.logout();
+    navigate("/login");
   };
   const handleClose = () => {
     setAnchor(null);
@@ -45,45 +58,47 @@ function Navbar() {
           E-Supermarket
         </Typography>
 
-        <div>
-          <Button
-            startIcon={<Person2Icon />}
-            id="basic-button"
-            color="inherit"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            sx={{
-              fontWeight: "500",
-              letterSpacing: "1px",
-            }}
-          >
-            mstephanidhs
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchor}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <EditIcon />
-              </ListItemIcon>
-              Profile
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
-        </div>
+        {auth.user ? (
+          <div>
+            <Button
+              startIcon={<Person2Icon />}
+              id="basic-button"
+              color="inherit"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              sx={{
+                fontWeight: "500",
+                letterSpacing: "1px",
+              }}
+            >
+              {auth.user.name}
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchor}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleCloseProfile}>
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                Profile
+              </MenuItem>
+              <MenuItem onClick={handleCloseLogout}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
+          </div>
+        ) : null}
       </Toolbar>
     </AppBar>
   );

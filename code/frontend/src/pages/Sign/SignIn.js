@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/Auth";
 
 import axios from "axios";
 
@@ -9,6 +10,7 @@ import SignInForm from "../../components/SignForms/SignInForm";
 
 function SignIn() {
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,6 +57,8 @@ function SignIn() {
         password,
       })
       .then((res) => {
+        const { token, name, role } = res.data;
+        auth.login(token, name, role);
         if (res.status === 200) navigate("/main");
       })
       .catch((error) => {

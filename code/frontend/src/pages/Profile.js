@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import axios from "axios";
+import { useAuth } from "./../context/Auth";
 
 import { Alert, Grid, Snackbar, Paper, Chip } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -11,6 +12,8 @@ import ChangePasswordForm from "../components/ProfileForms/ChangePasswordForm";
 import { passwordStrength } from "../util/checkPassword";
 
 function Profile() {
+  const auth = useAuth();
+
   const [username, setUsername] = useState("");
 
   const [oldPassword, setOldPassword] = useState("");
@@ -36,15 +39,26 @@ function Profile() {
 
     if (username.length === 0)
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "You must fill the Username field!",
       });
 
+    const token = "Bearer " + auth.user.token;
+    const config = {
+      headers: {
+        authorization: token,
+      },
+    };
+
     axios
-      .post("http://localhost:5000/profile/changeUsername", {
-        newName: username,
-      })
+      .put(
+        "http://localhost:5000/profile/changeUsername",
+        {
+          newName: username,
+        },
+        config
+      )
       .then((res) => {
         if (res.status === 200)
           return setAlert({
@@ -56,7 +70,7 @@ function Profile() {
       .catch((error) => {
         if (error.response) {
           return setAlert({
-            ...alert,
+            severity: "error",
             flag: true,
             message: error.response.data.message,
           });
@@ -74,52 +88,63 @@ function Profile() {
       rePassword.length === 0
     )
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "Invalid Form, you must fill the fields!",
       });
 
     if (oldPassword.length === 0)
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "Invalid Form, Old Password field cannot be empty!",
       });
 
     if (newPassword.length === 0)
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "Invalid Form, New Password field cannot be empty!",
       });
 
     if (rePassword.length === 0)
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "Invalid Form, Re-Password field cannot be empty!",
       });
 
     if (passwordStrength(newPassword) !== 4)
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "Password is not strong enough!",
       });
 
     if (newPassword !== rePassword)
       return setAlert({
-        ...alert,
+        severity: "error",
         flag: true,
         message: "Passwords do not match!",
       });
 
+    const token = "Bearer " + auth.user.token;
+    const config = {
+      headers: {
+        authorization: token,
+      },
+    };
+
     axios
-      .post("http://localhost:5000/profile/changePassword", {
-        oldPass: oldPassword,
-        newPass: newPassword,
-        rePass: rePassword,
-      })
+      .put(
+        "http://localhost:5000/profile/changePassword",
+        {
+          oldPass: oldPassword,
+          newPass: newPassword,
+          rePass: rePassword,
+        },
+        config
+      )
       .then((res) => {
         if (res.status === 200)
           return setAlert({
@@ -131,7 +156,7 @@ function Profile() {
       .catch((error) => {
         if (error.response) {
           return setAlert({
-            ...alert,
+            severity: "error",
             flag: true,
             message: error.response.data.message,
           });

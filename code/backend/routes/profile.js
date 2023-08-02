@@ -1,9 +1,11 @@
 const express = require("express");
+
 const profileController = require("./../controllers/profileController");
+const { verifyToken } = require("./../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.post("/changeUsername", profileController.changeUsername);
-router.post("/changePassword", profileController.changePassword);
+router.put("/changeUsername", verifyToken, profileController.changeUsername);
+router.put("/changePassword", verifyToken, profileController.changePassword);
 
 module.exports = router;

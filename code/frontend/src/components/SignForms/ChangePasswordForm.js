@@ -12,13 +12,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function ChangePasswordForm(props) {
-  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-
-  const handleVisibilityOldPassword = () => {
-    setShowOldPassword((prevOldPasswordState) => !prevOldPasswordState);
-  };
 
   const handleVisibilityNewPassword = () => {
     setShowNewPassword((prevNewPasswordState) => !prevNewPasswordState);
@@ -50,29 +45,11 @@ function ChangePasswordForm(props) {
           <TextField
             variant="outlined"
             margin="normal"
-            label="Current Password"
-            type={showOldPassword ? "text" : "password"}
+            label="Email"
             fullWidth
             required
             style={{ marginBottom: "12px" }}
-            onChange={(e) => props.setOldPassword(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  {showOldPassword ? (
-                    <VisibilityIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
-                      onClick={handleVisibilityOldPassword}
-                    />
-                  ) : (
-                    <VisibilityOffIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
-                      onClick={handleVisibilityOldPassword}
-                    />
-                  )}
-                </InputAdornment>
-              ),
-            }}
+            onChange={(e) => props.setEmail(e.target.value)}
           ></TextField>
           <TextField
             variant="outlined"

@@ -6,7 +6,7 @@ import ChangePasswordForm from "../../components/SignForms/ChangePasswordForm";
 import { passwordStrength } from "../../util/checkPassword";
 
 function ChangePassword() {
-  const [oldPassword, setOldPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [error, setError] = useState({ flag: false, message: "" });
@@ -23,7 +23,7 @@ function ChangePassword() {
     setOpenAlert(true);
 
     if (
-      oldPassword.length === 0 &&
+      email.length === 0 &&
       newPassword.length === 0 &&
       rePassword.length === 0
     )
@@ -32,10 +32,10 @@ function ChangePassword() {
         message: "Invalid Form, you must fill the fields!",
       });
 
-    if (oldPassword.length === 0)
+    if (email.length === 0)
       return setError({
         flag: true,
-        message: "Invalid Form, Old Password field cannot be empty!",
+        message: "Invalid Form, Email field cannot be empty!",
       });
 
     if (newPassword.length === 0)
@@ -73,7 +73,7 @@ function ChangePassword() {
         </Snackbar>
       ) : null}
       <ChangePasswordForm
-        setOldPassword={setOldPassword}
+        setEmail={setEmail}
         setNewPassword={setNewPassword}
         setRePassword={setRePassword}
         validateForm={validateForm}

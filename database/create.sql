@@ -53,7 +53,7 @@ user_id INT NOT NULL auto_increment,
 username VARCHAR(250) NOT NULL,
 email VARCHAR(25) NOT NULL,
 password VARCHAR(250) NOT NULL,
-isadmin bit,
+isadmin BIT(1) DEFAULT 0,
 score FLOAT,
 tokens FLOAT,
 PRIMARY KEY (user_id)
@@ -116,8 +116,8 @@ ON DELETE CASCADE
 create table reaction (
 user_id INT,
 offer_id INT,
-is_like bit,
-dates date,
+is_like BIT,
+dates DATE,
 FOREIGN KEY (user_id) REFERENCES user(user_id),
 FOREIGN KEY (offer_id) REFERENCES offer(offer_id)
 ON DELETE CASCADE

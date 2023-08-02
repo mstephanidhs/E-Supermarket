@@ -7,20 +7,38 @@ import Profile from "./pages/Profile";
 import ChangePassword from "./pages/Sign/ChangePassword";
 import Main from "./pages/Main";
 
+import { AuthProvider } from "./context/Auth";
+import RequireAuth from "./context/RequireAuth";
+
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Router>
         <Navbar />
         <Routes>
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
-          <Route path="/myProfile" element={<Profile />} />
+          <Route
+            path="/myProfile"
+            element={
+              <RequireAuth>
+                {" "}
+                <Profile />
+              </RequireAuth>
+            }
+          />
           <Route path="/changePassword" element={<ChangePassword />} />
-          <Route path="/main" element={<Main />} />
+          <Route
+            path="/main"
+            element={
+              <RequireAuth>
+                <Main />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </Router>
-    </div>
+    </AuthProvider>
   );
 }
 

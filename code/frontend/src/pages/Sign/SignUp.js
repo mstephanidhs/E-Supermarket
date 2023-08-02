@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/Auth";
 
 import axios from "axios";
 
@@ -10,6 +11,7 @@ import { passwordStrength } from "../../util/checkPassword";
 
 function SignUp() {
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -89,6 +91,8 @@ function SignUp() {
         rePassword,
       })
       .then((res) => {
+        const { token, name, role } = res.data;
+        auth.login(token, name, role);
         if (res.status === 200) navigate("/main");
       })
       .catch((error) => {

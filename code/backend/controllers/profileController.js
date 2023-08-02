@@ -1,5 +1,7 @@
 const mysql = require("mysql2");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 const { passwordStrength } = require("../utils/checkPassword");
 
 const db = mysql.createConnection({
@@ -13,7 +15,7 @@ const db = mysql.createConnection({
 exports.changeUsername = (req, res) => {
   const { newName } = req.body;
 
-  if (!newName) return res.status(400).json({ error: "Field is empty!" });
+  if (!newName) return res.status(400).json({ message: "Field is empty!" });
 
   const nameQuery = "SELECT user_id FROM user WHERE username = ?";
 
@@ -24,41 +26,40 @@ exports.changeUsername = (req, res) => {
     } else if (result.length > 0)
       return res
         .status(409)
-        .json({ error: "This Username is already in use!" });
-  });
+        .json({ message: "This Username is already in use!" });
 
-  // the username given is unique
-  const newNameQuery = "UPDATE user SET username = ? WHERE user_id = ?";
-  const token = req.cookies.jwt;
+    // the username given is unique
+    const newNameQuery = "UPDATE user SET username = ? WHERE user_id = ?";
+    const token = req.token;
 
-  jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-    if (err) {
-      console.log(err.message);
-      return;
-    } else {
-      db.query(
-        newNameQuery,
-        [newName.trim(), decodedToken.id],
-        async (error, result) => {
-          if (error) {
-            console.log(error.message);
-            return;
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+      if (err) {
+        console.log(err.message);
+        return;
+      } else {
+        db.query(
+          newNameQuery,
+          [newName.trim(), decodedToken.id],
+          async (error, result) => {
+            if (error) {
+              console.log(error.message);
+              return;
+            }
+            res.status(200).json({ message: "Username changed successfully!" });
           }
-        }
-      );
-    }
+        );
+      }
+    });
   });
-
-  res.status(200).json({ message: "Username changed successfully!" });
 };
 
 exports.changePassword = (req, res) => {
   const { oldPass, newPass, rePass } = req.body;
 
   if (!oldPass || !newPass || !rePass)
-    return res.status(400).json({ error: "All form fields are required!" });
+    return res.status(400).json({ message: "All form fields are required!" });
 
-  const token = req.cookies.jwt;
+  const token = req.token;
   const findUserQuery = "SELECT password FROM user WHERE user_id = ?";
 
   jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
@@ -76,16 +77,16 @@ exports.changePassword = (req, res) => {
       // check if the password given is correct
       const isMatch = await bcrypt.compare(oldPass, result[0].password);
       if (!isMatch)
-        return res.status(401).json({ error: "Incorrect current password!" });
+        return res.status(401).json({ message: "Incorrect current password!" });
 
       if (newPass !== rePass)
-        return res.status(401).json({ error: "The passwords do not match!" });
+        return res.status(401).json({ message: "The passwords do not match!" });
 
       // check if the password meets the criteria
       if (passwordStrength(newPass) < 4)
         return res
           .status(401)
-          .json({ error: "Password is not strong enough!" });
+          .json({ message: "Password is not strong enough!" });
 
       // everything's fine, so hash the password and update the user
       const hashedPassword = await bcrypt.hash(newPass, 8);
@@ -94,15 +95,15 @@ exports.changePassword = (req, res) => {
       db.query(
         newPasswordQuery,
         [hashedPassword, decodedToken.id],
-        (err, result) => {
+        (error, result) => {
           if (error) {
             console.log(error.message);
             return;
           }
+
+          res.status(200).json({ message: "Password changed successfully!" });
         }
       );
     });
   });
-
-  res.status(200).json({ message: "Password changed successfully!" });
 };

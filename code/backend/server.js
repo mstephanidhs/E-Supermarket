@@ -1,6 +1,5 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
 const mysql = require("mysql2");
 const cors = require("cors");
 
@@ -39,9 +38,6 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 // Parse JSON bodies (as sent by API clients)
 // Basically, make sure that the data coming from the front-end are in json form
 app.use(express.json());
-
-// set the cookie parser middleware
-app.use(cookieParser());
 
 // Define Routes
 // app.use("/", require("./routes/pages"));
