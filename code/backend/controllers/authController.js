@@ -50,8 +50,9 @@ exports.login = async (req, res) => {
     res.status(200).json({
       message: "Login successful!",
       token,
-      role,
+      role: role === true ? "admin" : "user",
       name: result[0].username,
+      userId: result[0].user_id,
     });
   });
 };
@@ -119,23 +120,16 @@ exports.register = async (req, res) => {
           }
 
           const token = createToken(result[0].user_id, expirationDate);
-          res
-            .status(200)
-            .json({
-              message: "Register successful!",
-              token,
-              role: "user",
-              name: result[0].username,
-            });
+          res.status(200).json({
+            message: "Register successful!",
+            token,
+            role: "user",
+            name: result[0].username,
+          });
         });
       }
     );
   });
-};
-
-exports.logout = async (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.status(200).json({ message: "Logout successful!" });
 };
 
 exports.forgotPassword = async (req, res) => {

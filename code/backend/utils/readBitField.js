@@ -6,6 +6,6 @@ exports.readBitField = (bitValue) => {
   const intValue = byteArray[0];
 
   // compare the integer value to determine if it's 0 or 1
-  if (intValue === 0) return "user";
-  else return "admin";
+  if (intValue === 0) return false;
+  else return true;
 };

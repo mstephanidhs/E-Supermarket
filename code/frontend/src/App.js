@@ -29,7 +29,7 @@ function App() {
           />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route
-            path="/main"
+            path="/"
             element={
               <RequireAuth>
                 <Main />

@@ -11,16 +11,18 @@ export const AuthProvider = ({ children }) => {
     const token = sessionStorage.getItem("token");
     const name = sessionStorage.getItem("name");
     const role = sessionStorage.getItem("role");
+    const userId = sessionStorage.getItem("userId");
 
-    if (!token || !name || !role) setUser(null);
-    else setUser({ token, name, role });
+    if (!token || !name || !role || !userId) setUser(null);
+    else setUser({ token, name, role, userId });
   }, []);
 
-  const login = (token, name, role) => {
+  const login = (token, name, role, userId) => {
     const userDetails = {
       token,
       name,
       role,
+      userId,
     };
 
     setUser(userDetails);
@@ -29,6 +31,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("name", name);
     sessionStorage.setItem("role", role);
+    sessionStorage.setItem("userId", userId);
   };
 
   const logout = () => {

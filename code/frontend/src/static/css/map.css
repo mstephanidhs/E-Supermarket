@@ -1,5 +1,33 @@
+/* 
+--- 01 TYPOGRAPHY SYSTEM
+
+- FONT SIZE SYSTEM (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Line heights
+    Default: 1
+    Small: 1.05
+    Medium: 1.2
+    Large: 1.8
+    Paragraph default: 1.6
+
+--- 02 COLORS
+
+- Primary: #3c00a0
+- Tints: #2a0070, #120030  (background), #1e0050
+- Shades: 
+- Accents: #cf711f, #e67e22
+- Greys: #495057
+- Error: #d8000c
+
+--- 07 WHITESPACE
+
+- SPACING SYSTEM (px):
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
 .leaflet-container {
-  margin: 4.8rem 6.4rem;
+  margin: 1.6rem 6.4rem;
   height: 40rem;
   width: 80rem;
   text-align: center;

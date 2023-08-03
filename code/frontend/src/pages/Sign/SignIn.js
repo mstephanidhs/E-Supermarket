@@ -57,8 +57,8 @@ function SignIn() {
         password,
       })
       .then((res) => {
-        const { token, name, role } = res.data;
-        auth.login(token, name, role);
+        const { token, name, role, userId } = res.data;
+        auth.login(token, name, role, userId);
         if (res.status === 200) navigate("/main");
       })
       .catch((error) => {

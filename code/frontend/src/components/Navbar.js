@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/Auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
 import {
   AppBar,
@@ -11,20 +11,36 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
+  Snackbar,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import CloseIcon from "@mui/icons-material/Close";
 import Person2Icon from "@mui/icons-material/Person2";
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 function Navbar() {
   const [anchor, setAnchor] = useState(null);
+  const [openBook, setOpenBook] = useState(false);
+
   const auth = useAuth();
   const navigate = useNavigate();
 
   const open = Boolean(anchor);
   const handleClick = (event) => {
     setAnchor(event.currentTarget);
+  };
+
+  const handleClickBook = () => {
+    setOpenBook(true);
+  };
+  const handleCloseBook = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenBook(false);
   };
 
   const handleCloseProfile = () => {
@@ -40,6 +56,27 @@ function Navbar() {
     setAnchor(null);
   };
 
+  const message = (
+    <div>
+      <p>Red Pin: Store has offers</p>
+      <p>Green Pin: Store hasn't offers</p>
+      <p>Blue Pin: your current location</p>
+    </div>
+  );
+
+  const action = (
+    <>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseBook}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -47,6 +84,8 @@ function Navbar() {
           <ShoppingCartIcon />
         </IconButton>
         <Typography
+          component={RouterLink}
+          to="/"
           variant="h6"
           sx={{
             flexGrow: 1,
@@ -60,6 +99,24 @@ function Navbar() {
 
         {auth.user ? (
           <div>
+            <Button
+              sx={{
+                color: "white",
+                fontWeight: "500",
+                letterSpacing: "1.1px",
+                marginRight: "4px",
+              }}
+              onClick={handleClickBook}
+              startIcon={<MenuBookIcon />}
+            >
+              Guidebook
+            </Button>
+            <Snackbar
+              open={openBook}
+              onClose={handleCloseBook}
+              message={message}
+              action={action}
+            />
             <Button
               startIcon={<Person2Icon />}
               id="basic-button"
