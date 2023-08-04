@@ -5,6 +5,11 @@ const { verifyToken } = require("./../middlewares/authMiddleware");
 
 const router = express.Router();
 
+router.get(
+  "/category/:category",
+  verifyToken,
+  storeController.fetchStoresByCategory
+);
 router.get("/getOfferStores", verifyToken, storeController.getOfferStores);
 router.get("/fetchAllStores", verifyToken, storeController.fetchStores);
 router.get("/:storeName", verifyToken, storeController.fetchStoresByName);

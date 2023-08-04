@@ -65,3 +65,33 @@ exports.fetchStoresByName = (req, res) => {
     });
   });
 };
+
+exports.fetchStoresByCategory = (req, res) => {
+  const categoryName = req.params.category;
+
+  const categoryIdQuery =
+    "SELECT category_id FROM category WHERE category_name = ?";
+
+  db.query(categoryIdQuery, [categoryName], async (error, result) => {
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    const categoryId = result[0].category_id;
+    const storesByCategoryQuery =
+      "SELECT s.store_id, s.store_name, s.longitude, s.latitude FROM offer o INNER JOIN product p ON p.product_id = o.product INNER JOIN store s ON s.store_id = o.store INNER JOIN category c ON p.category = c.category_id WHERE p.category = ?";
+
+    db.query(storesByCategoryQuery, [categoryId], async (error, result) => {
+      if (error) {
+        console.log(error.message);
+        return;
+      }
+
+      return res.status(200).json({
+        message: "Stores by category name are fetched!",
+        storesByCategory: result,
+      });
+    });
+  });
+};

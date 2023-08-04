@@ -93,7 +93,7 @@ function SignUp() {
       .then((res) => {
         const { token, name, role } = res.data;
         auth.login(token, name, role);
-        if (res.status === 200) navigate("/main");
+        if (res.status === 200) navigate("/");
       })
       .catch((error) => {
         if (error.response) {

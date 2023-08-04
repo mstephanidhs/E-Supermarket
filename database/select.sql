@@ -11,4 +11,12 @@ FROM store;
 SELECT * 
 FROM store s 
 LEFT JOIN offer o ON s.store_id =  o.store 
-WHERE s.store_name = ?
+WHERE s.store_name = ?;
+
+--  Fetch stores that in their offers have products on the specific category that the user has chosen 
+select s.store_id, s.store_name, s.longitude, s.latitude 
+from offer o
+inner join product p
+on p.product_id = o.product
+inner join store s on s.store_id = o.store
+where p.category = ?;

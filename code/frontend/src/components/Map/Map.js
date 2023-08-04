@@ -27,7 +27,7 @@ function Map({ stores }) {
   });
 
   return (
-    <MapContainer center={[38.246639, 21.734573]} zoom={13}>
+    <MapContainer center={[38.246639, 21.734573]} zoom={11}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
