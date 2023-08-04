@@ -20,6 +20,8 @@ function Main() {
   const [stores, setStores] = useState(null);
   const [storesNames, setStoresNames] = useState([]);
   const [categoriesNames, setCategoriesNames] = useState([]);
+  const [valueStoreName, setValueStoreName] = useState("");
+  const [valueCategoriesNames, setValueCategoriesNames] = useState("");
   const [loading, setLoading] = useState(true);
 
   const [error, setError] = useState({ flag: false, message: "" });
@@ -43,7 +45,6 @@ function Main() {
   const getAllStores = () => {
     setError({ flag: false, message: "" });
     setOpenAlert(true);
-    setLoading(true);
 
     axios
       .get("http://localhost:5000/store/fetchAllStores", config)
@@ -64,7 +65,6 @@ function Main() {
   const getAllCategories = () => {
     setError({ flag: false, message: "" });
     setOpenAlert(true);
-    setLoading(true);
 
     axios
       .get("http://localhost:5000/categories/getAllCategories", config)
@@ -83,6 +83,8 @@ function Main() {
   };
 
   const getOfferStores = () => {
+    setValueStoreName(null);
+    setValueCategoriesNames(null);
     setError({ flag: false, message: "" });
     setOpenAlert(true);
     setLoading(true);
@@ -106,11 +108,13 @@ function Main() {
 
   useEffect(() => {
     getAllStores();
-    getOfferStores();
     getAllCategories();
+    getOfferStores();
   }, []);
 
   const findStoresByName = (event, newValue) => {
+    setValueStoreName(newValue);
+    setValueCategoriesNames(null);
     setError({ flag: false, message: "" });
     setOpenAlert(true);
     setLoading(true);
@@ -133,6 +137,8 @@ function Main() {
   };
 
   const findStoresByCategory = (event, newValue) => {
+    setValueCategoriesNames(newValue);
+    setValueStoreName(null);
     setError({ flag: false, message: "" });
     setOpenAlert(true);
     setLoading(true);
@@ -174,6 +180,7 @@ function Main() {
           >
             <Grid item>
               <Autocomplete
+                value={valueStoreName}
                 onChange={findStoresByName}
                 disablePortal
                 id="combo-box-demo"
@@ -186,6 +193,7 @@ function Main() {
             </Grid>
             <Grid item>
               <Autocomplete
+                value={valueCategoriesNames}
                 onChange={findStoresByCategory}
                 disablePortal
                 id="combo-box-demo"

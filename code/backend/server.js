@@ -50,6 +50,7 @@ app.use("/auth", require("./routes/auth"));
 app.use("/profile", require("./routes/profile"));
 app.use("/store", require("./routes/store"));
 app.use("/categories", require("./routes/categories"));
+app.use("/offer", require("./routes/offer"));
 
 // Start the server
 app.listen(process.env.PORT, () => {

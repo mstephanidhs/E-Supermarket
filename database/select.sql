@@ -14,9 +14,15 @@ LEFT JOIN offer o ON s.store_id =  o.store
 WHERE s.store_name = ?;
 
 --  Fetch stores that in their offers have products on the specific category that the user has chosen 
-select s.store_id, s.store_name, s.longitude, s.latitude 
-from offer o
-inner join product p
-on p.product_id = o.product
-inner join store s on s.store_id = o.store
-where p.category = ?;
+SELECT s.store_id, s.store_name, s.longitude, s.latitude 
+FROM offer o
+INNER JOIN product p ON p.product_id = o.product
+INNER JOIN store s ON s.store_id = o.store
+WHERE p.category = ?;
+
+-- Get the offers that the specific user has submitted 
+SELECT o.offer_id as id, p.product_name, o.price, s.store_name, o.date_offer 
+FROM offer o
+INNER JOIN product p ON o.product = p.product_id
+INNER JOIN store s ON s.store_id = o.store
+WHERE o.user_id = ?;

@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { useAuth } from "./../context/Auth";
 
-import { Alert, Grid, Snackbar, Paper, Chip } from "@mui/material";
+import {
+  Alert,
+  Grid,
+  Snackbar,
+  Paper,
+  Chip,
+  CircularProgress,
+} from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 import ChangeUsernameForm from "../components/ProfileForms/ChangeUsernameForm";
 import ChangePasswordForm from "../components/ProfileForms/ChangePasswordForm";
+import OffersTable from "../components/ProfileForms/OffersTable";
 
 import { passwordStrength } from "../util/checkPassword";
 
@@ -19,6 +27,9 @@ function Profile() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [offers, setOffers] = useState([]);
+
+  const [loading, setLoading] = useState(true);
 
   const [alert, setAlert] = useState({
     flag: false,
@@ -26,6 +37,34 @@ function Profile() {
     severity: "error",
   });
   const [openAlert, setOpenAlert] = useState(true);
+
+  const token = "Bearer " + auth.user.token;
+  const config = {
+    headers: {
+      authorization: token,
+    },
+  };
+
+  useEffect(() => {
+    offersByUserID();
+  }, []);
+
+  const offersByUserID = () => {
+    axios
+      .get(
+        `http://localhost:5000/offer/offersByUser/${sessionStorage.getItem(
+          "userId"
+        )}`,
+        config
+      )
+      .then((res) => {
+        setOffers(res.data.offersByUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
@@ -43,13 +82,6 @@ function Profile() {
         flag: true,
         message: "You must fill the Username field!",
       });
-
-    const token = "Bearer " + auth.user.token;
-    const config = {
-      headers: {
-        authorization: token,
-      },
-    };
 
     axios
       .put(
@@ -127,13 +159,6 @@ function Profile() {
         flag: true,
         message: "Passwords do not match!",
       });
-
-    const token = "Bearer " + auth.user.token;
-    const config = {
-      headers: {
-        authorization: token,
-      },
-    };
 
     axios
       .put(
@@ -219,6 +244,7 @@ function Profile() {
           </Grid>
         </Paper>
       </div>
+      {loading ? <CircularProgress /> : <OffersTable offers={offers} />}
     </>
   );
 }
