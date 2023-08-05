@@ -1,5 +1,5 @@
 -- Get stores that are incluced in an offer
-SELECT *
+SELECT s.store_id, s.store_name, s.latitude, s.longitude
 FROM store s
 INNER JOIN offer o ON o.store = s.store_id;
 
@@ -16,7 +16,7 @@ SELECT DISTINCT store_name
 FROM store;
 
 -- Fetch a specific store (need to know if it has any offers or not)
-SELECT * 
+SELECT s.store_id, s.store_name, s.latitude, s.longitude, o.offer_id 
 FROM store s 
 LEFT JOIN offer o ON s.store_id =  o.store 
 WHERE s.store_name = ?;
@@ -52,4 +52,14 @@ FROM offer o
 INNER JOIN product p ON o.product = p.product_id
 INNER JOIN store s ON s.store_id = o.store
 WHERE o.user_id = ?;
+
+-- Offers of a specific store
+SELECT count(CASE WHEN r.is_like = 1 THEN 1 END) OVER(PARTITION BY o.offer_id) AS likes, 
+count(CASE WHEN r.is_like = 0 THEN 1 END) OVER(PARTITION BY o.offer_id) AS dislikes, 
+p.product_name, o.price, o.date_offer, o.stock, s.store_name, s.store_id 
+FROM store s 
+INNER JOIN offer o ON s.store_id = o.store 
+INNER JOIN product p ON o.product = p.product_id 
+LEFT JOIN reaction  r ON r.offer_id = o.offer_id 
+WHERE store_id = ?;
 

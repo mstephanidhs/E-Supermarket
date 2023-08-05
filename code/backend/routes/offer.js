@@ -10,5 +10,10 @@ router.get(
   verifyToken,
   offerController.fetchOffersByUser
 );
+router.get(
+  "/offersByStore/:storeId",
+  verifyToken,
+  offerController.offersByStore
+);
 
 module.exports = router;
