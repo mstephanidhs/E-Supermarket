@@ -118,7 +118,7 @@ create table reaction (
 user_id INT,
 offer_id INT,
 is_like BIT,
-dates DATE,
+date_reaction DATETIME DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (user_id) REFERENCES user(user_id),
 FOREIGN KEY (offer_id) REFERENCES offer(offer_id)
 ON DELETE CASCADE

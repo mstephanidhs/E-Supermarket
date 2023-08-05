@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
     if (!isMatch)
       return res.status(401).json({ message: "Incorrect password!" });
 
-    role = readBitField(result[0].isadmin);
+    const role = readBitField(result[0].isadmin);
 
     // if none of the above conditions are true, then the user can login
     // create a jwt token for the already registered user

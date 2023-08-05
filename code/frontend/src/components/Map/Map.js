@@ -6,6 +6,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon } from "leaflet";
 
+import PopupContent from "./PopupContent";
+
 function Map({ stores }) {
   const location = useGeolocation();
 
@@ -48,7 +50,9 @@ function Map({ stores }) {
                 : customIconGreenMarker
             }
           >
-            <Popup>Hello</Popup>
+            <Popup>
+              <PopupContent store={store} />
+            </Popup>
           </Marker>
         ))}
       </MarkerClusterGroup>

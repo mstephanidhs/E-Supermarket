@@ -21,7 +21,7 @@ exports.fetchOffersByUser = (req, res) => {
       return;
     }
 
-    offersByUser = result.map((offer) => ({
+    const offersByUser = result.map((offer) => ({
       ...offer,
       date_offer: modifyDatetimeField(offer.date_offer),
       price: offer.price + "€",
