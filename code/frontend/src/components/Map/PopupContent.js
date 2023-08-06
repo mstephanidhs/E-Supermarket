@@ -2,7 +2,16 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Typography, Link } from "@mui/material";
 
-function PopupContent({ store }) {
+import { L } from "leaflet";
+
+function PopupContent({ store, userCoordinates }) {
+  const withinDistance = (coord1, coord2, maxDistance) => {
+    const distance = L.latLng(coord1.lat, coord1.lng).distanceTo(
+      L.latLng(coord2.lat, coord2.lng)
+    );
+    return distance <= maxDistance;
+  };
+
   return (
     <>
       <div>

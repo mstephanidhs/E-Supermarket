@@ -56,10 +56,26 @@ WHERE o.user_id = ?;
 -- Offers of a specific store
 SELECT count(CASE WHEN r.is_like = 1 THEN 1 END) OVER(PARTITION BY o.offer_id) AS likes, 
 count(CASE WHEN r.is_like = 0 THEN 1 END) OVER(PARTITION BY o.offer_id) AS dislikes, 
-p.product_name, o.price, o.date_offer, o.stock, s.store_name, s.store_id 
+p.product_name, o.price, o.date_offer, o.stock, s.store_name, s.store_id, o.offer_id
 FROM store s 
 INNER JOIN offer o ON s.store_id = o.store 
 INNER JOIN product p ON o.product = p.product_id 
 LEFT JOIN reaction  r ON r.offer_id = o.offer_id 
 WHERE store_id = ?;
+
+-- Get offer details by id (2 selects in order to get the user's score)
+SELECT count(CASE WHEN r.is_like = 1 THEN 1 END) OVER(PARTITION BY o.offer_id) AS likes,
+count(CASE WHEN r.is_like = 0 THEN 1 END) OVER(PARTITION BY o.offer_id) AS dislikes,
+p.product_name, o.price, o.date_offer, o.stock, p.img, u.username  
+FROM offer o
+INNER JOIN product p ON o.product = p.product_id
+INNER JOIN reaction r ON r.offer_id = o.offer_id
+INNER JOIN user u ON o.user_id = u.user_id
+WHERE o.offer_id = ?;
+
+SELECT s.current_score 
+FROM score s 
+INNER JOIN user u ON u.user_id = s.user_id 
+WHERE u.user_id = ?;
+
 

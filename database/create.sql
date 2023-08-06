@@ -115,6 +115,7 @@ ON DELETE CASCADE
 -------- reaction --------
 
 create table reaction (
+reaction_id NOT NULL auto_increment,
 user_id INT,
 offer_id INT,
 is_like BIT,

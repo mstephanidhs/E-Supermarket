@@ -15,5 +15,7 @@ router.get(
   verifyToken,
   offerController.offersByStore
 );
+router.get("/:offerId", verifyToken, offerController.offerById);
+router.put("/changeStockOffer", verifyToken, offerController.changeStockOffer);
 
 module.exports = router;

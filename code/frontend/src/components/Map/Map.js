@@ -4,7 +4,7 @@ import "./../../static/css/map.css";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Icon } from "leaflet";
+import { Icon, L } from "leaflet";
 
 import PopupContent from "./PopupContent";
 
@@ -12,6 +12,11 @@ function Map({ stores }) {
   const location = useGeolocation();
 
   const userLocation = [location.coordinates.lat, location.coordinates.lng];
+
+  const userCoordinates = {
+    lat: location.coordinates.lat,
+    lng: location.coordinates.lng,
+  };
 
   const customIconUser = new Icon({
     iconUrl: require("./../../static/img/userMarker.png"),
@@ -38,23 +43,24 @@ function Map({ stores }) {
       <Marker position={userLocation} icon={customIconUser}>
         <Popup>Your Location!</Popup>
       </Marker>
-
       <MarkerClusterGroup chunkedLoading>
-        {stores.map((store, index) => (
-          <Marker
-            key={index}
-            position={[store.latitude, store.longitude]}
-            icon={
-              store.offer_id !== null
-                ? customIconRedMarker
-                : customIconGreenMarker
-            }
-          >
-            <Popup>
-              <PopupContent store={store} />
-            </Popup>
-          </Marker>
-        ))}
+        {stores.map((store, index) => {
+          return (
+            <Marker
+              key={index}
+              position={[store.latitude, store.longitude]}
+              icon={
+                store.offer_id !== null
+                  ? customIconRedMarker
+                  : customIconGreenMarker
+              }
+            >
+              <Popup>
+                <PopupContent store={store} userCoordinates={userCoordinates} />
+              </Popup>
+            </Marker>
+          );
+        })}
       </MarkerClusterGroup>
     </MapContainer>
   );

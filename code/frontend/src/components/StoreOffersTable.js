@@ -10,6 +10,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -63,7 +64,11 @@ function StoreOffersTable({ offers }) {
                 <TableCell>{offer.dislikes}</TableCell>
                 <TableCell>{offer.stock}</TableCell>
                 <TableCell>
-                  <IconButton className={classes.activeIconButton}>
+                  <IconButton
+                    component={RouterLink}
+                    to={`/viewStoreOffers/${offer.store_id}/${offer.offer_id}`}
+                    className={classes.activeIconButton}
+                  >
                     <EditIcon color="primary" />
                   </IconButton>
                 </TableCell>
