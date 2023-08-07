@@ -23,6 +23,7 @@ function OfferCard({
   handleDislike,
   likeColor,
   dislikeColor,
+  disable,
 }) {
   return (
     <>
@@ -100,12 +101,12 @@ function OfferCard({
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton onClick={handleLike}>
+              <IconButton onClick={handleLike} disabled={disable}>
                 <ThumbUpOffAltIcon color={likeColor} />
               </IconButton>
             </Grid>
             <Grid item>
-              <IconButton onClick={handleDislike}>
+              <IconButton onClick={handleDislike} disabled={disable}>
                 <ThumbDownOffAltIcon color={dislikeColor} />
               </IconButton>
             </Grid>

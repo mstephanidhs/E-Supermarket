@@ -2,15 +2,18 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Typography, Link } from "@mui/material";
 
-import { L } from "leaflet";
+import { getDistanceInMeters } from "../../util/distanceBetween2Markers";
 
 function PopupContent({ store, userCoordinates }) {
-  const withinDistance = (coord1, coord2, maxDistance) => {
-    const distance = L.latLng(coord1.lat, coord1.lng).distanceTo(
-      L.latLng(coord2.lat, coord2.lng)
-    );
-    return distance <= maxDistance;
-  };
+  const inDistance =
+    getDistanceInMeters(
+      userCoordinates.lat,
+      userCoordinates.lng,
+      store.latitude,
+      store.longitude
+    ) <= 50
+      ? true
+      : false;
 
   return (
     <>
@@ -33,9 +36,21 @@ function PopupContent({ store, userCoordinates }) {
           <Link
             style={{ fontSize: "12px" }}
             component={RouterLink}
-            to={`/viewStoreOffers/${store.store_id}`}
+            to={`/viewStoreOffers/${store.store_id}/${inDistance}`}
           >
             See Products
+          </Link>
+        </>
+      ) : null}
+      {inDistance === true ? (
+        <>
+          <br />
+          <Link
+            style={{ fontSize: "12px" }}
+            component={RouterLink}
+            to={`/addStoreOffer/${store.store_id}`}
+          >
+            Add Offer
           </Link>
         </>
       ) : null}

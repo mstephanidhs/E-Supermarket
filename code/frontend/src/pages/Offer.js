@@ -18,6 +18,7 @@ function Offer() {
   const [dislikes, setDislikes] = useState(null);
   const [likeColor, setLikeColor] = useState("");
   const [dislikeColor, setDislikeColor] = useState("");
+  const [disable, setDisable] = useState();
 
   const token = "Bearer " + auth.user.token;
   const config = {
@@ -129,8 +130,16 @@ function Offer() {
   };
 
   const changeStock = () => {
-    setStock((prevStock) => !prevStock);
+    if (stock === false) {
+      getReaction();
+      setDisable(false);
+    } else {
+      setDislikeColor("");
+      setLikeColor("");
+      setDisable(true);
+    }
 
+    setStock((prevStock) => !prevStock);
     setLoading(true);
 
     axios
@@ -157,6 +166,8 @@ function Offer() {
         setStock(res.data.offer.stock === "Yes" ? true : false);
         setLikes(res.data.offer.likes);
         setDislikes(res.data.offer.dislikes);
+        setDisable(res.data.offer.stock === "Yes" ? false : true);
+        if (res.data.offer.stock === "Yes") getReaction();
         setLoading(false);
       })
       .catch((error) => {
@@ -177,8 +188,6 @@ function Offer() {
             ? setLikeColor("primary")
             : setDislikeColor("primary");
         }
-
-        setLoading(false);
       })
       .catch((error) => {
         if (error.response) console.log(error.response.data.message);
@@ -187,7 +196,6 @@ function Offer() {
 
   useEffect(() => {
     fetchOffer();
-    getReaction();
   }, []);
 
   return (
@@ -205,6 +213,7 @@ function Offer() {
           handleDislike={handleDislike}
           likeColor={likeColor}
           dislikeColor={dislikeColor}
+          disable={disable}
         />
       )}
     </>

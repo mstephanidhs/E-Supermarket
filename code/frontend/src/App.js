@@ -39,7 +39,7 @@ function App() {
             }
           />
           <Route
-            path="/viewStoreOffers/:storeId"
+            path="/viewStoreOffers/:storeId/:inDistance"
             element={
               <RequireAuth>
                 <StoreOffers />

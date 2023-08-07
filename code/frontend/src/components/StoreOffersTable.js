@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StoreOffersTable({ offers }) {
+function StoreOffersTable({ offers, inDistance }) {
   const classes = useStyles();
 
   return (
@@ -64,13 +64,17 @@ function StoreOffersTable({ offers }) {
                 <TableCell>{offer.dislikes}</TableCell>
                 <TableCell>{offer.stock}</TableCell>
                 <TableCell>
-                  <IconButton
-                    component={RouterLink}
-                    to={`/viewStoreOffers/${offer.store_id}/${offer.offer_id}`}
-                    className={classes.activeIconButton}
-                  >
-                    <EditIcon color="primary" />
-                  </IconButton>
+                  {inDistance === "true" ? (
+                    <IconButton
+                      component={RouterLink}
+                      to={`/viewStoreOffers/${offer.store_id}/${offer.offer_id}`}
+                      className={classes.activeIconButton}
+                    >
+                      <EditIcon color="primary" />
+                    </IconButton>
+                  ) : (
+                    "-"
+                  )}
                 </TableCell>
               </TableRow>
             ))}
