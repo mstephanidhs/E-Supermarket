@@ -16,6 +16,8 @@ function AddOffer() {
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
 
+  const [openForm, setOpenForm] = useState(false);
+
   const token = "Bearer " + auth.user.token;
   const config = {
     headers: {
@@ -96,8 +98,10 @@ function AddOffer() {
             setProducts={setProducts}
             getProducts={getProducts}
             allProducts={allProducts}
+            setOpenForm={setOpenForm}
           />
-          <OfferForm />
+
+          {openForm === true ? <OfferForm /> : null}
         </>
       )}
     </>

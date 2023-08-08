@@ -11,6 +11,7 @@ function Filters({
   setProducts,
   getProducts,
   allProducts,
+  setOpenForm,
 }) {
   const [valueCategory, setValueCategory] = useState({ label: "", id: "" });
   const [valueSubCategory, setValueSubCategory] = useState({
@@ -31,6 +32,7 @@ function Filters({
       setValueCategory({ id: "", label: "" });
       setValueProduct({ id: "", label: "" });
       setIsDisabled(true);
+      setOpenForm(false);
       return;
     }
 
@@ -44,6 +46,7 @@ function Filters({
       setValueProduct({ id: "", label: "" });
       setProducts([]);
       setIsDisabled(true);
+      setOpenForm(false);
       return;
     }
 
@@ -55,15 +58,23 @@ function Filters({
     if (input === null) {
       setValueProduct({ id: "", label: "" });
       setIsDisabled(true);
+      setOpenForm(false);
+
       return;
     }
 
     setValueProduct({ ...input });
     setIsDisabled(false);
+    setOpenForm(true);
   };
 
   const handleAllProductChange = (event, input) => {
-    console.log(input);
+    if (input === null) {
+      setOpenForm(false);
+      return;
+    }
+
+    setOpenForm(true);
   };
 
   return (

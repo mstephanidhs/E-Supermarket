@@ -124,3 +124,91 @@ exports.changeStockOffer = (req, res) => {
     return res.status(200).json({ message: "Stock changed successfully!" });
   });
 };
+
+exports.addOffer = (req, res) => {
+  const { userId, productId, price, storeId } = req.body;
+  let userScore = 0;
+
+  const offerExistsQuery =
+    "SELECT * FROM offer WHERE store = ? AND product = ?";
+
+  db.query(offerExistsQuery, [storeId, productId], async (error, result) => {
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    if (result.length > 0) {
+      if (price > result[0].price - result[0].price * 0.2) {
+        return res.status(422).json({
+          message:
+            "The price of the product must be 20% lower than its current price.",
+        });
+      }
+    }
+
+    const previousDayAVGQuery =
+      "SELECT price AS AveragePrice FROM productsInStore WHERE id = ? AND DATE(date_product) = DATE(NOW() - INTERVAL 1 DAY);";
+
+    db.query(previousDayAVGQuery, [productId], async (error, result) => {
+      if (error) {
+        console.log(error.message);
+        return;
+      }
+
+      if (result.length > 0) {
+        if (price < result[0].AveragePrice - result[0].AveragePrice * 0.2) {
+          userScore = 50;
+        }
+      }
+
+      const previousWeekAVGQuery =
+        "SELECT price AS AveragePrice FROM productsInStore WHERE id = ? AND date_product >= DATE(NOW() - INTERVAL 1 WEEK) AND date_product < DATE(NOW());";
+
+      db.query(previousWeekAVGQuery, [productId], async (error, result) => {
+        if (error) {
+          console.log(error.message);
+          return;
+        }
+
+        if (result.length > 0) {
+          if (price < result[0].AveragePrice - result[0].AveragePrice * 0.2) {
+            userScore = userScore + 20;
+          }
+        }
+
+        const addOfferQuery =
+          "INSERT INTO offer(user_id, product, price, store) VALUES (?, ?, ?, ?)";
+
+        db.query(
+          addOfferQuery,
+          [userId, productId, price, storeId],
+          async (error, result) => {
+            if (error) {
+              console.log(error.message);
+              return;
+            }
+
+            const updateUserScore =
+              "UPDATE score SET current_score = current_score + ? WHERE user_id = ?";
+
+            db.query(
+              updateUserScore,
+              [userScore, userId],
+              async (error, result) => {
+                if (error) {
+                  console.log(error.message);
+                  return;
+                }
+
+                return res.status(200).json({
+                  message: `${userScore} points added to your score`,
+                });
+              }
+            );
+          }
+        );
+      });
+    });
+  });
+};
