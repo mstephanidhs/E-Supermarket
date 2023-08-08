@@ -11,7 +11,7 @@ function PopupContent({ store, userCoordinates }) {
       userCoordinates.lng,
       store.latitude,
       store.longitude
-    ) <= 50
+    ) <= 5000000
       ? true
       : false;
 

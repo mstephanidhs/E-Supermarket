@@ -6,7 +6,7 @@ const { verifyToken } = require("./../middlewares/authMiddleware");
 const router = express.Router();
 
 router.get(
-  "/category/:category",
+  "/category/:categoryId",
   verifyToken,
   storeController.fetchStoresByCategory
 );

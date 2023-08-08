@@ -10,5 +10,16 @@ router.get(
   verifyToken,
   categoriesController.getAllCategories
 );
+router.get(
+  "/getSubCategories/:categoryId",
+  verifyToken,
+  categoriesController.getSubCategories
+);
+router.get(
+  "/products/:categoryId&:subCategoryId",
+  verifyToken,
+  categoriesController.getProduct
+);
+router.get("/allProducts", verifyToken, categoriesController.getAllProducts);
 
 module.exports = router;

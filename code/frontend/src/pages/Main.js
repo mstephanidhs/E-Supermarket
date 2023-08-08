@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useGeolocation from "../hooks/useGeoLocation";
 
 import axios from "axios";
 import { useAuth } from "../context/Auth";
@@ -17,6 +18,10 @@ import {
 import Map from "../components/Map/Map";
 
 function Main() {
+  const location = useGeolocation();
+
+  const userLocation = [location.coordinates.lat, location.coordinates.lng];
+
   const [stores, setStores] = useState(null);
   const [storesNames, setStoresNames] = useState([]);
   const [categoriesNames, setCategoriesNames] = useState([]);
@@ -137,14 +142,14 @@ function Main() {
   };
 
   const findStoresByCategory = (event, newValue) => {
-    setValueCategoriesNames(newValue);
+    setValueCategoriesNames(newValue.label);
     setValueStoreName(null);
     setError({ flag: false, message: "" });
     setOpenAlert(true);
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/store/category/${newValue}`, config)
+      .get(`http://localhost:5000/store/category/${newValue.id}`, config)
       .then((res) => {
         // console.log(res.data.storesByCategory);
         setStores(res.data.storesByCategory);
@@ -199,6 +204,9 @@ function Main() {
                 id="combo-box-demo"
                 options={categoriesNames}
                 sx={{ width: 200, marginLeft: "1.6rem" }}
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
+                }
                 renderInput={(params) => (
                   <TextField {...params} label="Select Category" />
                 )}
@@ -218,7 +226,7 @@ function Main() {
               </Box>
             </Grid>
           </Grid>
-          <Map stores={stores} />
+          <Map stores={stores} userLocation={userLocation} />
         </>
       )}
     </>

@@ -4,18 +4,14 @@ import "./../../static/css/map.css";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Icon, L } from "leaflet";
+import { Icon } from "leaflet";
 
 import PopupContent from "./PopupContent";
 
-function Map({ stores }) {
-  const location = useGeolocation();
-
-  const userLocation = [location.coordinates.lat, location.coordinates.lng];
-
+function Map({ stores, userLocation }) {
   const userCoordinates = {
-    lat: location.coordinates.lat,
-    lng: location.coordinates.lng,
+    lat: userLocation[0],
+    lng: userLocation[1],
   };
 
   const customIconUser = new Icon({
@@ -43,6 +39,7 @@ function Map({ stores }) {
       <Marker position={userLocation} icon={customIconUser}>
         <Popup>Your Location!</Popup>
       </Marker>
+
       <MarkerClusterGroup chunkedLoading>
         {stores.map((store, index) => {
           return (
