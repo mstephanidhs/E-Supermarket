@@ -15,6 +15,12 @@ exports.insertReaction = (req, res) => {
   const insertReactionQuery =
     "INSERT INTO reaction(user_id, offer_id, is_like) VALUES (?, ?, ?)";
 
+  const substractScoreQuery =
+    "UPDATE score SET current_score = current_score - 1 WHERE user_id = ?";
+
+  const addScoreQuery =
+    "UPDATE score SET current_score = current_score + 5 WHERE user_id = ?";
+
   db.query(
     insertReactionQuery,
     [userId, offerId, isLike],
@@ -24,9 +30,20 @@ exports.insertReaction = (req, res) => {
         return;
       }
 
-      return res
-        .status(200)
-        .json({ message: "Reaction inserted successfully!" });
+      db.query(
+        isLike === 1 ? addScoreQuery : substractScoreQuery,
+        [userId],
+        async (error, result) => {
+          if (error) {
+            console.log(error.message);
+            return;
+          }
+
+          return res
+            .status(200)
+            .json({ message: "Reaction inserted successfully!" });
+        }
+      );
     }
   );
 };

@@ -2,7 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mysql = require("mysql2");
 const cors = require("cors");
-
 // location of the .env file
 dotenv.config({ path: "./.env" });
 
@@ -24,6 +23,9 @@ db.connect((error) => {
   else console.log("DB connection was successful!");
 });
 //so now our application in node.js is actually connected to the database we just created in phpmyadmin
+
+// require all the schedulers
+const { offerScheduler } = require("./schedulers/offerScheduler");
 
 //======= MIDDLEWARES =======
 
@@ -52,6 +54,9 @@ app.use("/store", require("./routes/store"));
 app.use("/categories", require("./routes/categories"));
 app.use("/offer", require("./routes/offer"));
 app.use("/reaction", require("./routes/reaction"));
+
+//======= SCHEDULERS =======
+offerScheduler();
 
 // Start the server
 app.listen(process.env.PORT, () => {
