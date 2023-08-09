@@ -1,7 +1,7 @@
-import { Paper, Chip, TextField, Button, InputAdornment } from "@mui/material";
+import { Paper, Chip, TextField, Button } from "@mui/material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
-function OfferForm() {
+function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
   return (
     <div
       style={{
@@ -32,8 +32,9 @@ function OfferForm() {
           variant="outlined"
           disabled
           label="Product Name"
-          style={{ marginBottom: "30px" }}
+          style={{ marginBottom: "30px", width: "400px" }}
           defaultValue="Hello World"
+          value={selectedProduct.label}
         />
 
         <TextField
@@ -41,10 +42,12 @@ function OfferForm() {
           variant="outlined"
           label="Price"
           style={{ marginBottom: "30px" }}
-          // value={}
+          onChange={(e) => setPrice(e.target.value)}
         />
         <br />
-        <Button variant="contained">Submit</Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          Submit
+        </Button>
       </Paper>
     </div>
   );

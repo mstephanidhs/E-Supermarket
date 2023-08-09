@@ -148,7 +148,7 @@ exports.addOffer = (req, res) => {
     }
 
     const previousDayAVGQuery =
-      "SELECT price AS AveragePrice FROM productsInStore WHERE id = ? AND DATE(date_product) = DATE(NOW() - INTERVAL 1 DAY);";
+      "SELECT price AS AveragePrice FROM productsinstore WHERE product_id = ? AND DATE(date_product) = DATE(NOW() - INTERVAL 1 DAY);";
 
     db.query(previousDayAVGQuery, [productId], async (error, result) => {
       if (error) {
@@ -163,7 +163,7 @@ exports.addOffer = (req, res) => {
       }
 
       const previousWeekAVGQuery =
-        "SELECT price AS AveragePrice FROM productsInStore WHERE id = ? AND date_product >= DATE(NOW() - INTERVAL 1 WEEK) AND date_product < DATE(NOW());";
+        "SELECT price AS AveragePrice FROM productsinstore WHERE product_id = 2 AND date_product >= DATE(NOW() - INTERVAL 1 WEEK) AND date_product < DATE(NOW()) ORDER BY ABS(DATEDIFF(NOW(), date_product)) ASC LIMIT 1";
 
       db.query(previousWeekAVGQuery, [productId], async (error, result) => {
         if (error) {

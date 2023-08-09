@@ -62,12 +62,11 @@ function SignIn() {
         if (res.status === 200) navigate("/");
       })
       .catch((error) => {
-        if (error.response) {
+        if (error.response)
           return setError({
             flag: true,
             message: error.response.data.message,
           });
-        }
       });
   };
 

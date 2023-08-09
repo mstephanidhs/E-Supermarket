@@ -55,14 +55,16 @@ WHERE u.user_id = ?;
 -- Add Offer (& calculation of the score)
 -- the day before
 SELECT price AS AveragePrice 
-FROM productsInStore 
+FROM productsinstore 
 WHERE id = ? AND 
 DATE(date_product) = DATE(NOW() - INTERVAL 1 DAY);
 
 -- the week before
 SELECT price AS AveragePrice 
-FROM productsInStore 
-WHERE id = ? AND 
-date_product >= DATE(NOW() - INTERVAL 1 WEEK) AND date_product < DATE(NOW());
+FROM productsinstore 
+WHERE product_id = 2 AND 
+date_product >= DATE(NOW() - INTERVAL 1 WEEK) 
+AND date_product < DATE(NOW())
+ORDER BY ABS(DATEDIFF(NOW(), date_product)) ASC LIMIT 1;
 
 

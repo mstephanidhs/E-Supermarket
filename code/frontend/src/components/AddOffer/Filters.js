@@ -12,6 +12,7 @@ function Filters({
   getProducts,
   allProducts,
   setOpenForm,
+  setSelectedProduct,
 }) {
   const [valueCategory, setValueCategory] = useState({ label: "", id: "" });
   const [valueSubCategory, setValueSubCategory] = useState({
@@ -22,17 +23,23 @@ function Filters({
     label: "",
     id: "",
   });
+  const [searchProduct, setSearchProduct] = useState({
+    label: "",
+    id: "",
+  });
 
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleCategoryChange = (event, input) => {
+    setSearchProduct({ id: "", label: "" });
+    setOpenForm(false);
+    setValueSubCategory({ id: "", label: "" });
+    setValueProduct({ id: "", label: "" });
+
     if (input === null) {
       setSubCategories([]);
-      setValueSubCategory({ id: "", label: "" });
       setValueCategory({ id: "", label: "" });
-      setValueProduct({ id: "", label: "" });
       setIsDisabled(true);
-      setOpenForm(false);
       return;
     }
 
@@ -41,12 +48,15 @@ function Filters({
   };
 
   const handleSubCategoryChange = (event, input) => {
+    setSearchProduct({ id: "", label: "" });
+    setValueProduct({ id: "", label: "" });
+
+    setOpenForm(false);
+
     if (input === null) {
       setValueSubCategory({ id: "", label: "" });
-      setValueProduct({ id: "", label: "" });
       setProducts([]);
       setIsDisabled(true);
-      setOpenForm(false);
       return;
     }
 
@@ -55,6 +65,7 @@ function Filters({
   };
 
   const handleProductChange = (event, input) => {
+    setSearchProduct({ id: "", label: "" });
     if (input === null) {
       setValueProduct({ id: "", label: "" });
       setIsDisabled(true);
@@ -65,15 +76,25 @@ function Filters({
 
     setValueProduct({ ...input });
     setIsDisabled(false);
-    setOpenForm(true);
+    setSelectedProduct({ ...input });
   };
 
   const handleAllProductChange = (event, input) => {
     if (input === null) {
       setOpenForm(false);
+      setSearchProduct({ id: "", label: "" });
       return;
     }
 
+    setOpenForm(true);
+    setValueCategory({ id: "", label: "" });
+    setValueSubCategory({ id: "", label: "" });
+    setValueProduct({ id: "", label: "" });
+    setSelectedProduct({ ...input });
+    setSearchProduct({ ...input });
+  };
+
+  const handleSubmit = () => {
     setOpenForm(true);
   };
 
@@ -126,6 +147,7 @@ function Filters({
         <Grid item xs={3}>
           <Button
             variant="contained"
+            onClick={handleSubmit}
             sx={{ width: "100px", marginLeft: "6rem" }}
             disabled={isDisabled}
           >
@@ -135,6 +157,7 @@ function Filters({
       </Grid>
       <Autocomplete
         sx={{ width: 300 }}
+        value={searchProduct}
         options={allProducts}
         onChange={handleAllProductChange}
         isOptionEqualToValue={(option, value) => option.value === value.value}
