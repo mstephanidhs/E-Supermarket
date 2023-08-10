@@ -10,7 +10,6 @@ import Main from "./pages/Main";
 import { AuthProvider } from "./context/Auth";
 import RequireAuth from "./context/RequireAuth";
 import StoreOffers from "./pages/StoreOffers";
-import Offer from "./pages/Offer";
 import AddOffer from "./pages/AddOffer";
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
             path="/myProfile"
             element={
               <RequireAuth>
-                {" "}
                 <Profile />
               </RequireAuth>
             }

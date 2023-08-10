@@ -13,9 +13,10 @@ import {
 } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
-import ChangeUsernameForm from "../components/ProfileForms/ChangeUsernameForm";
-import ChangePasswordForm from "../components/ProfileForms/ChangePasswordForm";
+import ChangeUsernameForm from "../components/ProfileForms/AccountDetails/ChangeUsernameForm";
+import ChangePasswordForm from "../components/ProfileForms/AccountDetails/ChangePasswordForm";
 import OffersTable from "../components/ProfileForms/OffersTable";
+import PerformanceForm from "../components/ProfileForms/AccountPerformance/PerformanceForm";
 
 import { passwordStrength } from "../util/checkPassword";
 
@@ -23,6 +24,13 @@ function Profile() {
   const auth = useAuth();
 
   const [username, setUsername] = useState("");
+
+  const [likes, setLikes] = useState("");
+  const [dislikes, setDislikes] = useState("");
+  const [currentScore, setCurrentScore] = useState("");
+  const [totalScore, setTotalScore] = useState("");
+  const [previousTokens, setPreviousTokens] = useState("");
+  const [totalTokens, setTotalTokens] = useState("");
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -46,8 +54,62 @@ function Profile() {
   };
 
   useEffect(() => {
+    getReactions();
+    getScore();
+    getTokens();
     offersByUserID();
   }, []);
+
+  const getReactions = () => {
+    axios
+      .get(
+        `http://localhost:5000/profile/GetReactions/${sessionStorage.getItem(
+          "userId"
+        )}`,
+        config
+      )
+      .then((res) => {
+        setLikes(res.data.likes);
+        setDislikes(res.data.dislikes);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
+
+  const getScore = () => {
+    axios
+      .get(
+        `http://localhost:5000/profile/GetScores/${sessionStorage.getItem(
+          "userId"
+        )}`,
+        config
+      )
+      .then((res) => {
+        setCurrentScore(res.data.current_score);
+        setTotalScore(res.data.past_score);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
+
+  const getTokens = () => {
+    axios
+      .get(
+        `http://localhost:5000/profile/GetTokens/${sessionStorage.getItem(
+          "userId"
+        )}`,
+        config
+      )
+      .then((res) => {
+        setPreviousTokens(res.data.previous_month_tokens);
+        setTotalTokens(res.data.total_tokens);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
 
   const offersByUserID = () => {
     axios
@@ -244,7 +306,21 @@ function Profile() {
           </Grid>
         </Paper>
       </div>
-      {loading ? <CircularProgress /> : <OffersTable offers={offers} />}
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <OffersTable offers={offers} />
+          <PerformanceForm
+            likes={likes}
+            dislikes={dislikes}
+            currentScore={currentScore}
+            totalScore={totalScore}
+            totalTokens={totalTokens}
+            previousTokens={previousTokens}
+          />
+        </>
+      )}
     </>
   );
 }

@@ -33,42 +33,40 @@ function OffersTable({ offers }) {
   ];
 
   return (
-    <>
-      <div
-        style={{
-          textAlign: "center",
-          width: "140vh",
-          margin: "4.8rem auto",
-        }}
-      >
-        <Paper elevation={2} style={{ padding: "30px", borderRadius: "20px" }}>
-          <Chip
-            label="Your Offers"
-            color="primary"
-            variant="outlined"
-            icon={<LocalOfferIcon />}
-            size="medium"
-            style={{
-              marginTop: "10px",
-              marginBottom: "40px",
-              fontWeight: 600,
-              letterSpacing: "0.75px",
-              padding: "0 8px",
+    <div
+      style={{
+        textAlign: "center",
+        width: "140vh",
+        margin: "4.8rem auto",
+      }}
+    >
+      <Paper elevation={2} style={{ padding: "30px", borderRadius: "20px" }}>
+        <Chip
+          label="Your Offers"
+          color="primary"
+          variant="outlined"
+          icon={<LocalOfferIcon />}
+          size="medium"
+          style={{
+            marginTop: "10px",
+            marginBottom: "40px",
+            fontWeight: 600,
+            letterSpacing: "0.75px",
+            padding: "0 8px",
+          }}
+        />
+        <div style={{ height: 250, padding: "0 3.6rem" }}>
+          <DataGrid
+            columns={columns}
+            rows={offers}
+            initialState={{
+              pagination: { paginationModel: { page: 0, pageSize: 5 } },
             }}
+            pageSizeOptions={[5, 10]}
           />
-          <div style={{ height: 250, padding: "0 3.6rem" }}>
-            <DataGrid
-              columns={columns}
-              rows={offers}
-              initialState={{
-                pagination: { paginationModel: { page: 0, pageSize: 5 } },
-              }}
-              pageSizeOptions={[5, 10]}
-            />
-          </div>
-        </Paper>
-      </div>
-    </>
+        </div>
+      </Paper>
+    </div>
   );
 }
 

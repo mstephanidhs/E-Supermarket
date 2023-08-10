@@ -33,7 +33,6 @@ function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
           disabled
           label="Product Name"
           style={{ marginBottom: "30px", width: "400px" }}
-          defaultValue="Hello World"
           value={selectedProduct.label}
         />
 

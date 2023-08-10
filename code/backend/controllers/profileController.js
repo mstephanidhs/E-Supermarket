@@ -107,3 +107,76 @@ exports.changePassword = (req, res) => {
     });
   });
 };
+
+exports.getScores = (req, res) => {
+  const userId = req.params.userId;
+
+  const getScoreQuery =
+    "SELECT current_score, past_score FROM score WHERE user_id = ?";
+
+  db.query(getScoreQuery, [userId], async (error, result) => {
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    res.status(200).json({
+      message: "Score fetched successfully!",
+      current_score: result[0].current_score,
+      past_score: result[0].past_score,
+    });
+  });
+};
+
+exports.getTokens = (req, res) => {
+  const userId = req.params.userId;
+
+  const getTokensQuery =
+    "SELECT total_tokens, previous_month_tokens FROM tokens WHERE user_id = ?";
+
+  db.query(getTokensQuery, [userId], async (error, result) => {
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    res.status(200).json({
+      message: "Tokens fetched successfully!",
+      total_tokens: result[0].total_tokens,
+      previous_month_tokens: result[0].previous_month_tokens,
+    });
+  });
+};
+
+exports.getReactions = (req, res) => {
+  const userId = req.params.userId;
+
+  const getLikesQuery =
+    "SELECT count(user_id) AS likes FROM reaction WHERE is_like = 1";
+  const getDislikesQuery =
+    "SELECT count(user_id) AS dislikes FROM reaction WHERE is_like = 0";
+
+  db.query(getLikesQuery, [userId], async (error, result) => {
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    likes = result[0].likes;
+
+    db.query(getDislikesQuery, [userId], async (error, result) => {
+      if (error) {
+        console.log(error.message);
+        return;
+      }
+
+      res
+        .status(200)
+        .json({
+          message: "Reactions fethed successfully!",
+          likes,
+          dislikes: result[0].dislikes,
+        });
+    });
+  });
+};
