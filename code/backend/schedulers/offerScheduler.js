@@ -53,7 +53,7 @@ exports.offerScheduler = () => {
         }
       }
     } catch (error) {
-      console.error("Error perfoming daily tast: ", error);
+      console.error("Error perfoming daily task: ", error);
     }
   });
 };

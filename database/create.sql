@@ -65,9 +65,8 @@ CREATE TABLE user (
 CREATE TABLE score (
     score_id INT NOT NULL auto_increment,
     user_id INT,
-    current_score INT,
-    past_score INT,
-    dates date,
+    current_score FLOAT,
+    past_score FLOAT,
     PRIMARY KEY (score_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id)
     ON DELETE CASCADE
@@ -79,9 +78,9 @@ CREATE TABLE score (
 CREATE TABLE tokens (
     token_id INT NOT NULL auto_increment,
     user_id INT,
-    current_tokens INT,
-    past_tokens INT,
-    dates date,
+    current_tokens FLOAT,
+    previous_month_tokens FLOAT,
+    total_tokens FLOAT,
     PRIMARY KEY (token_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id)
     ON DELETE CASCADE
@@ -135,4 +134,8 @@ CREATE TABLE productsInStore (
     date_product DATE NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+CREATE TABLE totaltokens (
+    total_tokens INT NOT NULL
 );

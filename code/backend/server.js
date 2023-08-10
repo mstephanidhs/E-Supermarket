@@ -26,6 +26,11 @@ db.connect((error) => {
 
 // require all the schedulers
 const { offerScheduler } = require("./schedulers/offerScheduler");
+const { scoreScheduler } = require("./schedulers/scoreScheduler");
+const {
+  initializeTokens,
+  distributeTokens,
+} = require("./schedulers/tokensScheduler");
 
 //======= MIDDLEWARES =======
 
@@ -57,6 +62,9 @@ app.use("/reaction", require("./routes/reaction"));
 
 //======= SCHEDULERS =======
 offerScheduler();
+scoreScheduler();
+initializeTokens();
+distributeTokens();
 
 // Start the server
 app.listen(process.env.PORT, () => {

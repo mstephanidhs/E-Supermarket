@@ -120,11 +120,33 @@ exports.register = async (req, res) => {
           }
 
           const token = createToken(result[0].user_id, expirationDate);
-          res.status(200).json({
-            message: "Register successful!",
-            token,
-            role: "user",
-            name: result[0].username,
+          const userId = result[0].user_id;
+          const userName = result[0].username;
+
+          const addTokensQuery =
+            "INSERT INTO tokens (user_id, current_tokens, previous_month_tokens, total_tokens) VALUES (?, 0, 0, 0)";
+          const addScoreQuery =
+            "INSERT INTO score (user_id, current_score, past_score) VALUES (?, 0, 0)";
+
+          db.query(addTokensQuery, [userId], async (error, result) => {
+            if (error) {
+              console.log(error.message);
+              return;
+            }
+
+            db.query(addScoreQuery, [userId], async (error, result) => {
+              if (error) {
+                console.log(error.message);
+                return;
+              }
+
+              res.status(200).json({
+                message: "Register successful!",
+                token,
+                role: "user",
+                name: userName,
+              });
+            });
           });
         });
       }
