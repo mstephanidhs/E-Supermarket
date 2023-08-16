@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "../context/Auth";
@@ -23,6 +23,7 @@ const StyledSnackbarContent = styled("div")({
 function StoreOffers() {
   const { storeId, inDistance } = useParams();
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const [storeOffers, setStoreOffers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,11 +36,27 @@ function StoreOffers() {
     setOpen(false);
   };
 
-  const token = "Bearer " + auth.user.token;
+  const token = "Bearer " + sessionStorage.getItem("token");
   const config = {
     headers: {
       authorization: token,
     },
+  };
+
+  const deleteOffer = (offerId) => {
+    const storesFlag = storeOffers.length === 1 ? true : false;
+    axios
+      .delete(`http://localhost:5000/offer/deleteOffer/${offerId}`, config)
+      .then((res) => {
+        if (storesFlag === true) {
+          navigate("/");
+          return;
+        }
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
   };
 
   useEffect(() => {
@@ -84,7 +101,11 @@ function StoreOffers() {
       {loading ? (
         <CircularProgress />
       ) : (
-        <StoreOffersTable offers={storeOffers} inDistance={inDistance} />
+        <StoreOffersTable
+          offers={storeOffers}
+          inDistance={inDistance}
+          deleteOffer={deleteOffer}
+        />
       )}
     </>
   );

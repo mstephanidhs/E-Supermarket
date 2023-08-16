@@ -18,5 +18,10 @@ router.get(
 router.get("/:offerId", verifyToken, offerController.offerById);
 router.put("/changeStockOffer", verifyToken, offerController.changeStockOffer);
 router.post("/AddOffer", verifyToken, offerController.addOffer);
+router.delete(
+  "/deleteOffer/:offerId",
+  verifyToken,
+  offerController.deleteOffer
+);
 
 module.exports = router;

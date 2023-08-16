@@ -13,14 +13,18 @@ import { makeStyles } from "@mui/styles";
 import { Link as RouterLink } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const useStyles = makeStyles((theme) => ({
   activeIconButton: {
     cursor: "pointer", // Change this to your desired cursor style
   },
+  redIcon: {
+    color: "rgba(255, 99, 71, 1)",
+  },
 }));
 
-function StoreOffersTable({ offers, inDistance }) {
+function StoreOffersTable({ offers, inDistance, deleteOffer }) {
   const classes = useStyles();
 
   return (
@@ -65,13 +69,20 @@ function StoreOffersTable({ offers, inDistance }) {
                 <TableCell>{offer.stock}</TableCell>
                 <TableCell>
                   {inDistance === "true" ? (
-                    <IconButton
-                      component={RouterLink}
-                      to={`/viewStoreOffers/${offer.store_id}/${offer.offer_id}`}
-                      className={classes.activeIconButton}
-                    >
-                      <EditIcon color="primary" />
-                    </IconButton>
+                    <>
+                      <IconButton
+                        component={RouterLink}
+                        to={`/viewOffer/${offer.store_id}/${offer.offer_id}`}
+                        className={classes.activeIconButton}
+                      >
+                        <EditIcon color="primary" />
+                      </IconButton>
+                      {sessionStorage.getItem("role") === "admin" ? (
+                        <IconButton onClick={() => deleteOffer(offer.offer_id)}>
+                          <DeleteIcon className={classes.redIcon} />
+                        </IconButton>
+                      ) : null}
+                    </>
                   ) : (
                     "-"
                   )}

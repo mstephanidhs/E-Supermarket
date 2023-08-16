@@ -11,6 +11,7 @@ import { AuthProvider } from "./context/Auth";
 import RequireAuth from "./context/RequireAuth";
 import StoreOffers from "./pages/StoreOffers";
 import AddOffer from "./pages/AddOffer";
+import Offer from "./pages/Offer";
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
             element={
               <RequireAuth>
                 <AddOffer />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/viewOffer/:storeId/:offerId"
+            element={
+              <RequireAuth>
+                <Offer />
               </RequireAuth>
             }
           />

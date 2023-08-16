@@ -46,7 +46,7 @@ function Profile() {
   });
   const [openAlert, setOpenAlert] = useState(true);
 
-  const token = "Bearer " + auth.user.token;
+  const token = "Bearer " + sessionStorage.getItem("token");
   const config = {
     headers: {
       authorization: token,
@@ -154,12 +154,14 @@ function Profile() {
         config
       )
       .then((res) => {
-        if (res.status === 200)
+        if (res.status === 200) {
+          sessionStorage.setItem("name", username);
           return setAlert({
             flag: true,
             message: res.data.message,
             severity: "success",
           });
+        }
       })
       .catch((error) => {
         if (error.response) {

@@ -54,8 +54,6 @@ CREATE TABLE user (
     email VARCHAR(25) NOT NULL,
     password VARCHAR(250) NOT NULL,
     isadmin BIT(1) DEFAULT 0,
-    score FLOAT,
-    tokens FLOAT,
     PRIMARY KEY (user_id)
 );
 

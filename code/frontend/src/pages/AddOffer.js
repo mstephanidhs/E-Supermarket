@@ -38,7 +38,7 @@ function AddOffer() {
 
   const [openForm, setOpenForm] = useState(false);
 
-  const token = "Bearer " + auth.user.token;
+  const token = "Bearer " + sessionStorage.getItem("token");
   const config = {
     headers: {
       authorization: token,
