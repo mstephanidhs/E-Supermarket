@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useGeolocation from "../hooks/useGeoLocation";
 
 import axios from "axios";
-import { useAuth } from "../context/Auth";
 
 import {
   Alert,
@@ -31,8 +30,6 @@ function Main() {
 
   const [error, setError] = useState({ flag: false, message: "" });
   const [openAlert, setOpenAlert] = useState(true);
-
-  const auth = useAuth();
 
   const token = "Bearer " + sessionStorage.getItem("token");
   const config = {
@@ -118,8 +115,15 @@ function Main() {
   }, []);
 
   const findStoresByName = (event, newValue) => {
-    setValueStoreName(newValue);
     setValueCategoriesNames(null);
+
+    if (newValue === null) {
+      setValueStoreName(null);
+      getOfferStores();
+      return;
+    }
+
+    setValueStoreName(newValue);
     setError({ flag: false, message: "" });
     setOpenAlert(true);
     setLoading(true);
@@ -142,8 +146,15 @@ function Main() {
   };
 
   const findStoresByCategory = (event, newValue) => {
-    setValueCategoriesNames(newValue.label);
     setValueStoreName(null);
+
+    if (newValue === null) {
+      setValueCategoriesNames(null);
+      getOfferStores();
+      return;
+    }
+
+    setValueCategoriesNames(newValue);
     setError({ flag: false, message: "" });
     setOpenAlert(true);
     setLoading(true);
