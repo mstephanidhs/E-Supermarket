@@ -13,6 +13,7 @@ import StoreOffers from "./pages/StoreOffers";
 import AddOffer from "./pages/AddOffer";
 import Offer from "./pages/Offer";
 import Leaderboard from "./pages/Leaderboard";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -68,6 +69,14 @@ function App() {
             element={
               <RequireAuth>
                 <Leaderboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <RequireAuth>
+                <Settings />
               </RequireAuth>
             }
           />
