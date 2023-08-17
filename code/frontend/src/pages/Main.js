@@ -151,7 +151,6 @@ function Main() {
     axios
       .get(`http://localhost:5000/store/category/${newValue.id}`, config)
       .then((res) => {
-        // console.log(res.data.storesByCategory);
         setStores(res.data.storesByCategory);
         setLoading(false);
       })

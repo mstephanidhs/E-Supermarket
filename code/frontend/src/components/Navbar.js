@@ -19,6 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Person2Icon from "@mui/icons-material/Person2";
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 
 function Navbar() {
   const [anchor, setAnchor] = useState(null);
@@ -54,6 +55,10 @@ function Navbar() {
   };
   const handleClose = () => {
     setAnchor(null);
+  };
+  const handleLeaderboard = () => {
+    setAnchor(null);
+    navigate("/leaderboard");
   };
 
   const message = (
@@ -143,13 +148,21 @@ function Navbar() {
             >
               <MenuItem onClick={handleCloseProfile}>
                 <ListItemIcon>
-                  <EditIcon />
+                  <EditIcon color="primary" />
                 </ListItemIcon>
                 Profile
               </MenuItem>
+              {sessionStorage.getItem("role") === "admin" ? (
+                <MenuItem onClick={handleLeaderboard}>
+                  <ListItemIcon>
+                    <LeaderboardIcon color="primary" />
+                  </ListItemIcon>
+                  Leaderboard
+                </MenuItem>
+              ) : null}
               <MenuItem onClick={handleCloseLogout}>
                 <ListItemIcon>
-                  <LogoutIcon />
+                  <LogoutIcon color="primary" />
                 </ListItemIcon>
                 Logout
               </MenuItem>

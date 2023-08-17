@@ -59,6 +59,7 @@ app.use("/store", require("./routes/store"));
 app.use("/categories", require("./routes/categories"));
 app.use("/offer", require("./routes/offer"));
 app.use("/reaction", require("./routes/reaction"));
+app.use("/leaderboard", require("./routes/leaderboard"));
 
 //======= SCHEDULERS =======
 offerScheduler();

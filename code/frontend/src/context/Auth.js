@@ -26,12 +26,6 @@ export const AuthProvider = ({ children }) => {
     };
 
     setUser(userDetails);
-
-    sessionStorage.clear();
-    sessionStorage.setItem("token", token);
-    sessionStorage.setItem("name", name);
-    sessionStorage.setItem("role", role);
-    sessionStorage.setItem("userId", userId);
   };
 
   const logout = () => {

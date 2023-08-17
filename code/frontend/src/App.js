@@ -12,6 +12,7 @@ import RequireAuth from "./context/RequireAuth";
 import StoreOffers from "./pages/StoreOffers";
 import AddOffer from "./pages/AddOffer";
 import Offer from "./pages/Offer";
+import Leaderboard from "./pages/Leaderboard";
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
             element={
               <RequireAuth>
                 <Offer />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/leaderboard"
+            element={
+              <RequireAuth>
+                <Leaderboard />
               </RequireAuth>
             }
           />

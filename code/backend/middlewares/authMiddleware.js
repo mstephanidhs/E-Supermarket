@@ -13,7 +13,6 @@ const db = mysql.createConnection({
 // putting as a parameter the next keyword, the server knows that this function is a middleware
 exports.verifyToken = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
-  console.log(bearerHeader);
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
@@ -45,7 +44,3 @@ exports.verifyToken = (req, res, next) => {
     });
   }
 };
-
-// EXAMPLE WHEN IT IS TIME TO USE THIS SPECIFIC MIDDLEWARE
-// 1. require it to the folder it's needed
-// 2. place it BEFORE the actual function that is to be executed

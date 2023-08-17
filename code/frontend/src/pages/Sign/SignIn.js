@@ -58,6 +58,11 @@ function SignIn() {
       })
       .then((res) => {
         const { token, name, role, userId } = res.data;
+        sessionStorage.clear();
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("name", name);
+        sessionStorage.setItem("role", role);
+        sessionStorage.setItem("userId", userId);
         auth.login(token, name, role, userId);
         if (res.status === 200) navigate("/");
       })
