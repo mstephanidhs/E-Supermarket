@@ -5,7 +5,8 @@ CREATE TABLE store (
     store_name VARCHAR(250),
     longitude FLOAT,
     latitude FLOAT,
-    CONSTRAINT pk_store PRIMARY KEY (store_id)
+    CONSTRAINT pk_store PRIMARY KEY (store_id),
+    CONSTRAINT unique_comb UNIQUE (store_name, longitude, latitude)
 );
 
 

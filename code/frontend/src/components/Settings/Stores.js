@@ -1,7 +1,21 @@
 import StoreIcon from "@mui/icons-material/Store";
-import { Button, Chip } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
-function Stores() {
+function Stores({
+  handleFileChange,
+  handleUpload,
+  action,
+  handleActionChange,
+}) {
   return (
     <>
       <Chip
@@ -19,8 +33,43 @@ function Stores() {
         }}
       />
       <div>
-        <input type="file" accept=".json" />
-        <Button variant="contained">Upload JSON</Button>
+        <form onSubmit={handleUpload}>
+          <Grid container>
+            <Grid item xs={6}>
+              <input type="file" accept=".json" onChange={handleFileChange} />
+            </Grid>
+            <Grid item xs={6}>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl style={{ width: "120px" }}>
+                  <InputLabel>Action</InputLabel>
+                  <Select
+                    value={action}
+                    label="Action"
+                    onChange={handleActionChange}
+                  >
+                    <MenuItem value="Delete">Delete</MenuItem>
+                    <MenuItem value="Update">Update</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            justifyContent="center"
+            style={{ marginTop: "1.4rem" }}
+          >
+            <Grid item>
+              <Button variant="contained" color="primary" type="submit">
+                Upload JSON
+              </Button>
+            </Grid>
+          </Grid>
+          {/* <input type="file" accept=".json" onChange={handleFileChange} />
+          <Button variant="contained" type="submit">
+            Upload JSON
+          </Button> */}
+        </form>
       </div>
     </>
   );

@@ -60,6 +60,7 @@ app.use("/categories", require("./routes/categories"));
 app.use("/offer", require("./routes/offer"));
 app.use("/reaction", require("./routes/reaction"));
 app.use("/leaderboard", require("./routes/leaderboard"));
+app.use("/uploadFiles", require("./routes/files"));
 
 //======= SCHEDULERS =======
 offerScheduler();
