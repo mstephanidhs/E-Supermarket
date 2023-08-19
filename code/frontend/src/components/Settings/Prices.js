@@ -1,4 +1,4 @@
-import StoreIcon from "@mui/icons-material/Store";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import {
   Box,
   Button,
@@ -10,22 +10,22 @@ import {
   Select,
 } from "@mui/material";
 
-function Stores({
-  handleStoreFileChange,
-  handleStoreUpload,
-  storeAction,
-  handleStoreActionChange,
+function Prices({
+  handlePricesFileChange,
+  handlePricesUpload,
+  pricesAction,
+  handlePricesActionChange,
 }) {
   return (
     <>
       <Chip
-        label="Edit Stores"
+        label="Edit Products Prices"
         color="primary"
         variant="outlined"
-        icon={<StoreIcon />}
+        icon={<ProductionQuantityLimitsIcon />}
         size="medium"
         style={{
-          marginTop: "10px",
+          marginTop: "4rem",
           marginBottom: "40px",
           fontWeight: 600,
           letterSpacing: "0.75px",
@@ -33,13 +33,13 @@ function Stores({
         }}
       />
       <div>
-        <form onSubmit={handleStoreUpload}>
+        <form onSubmit={handlePricesUpload}>
           <Grid container>
             <Grid item xs={6}>
               <input
                 type="file"
                 accept=".json"
-                onChange={handleStoreFileChange}
+                onChange={handlePricesFileChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -47,9 +47,9 @@ function Stores({
                 <FormControl style={{ width: "120px" }}>
                   <InputLabel>Action</InputLabel>
                   <Select
-                    value={storeAction}
+                    value={pricesAction}
                     label="Action"
-                    onChange={handleStoreActionChange}
+                    onChange={handlePricesActionChange}
                   >
                     <MenuItem value="Delete">Delete</MenuItem>
                     <MenuItem value="Update">Update</MenuItem>
@@ -75,4 +75,4 @@ function Stores({
   );
 }
 
-export default Stores;
+export default Prices;

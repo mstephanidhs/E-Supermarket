@@ -39,12 +39,8 @@ CREATE TABLE product (
     category VARCHAR(250),
     subcategory VARCHAR(250),
     img  TEXT,
-    PRIMARY KEY (product_id)
+    CONSTRAINT pk_product PRIMARY KEY (product_id),
 );
-
--- insert into product (category, subcategory)
--- select category_name, subcategory_name
--- from category, subcategory
 
 
 -------- user --------
@@ -85,11 +81,6 @@ CREATE TABLE tokens (
     ON DELETE CASCADE
 );
 
--------- insert into user --------
--- insert into user (score, tokens)
--- select current_score, current_tokens
--- from score, tokens
-
 
 -------- offer --------
 
@@ -125,14 +116,15 @@ create table reaction (
 
 -------- products in store --------
 
-CREATE TABLE productsInStore (
+CREATE TABLE productsinstore (
 	id INT NOT NULL auto_increment,
     product_name VARCHAR(250) NOT NULL,
     product_id INT NOT NULL,
     price FLOAT NOT NULL,
     date_product DATE NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (product_id) REFERENCES product(product_id)
+    FOREIGN KEY (product_id) REFERENCES product(product_id),
+    CONSTRAINT pk_productsInStore UNIQUE (product_id, price, date_product)
 );
 
 CREATE TABLE totaltokens (

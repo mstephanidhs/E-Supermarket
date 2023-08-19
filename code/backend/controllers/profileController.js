@@ -152,9 +152,9 @@ exports.getReactions = (req, res) => {
   const userId = req.params.userId;
 
   const getLikesQuery =
-    "SELECT count(user_id) AS likes FROM reaction WHERE is_like = 1";
+    "SELECT count(*) AS likes FROM reaction WHERE user_id = ? AND is_like = 1";
   const getDislikesQuery =
-    "SELECT count(user_id) AS dislikes FROM reaction WHERE is_like = 0";
+    "SELECT count(*) AS dislikes FROM reaction WHERE user_id = ? AND is_like = 0";
 
   db.query(getLikesQuery, [userId], async (error, result) => {
     if (error) {
@@ -170,13 +170,11 @@ exports.getReactions = (req, res) => {
         return;
       }
 
-      res
-        .status(200)
-        .json({
-          message: "Reactions fethed successfully!",
-          likes,
-          dislikes: result[0].dislikes,
-        });
+      res.status(200).json({
+        message: "Reactions fethed successfully!",
+        likes,
+        dislikes: result[0].dislikes,
+      });
     });
   });
 };

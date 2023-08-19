@@ -15,5 +15,17 @@ router.post(
   upload.single("storeFile"),
   fileController.uploadStores
 );
+router.post(
+  "/products",
+  verifyToken,
+  upload.single("productFile"),
+  fileController.uploadProducts
+);
+router.post(
+  "/prices",
+  verifyToken,
+  upload.single("pricesFile"),
+  fileController.uploadPrices
+);
 
 module.exports = router;

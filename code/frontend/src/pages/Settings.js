@@ -5,10 +5,18 @@ import axios from "axios";
 import { Alert, Snackbar } from "@mui/material";
 
 import Stores from "../components/Settings/Stores";
+import Products from "../components/Settings/Products";
+import Prices from "../components/Settings/Prices";
 
 function Settings() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [action, setAction] = useState("");
+  const [selectedStoreFile, setSelectedStoreFile] = useState(null);
+  const [selectedProductFile, setSelectedProductFile] = useState(null);
+  const [selectedPricesFile, setSelectedPricesFile] = useState(null);
+
+  const [storeAction, setStoreAction] = useState("");
+  const [productAction, setProductAction] = useState("");
+  const [pricesAction, setPricesAction] = useState("");
+
   const [alert, setAlert] = useState({
     flag: false,
     message: "",
@@ -24,11 +32,23 @@ function Settings() {
     },
   };
 
-  const handleFileChange = (event) => {
+  const handleStoreFileChange = (event) => {
     const file = event.target.files[0];
 
-    if (file) setSelectedFile(file);
-    else setSelectedFile(null);
+    if (file) setSelectedStoreFile(file);
+    else setSelectedStoreFile(null);
+  };
+  const handleProductFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) setSelectedProductFile(file);
+    else setSelectedProductFile(null);
+  };
+  const handlePricesFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) setSelectedPricesFile(file);
+    else setSelectedPricesFile(null);
   };
 
   const handleClose = (event, reason) => {
@@ -37,24 +57,30 @@ function Settings() {
     setOpenAlert(false);
   };
 
-  const handleActionChange = (event) => {
-    setAction(event.target.value);
+  const handleStoreActionChange = (event) => {
+    setStoreAction(event.target.value);
+  };
+  const handleProductActionChange = (event) => {
+    setProductAction(event.target.value);
+  };
+  const handlePricesActionChange = (event) => {
+    setPricesAction(event.target.value);
   };
 
-  const handleUpload = (e) => {
+  const handleStoreUpload = (e) => {
     e.preventDefault();
 
     setAlert({ flag: false, message: "", severity: "error" });
     setOpenAlert(true);
 
-    if (selectedFile === null)
+    if (selectedStoreFile === null)
       return setAlert({
         severity: "error",
         flag: true,
         message: "You need to upload a file!",
       });
 
-    if (action === "")
+    if (storeAction === "")
       return setAlert({
         severity: "error",
         flag: true,
@@ -62,11 +88,87 @@ function Settings() {
       });
 
     const formData = new FormData();
-    formData.append("storeFile", selectedFile);
-    formData.append("action", action);
+    formData.append("storeFile", selectedStoreFile);
+    formData.append("action", storeAction);
 
     axios
       .post("http://localhost:5000/uploadFiles/stores", formData, config)
+      .then((res) => {
+        return setAlert({
+          flag: true,
+          message: res.data.message,
+          severity: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
+
+  const handleProductUpload = (e) => {
+    e.preventDefault();
+
+    setAlert({ flag: false, message: "", severity: "error" });
+    setOpenAlert(true);
+
+    if (selectedProductFile === null)
+      return setAlert({
+        severity: "error",
+        flag: true,
+        message: "You need to upload a file!",
+      });
+
+    if (productAction === "")
+      return setAlert({
+        severity: "error",
+        flag: true,
+        message: "You need to select an action!",
+      });
+
+    const formData = new FormData();
+    formData.append("productFile", selectedProductFile);
+    formData.append("action", productAction);
+
+    axios
+      .post("http://localhost:5000/uploadFiles/products", formData, config)
+      .then((res) => {
+        return setAlert({
+          flag: true,
+          message: res.data.message,
+          severity: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
+
+  const handlePricesUpload = (e) => {
+    e.preventDefault();
+
+    setAlert({ flag: false, message: "", severity: "error" });
+    setOpenAlert(true);
+
+    if (selectedPricesFile === null)
+      return setAlert({
+        severity: "error",
+        flag: true,
+        message: "You need to upload a file!",
+      });
+
+    if (pricesAction === "")
+      return setAlert({
+        severity: "error",
+        flag: true,
+        message: "You need to select an action!",
+      });
+
+    const formData = new FormData();
+    formData.append("pricesFile", selectedPricesFile);
+    formData.append("action", pricesAction);
+
+    axios
+      .post("http://localhost:5000/uploadFiles/prices", formData, config)
       .then((res) => {
         return setAlert({
           flag: true,
@@ -98,10 +200,22 @@ function Settings() {
       >
         <Paper elevation={3} style={{ padding: "30px", borderRadius: "20px" }}>
           <Stores
-            handleFileChange={handleFileChange}
-            handleUpload={handleUpload}
-            handleActionChange={handleActionChange}
-            action={action}
+            handleStoreFileChange={handleStoreFileChange}
+            handleStoreUpload={handleStoreUpload}
+            handleStoreActionChange={handleStoreActionChange}
+            storeAction={storeAction}
+          />
+          <Products
+            handleProductFileChange={handleProductFileChange}
+            productAction={productAction}
+            handleProductActionChange={handleProductActionChange}
+            handleProductUpload={handleProductUpload}
+          />
+          <Prices
+            handlePricesFileChange={handlePricesFileChange}
+            pricesAction={pricesAction}
+            handlePricesActionChange={handlePricesActionChange}
+            handlePricesUpload={handlePricesUpload}
           />
         </Paper>
       </div>
