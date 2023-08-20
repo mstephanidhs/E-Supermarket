@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import axios from "axios";
-import { useAuth } from "./../context/Auth";
 
 import {
   Alert,
@@ -19,14 +18,12 @@ import OffersTable from "../components/ProfileForms/OffersTable";
 import PerformanceForm from "../components/ProfileForms/AccountPerformance/PerformanceForm";
 
 import { passwordStrength } from "../util/checkPassword";
+import Reactions from "../components/ProfileForms/AccountPerformance/Reactions";
 
 function Profile() {
-  const auth = useAuth();
-
   const [username, setUsername] = useState("");
 
-  const [likes, setLikes] = useState("");
-  const [dislikes, setDislikes] = useState("");
+  const [reactions, setReactions] = useState([]);
   const [currentScore, setCurrentScore] = useState("");
   const [totalScore, setTotalScore] = useState("");
   const [previousTokens, setPreviousTokens] = useState("");
@@ -69,8 +66,7 @@ function Profile() {
         config
       )
       .then((res) => {
-        setLikes(res.data.likes);
-        setDislikes(res.data.dislikes);
+        setReactions(res.data.reactions);
       })
       .catch((error) => {
         if (error.response) console.log(error.response.data.message);
@@ -314,13 +310,12 @@ function Profile() {
         <>
           <OffersTable offers={offers} />
           <PerformanceForm
-            likes={likes}
-            dislikes={dislikes}
             currentScore={currentScore}
             totalScore={totalScore}
             totalTokens={totalTokens}
             previousTokens={previousTokens}
           />
+          <Reactions reactions={reactions} />
         </>
       )}
     </>

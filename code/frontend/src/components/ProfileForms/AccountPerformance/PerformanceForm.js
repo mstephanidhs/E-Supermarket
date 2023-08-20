@@ -4,8 +4,6 @@ import Score from "./Score";
 import Token from "./Token";
 
 function PerformanceForm({
-  likes,
-  dislikes,
   currentScore,
   totalScore,
   totalTokens,
@@ -21,7 +19,6 @@ function PerformanceForm({
         >
           Αccount Performance
         </Typography>
-        <Reactions likes={likes} dislikes={dislikes} />
         <Score currentScore={currentScore} totalScore={totalScore} />
         <Token totalTokens={totalTokens} previousTokens={previousTokens} />
       </Paper>
