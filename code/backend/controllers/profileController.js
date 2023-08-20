@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const { passwordStrength } = require("../utils/checkPassword");
+const { readBitField } = require("../utils/readBitField");
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -151,30 +152,26 @@ exports.getTokens = (req, res) => {
 exports.getReactions = (req, res) => {
   const userId = req.params.userId;
 
-  const getLikesQuery =
-    "SELECT count(*) AS likes FROM reaction WHERE user_id = ? AND is_like = 1";
-  const getDislikesQuery =
-    "SELECT count(*) AS dislikes FROM reaction WHERE user_id = ? AND is_like = 0";
+  const getReactionsQuery =
+    "SELECT o.price, r.is_like, p.product_name, s.store_name, r.reaction_id AS id FROM user u INNER JOIN reaction r ON r.user_id = u.user_id INNER JOIN offer o ON o.offer_id = r.offer_id INNER JOIN product p ON p.product_id = o.product INNER JOIN store s ON s.store_id = o.store WHERE u.user_id = ?;";
 
-  db.query(getLikesQuery, [userId], async (error, result) => {
+  db.query(getReactionsQuery, [userId], async (error, result) => {
     if (error) {
       console.log(error.message);
       return;
     }
 
-    likes = result[0].likes;
+    const reactions = result.map((reaction) => {
+      const like = readBitField(reaction.is_like);
+      return {
+        ...reaction,
+        is_like: like === true ? "Yes" : "No",
+      };
+    });
 
-    db.query(getDislikesQuery, [userId], async (error, result) => {
-      if (error) {
-        console.log(error.message);
-        return;
-      }
-
-      res.status(200).json({
-        message: "Reactions fethed successfully!",
-        likes,
-        dislikes: result[0].dislikes,
-      });
+    res.status(200).json({
+      message: "User reactions fetched successfully!",
+      reactions,
     });
   });
 };
