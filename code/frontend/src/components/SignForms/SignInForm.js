@@ -23,17 +23,17 @@ function SignInForm(props) {
     <div
       style={{
         textAlign: "center",
-        width: "800px",
+        width: "50rem",
         margin: "0 auto",
-        marginTop: "50px",
+        marginTop: "3.5rem",
       }}
     >
-      <Paper elevation={3} style={{ padding: "30px" }}>
+      <Paper elevation={3} style={{ padding: "2.6rem" }}>
         <Typography
           variant="h4"
           color="primary"
           gutterBottom
-          style={{ marginTop: "32px", textAlign: "center" }}
+          style={{ marginTop: "1.4rem", textAlign: "center" }}
         >
           Sign In
         </Typography>
@@ -44,7 +44,7 @@ function SignInForm(props) {
             label="Email"
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1.2rem" }}
             onChange={(e) => props.setEmail(e.target.value)}
           ></TextField>
           <TextField
@@ -54,7 +54,7 @@ function SignInForm(props) {
             type={showPassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "32px" }}
+            style={{ marginBottom: "2.2rem" }}
             onChange={(e) => props.setPassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -79,7 +79,7 @@ function SignInForm(props) {
             fullWidth
             variant="contained"
             onClick={() => props.validateForm()}
-            sx={{ width: "100px" }}
+            sx={{ width: "7rem" }}
           >
             Sign In
           </Button>
@@ -88,10 +88,10 @@ function SignInForm(props) {
           container
           alignItems="center"
           justifyContent="space-between"
-          style={{ marginTop: "12px" }}
+          style={{ marginTop: "1.2rem" }}
         >
           <Grid item xs={3}>
-            <Typography sx={{ marginTop: "24px", fontSize: "14px" }}>
+            <Typography sx={{ marginTop: "1.6rem", fontSize: "14px" }}>
               <Link href="/register">Create an Account now!</Link>
             </Typography>
           </Grid>

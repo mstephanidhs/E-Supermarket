@@ -191,9 +191,19 @@ function Main() {
         <>
           <Grid
             container
-            sx={{ marginTop: "4.8rem", marginLeft: "6.4rem", width: "100vh" }}
+            sx={{
+              marginTop: "4.8rem",
+              marginLeft: "6.4rem",
+              width: "100vh",
+              "@media (max-width: 600px)": {
+                flexDirection: "column", // Change layout to column on small screens
+                alignItems: "center", // Center items horizontally
+                marginTop: "3rem",
+                marginLeft: 0,
+              },
+            }}
           >
-            <Grid item>
+            <Grid item sx={{ marginBottom: "0.8rem" }}>
               <Autocomplete
                 value={valueStoreName}
                 onChange={findStoresByName}
@@ -206,7 +216,7 @@ function Main() {
                 )}
               />
             </Grid>
-            <Grid item>
+            <Grid item sx={{ marginBottom: "0.8rem" }}>
               <Autocomplete
                 value={valueCategoriesNames}
                 onChange={findStoresByCategory}

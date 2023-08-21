@@ -11,7 +11,7 @@ function ChangeUsernameForm(props) {
             label="New Username"
             fullWidth
             required
-            style={{ marginBottom: "32px" }}
+            style={{ marginBottom: "2rem" }}
             onChange={(e) => props.setUsername(e.target.value)}
           ></TextField>
         </Grid>
@@ -20,7 +20,7 @@ function ChangeUsernameForm(props) {
             type="button"
             variant="contained"
             onClick={() => props.validateUsername()}
-            sx={{ width: "200px" }}
+            sx={{ width: "12rem" }}
           >
             Change Username
           </Button>

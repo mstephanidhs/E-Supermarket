@@ -40,7 +40,7 @@ function OffersTable({ offers }) {
         margin: "4.8rem auto",
       }}
     >
-      <Paper elevation={2} style={{ padding: "30px", borderRadius: "20px" }}>
+      <Paper elevation={2} style={{ padding: "2.4rem", borderRadius: "20px" }}>
         <Chip
           label="Your Offers"
           color="primary"
@@ -48,11 +48,11 @@ function OffersTable({ offers }) {
           icon={<LocalOfferIcon />}
           size="medium"
           style={{
-            marginTop: "10px",
-            marginBottom: "40px",
+            marginTop: "0.6rem",
+            marginBottom: "2rem",
             fontWeight: 600,
             letterSpacing: "0.75px",
-            padding: "0 8px",
+            padding: "0 0.6rem",
           }}
         />
         <div style={{ height: 250, padding: "0 3.6rem" }}>

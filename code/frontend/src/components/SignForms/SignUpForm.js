@@ -27,17 +27,18 @@ function SignUpForm(props) {
     <div
       style={{
         textAlign: "center",
-        width: "800px",
+        width: "50rem",
         margin: "0 auto",
-        marginTop: "50px",
+        marginTop: "3.5rem",
+        marginBottom: "2.4rem",
       }}
     >
-      <Paper elevation={3} style={{ padding: "30px" }}>
+      <Paper elevation={3} style={{ padding: "2.6rem" }}>
         <Typography
           variant="h4"
           color="primary"
           gutterBottom
-          style={{ marginTop: "32px", textAlign: "center" }}
+          style={{ marginTop: "1.4rem", textAlign: "center" }}
         >
           Sign Up
         </Typography>
@@ -48,7 +49,7 @@ function SignUpForm(props) {
             label="Username"
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1.2rem" }}
             onChange={(e) => props.setUsername(e.target.value)}
           ></TextField>
           <TextField
@@ -57,7 +58,7 @@ function SignUpForm(props) {
             label="Email"
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1.2rem" }}
             onChange={(e) => props.setEmail(e.target.value)}
           ></TextField>
           <TextField
@@ -67,7 +68,7 @@ function SignUpForm(props) {
             type={showPassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1.2rem" }}
             onChange={(e) => props.setPassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -94,7 +95,7 @@ function SignUpForm(props) {
             type={showRePassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "32px" }}
+            style={{ marginBottom: "2rem" }}
             onChange={(e) => props.setRePassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -119,13 +120,13 @@ function SignUpForm(props) {
             fullWidth
             variant="contained"
             onClick={() => props.validateForm()}
-            sx={{ width: "100px" }}
+            sx={{ width: "7rem" }}
           >
-            Sign In
+            Sign Up
           </Button>
         </form>
         <Typography
-          sx={{ textAlign: "left", marginTop: "24px", fontSize: "14px" }}
+          sx={{ textAlign: "left", marginTop: "1.8rem", fontSize: "14px" }}
         >
           <Link href="/login">Have already an account?</Link>
         </Typography>

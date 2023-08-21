@@ -26,10 +26,10 @@ function Products({
         size="medium"
         style={{
           marginTop: "4rem",
-          marginBottom: "40px",
+          marginBottom: "3rem",
           fontWeight: 600,
           letterSpacing: "0.75px",
-          padding: "0 8px",
+          padding: "0 0.6rem",
         }}
       />
       <div>
@@ -44,7 +44,7 @@ function Products({
             </Grid>
             <Grid item xs={6}>
               <Box sx={{ minWidth: 120 }}>
-                <FormControl style={{ width: "120px" }}>
+                <FormControl style={{ width: "8rem" }}>
                   <InputLabel>Action</InputLabel>
                   <Select
                     value={productAction}

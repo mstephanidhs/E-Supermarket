@@ -40,8 +40,8 @@ function StoreOffersTable({ offers, inDistance, deleteOffer }) {
 
       <TableContainer
         component={Paper}
-        style={{ margin: "auto", width: "80%", marginTop: "35px" }}
-        sx={{ maxHeight: "300px" }}
+        style={{ margin: "auto", width: "80%", marginTop: "3.1rem" }}
+        sx={{ maxHeight: "30rem" }}
       >
         <Table arial-aria-label="Offers Table" stickyHeader>
           <TableHead>

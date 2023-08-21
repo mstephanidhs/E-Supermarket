@@ -26,17 +26,17 @@ function ChangePasswordForm(props) {
     <div
       style={{
         textAlign: "center",
-        width: "800px",
+        width: "50rem",
         margin: "0 auto",
-        marginTop: "50px",
+        marginTop: "4rem",
       }}
     >
-      <Paper elevation={3} style={{ padding: "30px" }}>
+      <Paper elevation={3} style={{ padding: "2rem" }}>
         <Typography
           variant="h4"
           color="primary"
           gutterBottom
-          style={{ marginTop: "32px", textAlign: "center" }}
+          style={{ marginTop: "2rem", textAlign: "center" }}
         >
           Password Restoration
         </Typography>
@@ -47,7 +47,7 @@ function ChangePasswordForm(props) {
             label="Email"
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1.2rem" }}
             onChange={(e) => props.setEmail(e.target.value)}
           ></TextField>
           <TextField
@@ -57,7 +57,7 @@ function ChangePasswordForm(props) {
             type={showNewPassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1.2rem" }}
             onChange={(e) => props.setNewPassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -84,7 +84,7 @@ function ChangePasswordForm(props) {
             type={showRePassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "32px" }}
+            style={{ marginBottom: "2.4rem" }}
             onChange={(e) => props.setRePassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -109,7 +109,7 @@ function ChangePasswordForm(props) {
             fullWidth
             variant="contained"
             onClick={() => props.validateForm()}
-            sx={{ width: "200px" }}
+            sx={{ width: "14rem" }}
           >
             Change Password
           </Button>

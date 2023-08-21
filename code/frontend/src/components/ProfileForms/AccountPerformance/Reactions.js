@@ -27,7 +27,7 @@ function Reactions({ reactions }) {
   ];
   return (
     <div style={{ textAlign: "center", width: "140vh", margin: "4.8rem auto" }}>
-      <Paper elevation={2} style={{ padding: "30px", borderRadius: "20px" }}>
+      <Paper elevation={2} style={{ padding: "2.2rem", borderRadius: "20px" }}>
         <Chip
           label="Your Reactions"
           color="primary"
@@ -35,11 +35,11 @@ function Reactions({ reactions }) {
           icon={<AddReactionIcon />}
           size="medium"
           style={{
-            marginTop: "10px",
-            marginBottom: "40px",
+            marginTop: "0.6rem",
+            marginBottom: "2.8rem",
             fontWeight: 600,
             letterSpacing: "0.75px",
-            padding: "0 8px",
+            padding: "0 0.6rem",
           }}
         />
         <div style={{ height: 250, padding: "0 3.6rem" }}>

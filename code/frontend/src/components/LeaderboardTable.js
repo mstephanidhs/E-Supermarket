@@ -34,7 +34,7 @@ function LeaderBoardTable({ leaderboardUsers }) {
         margin: "4.8rem auto",
       }}
     >
-      <Paper elevation={3} style={{ padding: "30px", borderRadius: "20px" }}>
+      <Paper elevation={3} style={{ padding: "3rem", borderRadius: "20px" }}>
         <Chip
           label="Leaderboard"
           color="primary"
@@ -42,11 +42,11 @@ function LeaderBoardTable({ leaderboardUsers }) {
           icon={<EmojiEventsIcon />}
           size="medium"
           style={{
-            marginTop: "10px",
-            marginBottom: "40px",
+            marginTop: "0.7rem",
+            marginBottom: "3.5rem",
             fontWeight: 600,
             letterSpacing: "0.75px",
-            padding: "0 8px",
+            padding: "0 0.6rem",
           }}
         />
         <div style={{ height: 350, padding: "0 3.6rem" }}>

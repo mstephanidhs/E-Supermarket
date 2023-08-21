@@ -119,7 +119,7 @@ function Navbar() {
                 color: "white",
                 fontWeight: "500",
                 letterSpacing: "1.1px",
-                marginRight: "4px",
+                marginRight: "0.4rem",
               }}
               onClick={handleClickBook}
               startIcon={<MenuBookIcon />}

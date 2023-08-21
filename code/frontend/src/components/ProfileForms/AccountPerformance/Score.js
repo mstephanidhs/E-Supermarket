@@ -13,11 +13,11 @@ function Score({ currentScore, totalScore }) {
         icon={<ScoreboardIcon />}
         size="medium"
         style={{
-          marginTop: "30px",
-          marginBottom: "40px",
+          marginTop: "1.6rem",
+          marginBottom: "3rem",
           fontWeight: 600,
           letterSpacing: "0.75px",
-          padding: "0 8px",
+          padding: "0 0.6rem",
         }}
       />
       <Grid container spacing={2}>
@@ -26,7 +26,7 @@ function Score({ currentScore, totalScore }) {
             variant="outlined"
             disabled
             label="Current Month's Score"
-            style={{ marginBottom: "30px", width: "300px" }}
+            style={{ marginBottom: "2rem", width: "18rem" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -42,7 +42,7 @@ function Score({ currentScore, totalScore }) {
             variant="outlined"
             disabled
             label="Total Score"
-            style={{ marginBottom: "30px", width: "300px" }}
+            style={{ marginBottom: "2rem", width: "18rem" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

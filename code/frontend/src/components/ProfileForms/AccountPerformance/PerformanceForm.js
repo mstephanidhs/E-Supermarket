@@ -11,7 +11,7 @@ function PerformanceForm({
 }) {
   return (
     <div style={{ textAlign: "center", width: "140vh", margin: "4.8rem auto" }}>
-      <Paper elevation={2} style={{ padding: "30px", borderRadius: "20px" }}>
+      <Paper elevation={2} style={{ padding: "2.2rem", borderRadius: "20px" }}>
         <Typography
           variant="h4"
           color="primary"

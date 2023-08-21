@@ -8,11 +8,11 @@ function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
         textAlign: "center",
         width: "500px",
         margin: "0 auto",
-        marginTop: "50px",
-        marginBottom: "80px",
+        marginTop: "4.4rem",
+        marginBottom: "7.2rem",
       }}
     >
-      <Paper elevation={3} style={{ padding: "30px", borderRadius: "10px" }}>
+      <Paper elevation={3} style={{ padding: "2.8rem", borderRadius: "10px" }}>
         <Chip
           label="Add Offer"
           color="primary"
@@ -20,11 +20,11 @@ function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
           icon={<LocalOfferIcon />}
           size="medium"
           style={{
-            marginTop: "10px",
-            marginBottom: "40px",
+            marginTop: "0.6rem",
+            marginBottom: "3.4rem",
             fontWeight: 600,
             letterSpacing: "0.75px",
-            padding: "0 8px",
+            padding: "0 0.6rem",
           }}
         />
         <br />
@@ -32,7 +32,7 @@ function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
           variant="outlined"
           disabled
           label="Product Name"
-          style={{ marginBottom: "30px", width: "400px" }}
+          style={{ marginBottom: "2.2rem", width: "20rem" }}
           value={selectedProduct.label}
         />
 
@@ -40,7 +40,7 @@ function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
           color="primary"
           variant="outlined"
           label="Price"
-          style={{ marginBottom: "30px" }}
+          style={{ marginBottom: "2rem" }}
           onChange={(e) => setPrice(e.target.value)}
         />
         <br />

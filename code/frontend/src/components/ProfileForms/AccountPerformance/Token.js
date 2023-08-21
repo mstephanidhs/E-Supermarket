@@ -13,11 +13,11 @@ function Token({ totalTokens, previousTokens }) {
         icon={<TokenIcon />}
         size="medium"
         style={{
-          marginTop: "30px",
-          marginBottom: "40px",
+          marginTop: "1.6rem",
+          marginBottom: "3rem",
           fontWeight: 600,
           letterSpacing: "0.75px",
-          padding: "0 8px",
+          padding: "0 0.6rem",
         }}
       />
       <Grid container spacing={2}>
@@ -26,7 +26,7 @@ function Token({ totalTokens, previousTokens }) {
             variant="outlined"
             disabled
             label="Previous Month's Tokens"
-            style={{ marginBottom: "30px", width: "300px" }}
+            style={{ marginBottom: "2rem", width: "18rem" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -42,7 +42,7 @@ function Token({ totalTokens, previousTokens }) {
             variant="outlined"
             disabled
             label="Total Tokens"
-            style={{ marginBottom: "30px", width: "300px" }}
+            style={{ marginBottom: "2rem", width: "18rem" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

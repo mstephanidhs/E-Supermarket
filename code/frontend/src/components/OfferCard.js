@@ -30,7 +30,7 @@ function OfferCard({
       <div
         style={{
           textAlign: "center",
-          width: "400px",
+          width: "40rem",
           margin: "3rem auto",
         }}
       >

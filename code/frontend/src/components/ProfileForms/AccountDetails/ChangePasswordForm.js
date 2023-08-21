@@ -32,7 +32,7 @@ function ChangePasswordForm(props) {
             type={showOldPassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1rem" }}
             onChange={(e) => props.setOldPassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -61,7 +61,7 @@ function ChangePasswordForm(props) {
             type={showNewPassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "1rem" }}
             onChange={(e) => props.setNewPassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -90,7 +90,7 @@ function ChangePasswordForm(props) {
             type={showRePassword ? "text" : "password"}
             fullWidth
             required
-            style={{ marginBottom: "32px" }}
+            style={{ marginBottom: "2rem" }}
             onChange={(e) => props.setRePassword(e.target.value)}
             InputProps={{
               startAdornment: (
@@ -117,7 +117,7 @@ function ChangePasswordForm(props) {
             fullWidth
             variant="contained"
             onClick={() => props.validatePassword()}
-            sx={{ width: "200px" }}
+            sx={{ width: "12rem" }}
           >
             Change Password
           </Button>
