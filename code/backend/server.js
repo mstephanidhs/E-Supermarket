@@ -61,6 +61,7 @@ app.use("/offer", require("./routes/offer"));
 app.use("/reaction", require("./routes/reaction"));
 app.use("/leaderboard", require("./routes/leaderboard"));
 app.use("/uploadFiles", require("./routes/files"));
+app.use("/statistics", require("./routes/statistics"));
 
 //======= SCHEDULERS =======
 offerScheduler();

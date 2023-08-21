@@ -21,6 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import SettingsIcon from "@mui/icons-material/Settings";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 
 function Navbar() {
   const [anchor, setAnchor] = useState(null);
@@ -64,6 +65,10 @@ function Navbar() {
   const handleSettings = () => {
     setAnchor(null);
     navigate("/settings");
+  };
+  const handleStatistics = () => {
+    setAnchor(null);
+    navigate("/statistics");
   };
 
   const message = (
@@ -163,6 +168,14 @@ function Navbar() {
                     <LeaderboardIcon color="primary" />
                   </ListItemIcon>
                   Leaderboard
+                </MenuItem>
+              ) : null}
+              {sessionStorage.getItem("role") === "admin" ? (
+                <MenuItem onClick={handleStatistics}>
+                  <ListItemIcon>
+                    <ShowChartIcon color="primary" />
+                  </ListItemIcon>
+                  Statistics
                 </MenuItem>
               ) : null}
               {sessionStorage.getItem("role") === "admin" ? (
