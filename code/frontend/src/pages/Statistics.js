@@ -7,11 +7,13 @@ import { Alert, LinearProgress, Snackbar } from "@mui/material";
 import axios from "axios";
 import FirstGraph from "../components/statistics/FirstGraph";
 import FiltersSecondGraph from "../components/statistics/FiltersSecondGraph";
+import SecondGraph from "../components/statistics/SecondGraph";
 
 function Statistics() {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [offerData, setOfferData] = useState([]);
+  const [avgData, setAvgData] = useState([]);
 
   const [valueCategory, setValueCategory] = useState({ label: "", id: "" });
   const [valueSubCategory, setValueSubCategory] = useState({
@@ -141,11 +143,37 @@ function Statistics() {
       });
 
     axios
-      .get("http://localhost:5000/statistics/medianOffers/1&2", config)
-      .then((res) => {})
+      .get(
+        `http://localhost:5000/statistics/medianOffers/${valueCategory.id}&${
+          valueSubCategory.label === "" ? "-1" : valueSubCategory.id
+        }`,
+        config
+      )
+      .then((res) => {
+        if (res.status === 204) {
+          setAvgData([]);
+          return setError({
+            flag: true,
+            message: "No offers were found",
+          });
+        }
+        setAvgData(res.data.finalOffers);
+      })
       .catch((error) => {
         if (error.response) console.log(error.response.data.message);
       });
+  };
+
+  const avgChartData = {
+    labels: avgData.map((data) => data.day_of_month),
+    datasets: [
+      {
+        label: "Average Discount based on Category/Subcategory",
+        data: avgData.map((data) => data.AveragePrice),
+        borderColor: "black",
+        borderWidth: 2,
+      },
+    ],
   };
 
   useEffect(() => {
@@ -169,15 +197,18 @@ function Statistics() {
       {loading === true ? (
         <LinearProgress />
       ) : (
-        <FiltersSecondGraph
-          valueCategory={valueCategory}
-          valueSubCategory={valueSubCategory}
-          categories={categories}
-          subCategories={subCategories}
-          handleCategoryChange={handleCategoryChange}
-          handleSubCategoryChange={handleSubCategoryChange}
-          handleSubmit={handleSubmit}
-        />
+        <>
+          <FiltersSecondGraph
+            valueCategory={valueCategory}
+            valueSubCategory={valueSubCategory}
+            categories={categories}
+            subCategories={subCategories}
+            handleCategoryChange={handleCategoryChange}
+            handleSubCategoryChange={handleSubCategoryChange}
+            handleSubmit={handleSubmit}
+          />
+          <SecondGraph avgChartData={avgChartData} />
+        </>
       )}
     </>
   );
