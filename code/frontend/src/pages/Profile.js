@@ -266,7 +266,7 @@ function Profile() {
           marginTop: "10vh",
         }}
       >
-        <Paper elevation={3} style={{ padding: "30px", borderRadius: "20px" }}>
+        <Paper elevation={3} style={{ padding: "2rem", borderRadius: "20px" }}>
           <Chip
             label="Account Details"
             color="primary"
@@ -274,26 +274,21 @@ function Profile() {
             icon={<AccountBoxIcon />}
             size="medium"
             style={{
-              marginTop: "10px",
-              marginBottom: "40px",
+              marginTop: "0.6rem",
+              marginBottom: "3rem",
               fontWeight: 600,
               letterSpacing: "0.75px",
-              padding: "0 8px",
+              padding: "0 0.6rem",
             }}
           />
-          <Grid
-            container
-            spacing={12}
-            justifyContent="center"
-            alignItems="flex-start"
-          >
-            <Grid item>
+          <Grid container spacing={12}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <ChangeUsernameForm
                 setUsername={setUsername}
                 validateUsername={validateUsername}
               />
             </Grid>
-            <Grid item>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <ChangePasswordForm
                 setOldPassword={setOldPassword}
                 setNewPassword={setNewPassword}

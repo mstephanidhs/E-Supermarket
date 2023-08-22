@@ -14,7 +14,7 @@ const StyledSnackbarContent = styled("div")({
   backgroundColor: "#3f51b5", // Change this to your desired color
   color: "#fff",
   borderRadius: "4px",
-  padding: "10px 20px",
+  padding: "0.6rem 1.6rem",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",

@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from "@mui/material";
 
 function ChangeUsernameForm(props) {
   return (
-    <Grid container justifyContent="left" alignItems="center">
+    <Grid container>
       <form>
         <Grid item>
           <TextField

@@ -106,7 +106,7 @@ function Filters({
         alignItems="center"
         sx={{ marginTop: "3.2rem", marginLeft: "6.4rem", width: "130vh" }}
       >
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3} md={3} lg={3} xl={3}>
           <Autocomplete
             value={valueCategory}
             sx={{ width: 200 }}
@@ -118,7 +118,7 @@ function Filters({
             renderInput={(params) => <TextField {...params} label="Category" />}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
           <Autocomplete
             onChange={handleSubCategoryChange}
             value={valueSubCategory}
@@ -132,7 +132,7 @@ function Filters({
             )}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
           <Autocomplete
             value={valueProduct}
             onChange={handleProductChange}
@@ -144,11 +144,11 @@ function Filters({
             renderInput={(params) => <TextField {...params} label="Product" />}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3} md={3} lg={3} xl={3}>
           <Button
             variant="contained"
             onClick={handleSubmit}
-            sx={{ width: "100px", marginLeft: "6rem" }}
+            sx={{ width: "6rem", marginLeft: "6rem" }}
             disabled={isDisabled}
           >
             Search

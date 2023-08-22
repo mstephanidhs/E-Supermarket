@@ -198,7 +198,7 @@ function Settings() {
           marginTop: "10vh",
         }}
       >
-        <Paper elevation={3} style={{ padding: "30px", borderRadius: "20px" }}>
+        <Paper elevation={3} style={{ padding: "2rem", borderRadius: "20px" }}>
           <Stores
             handleStoreFileChange={handleStoreFileChange}
             handleStoreUpload={handleStoreUpload}

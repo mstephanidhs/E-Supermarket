@@ -6,7 +6,7 @@ function OfferForm({ selectedProduct, setPrice, handleSubmit }) {
     <div
       style={{
         textAlign: "center",
-        width: "500px",
+        width: "30rem",
         margin: "0 auto",
         marginTop: "4.4rem",
         marginBottom: "7.2rem",

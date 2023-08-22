@@ -195,15 +195,18 @@ function Main() {
               marginTop: "4.8rem",
               marginLeft: "6.4rem",
               width: "100vh",
-              "@media (max-width: 600px)": {
-                flexDirection: "column", // Change layout to column on small screens
-                alignItems: "center", // Center items horizontally
-                marginTop: "3rem",
-                marginLeft: 0,
-              },
             }}
+            spacing={1}
           >
-            <Grid item sx={{ marginBottom: "0.8rem" }}>
+            <Grid
+              item
+              sx={{ marginBottom: "0.8rem" }}
+              xs={12}
+              sm={4}
+              md={4}
+              lg={4}
+              xl={4}
+            >
               <Autocomplete
                 value={valueStoreName}
                 onChange={findStoresByName}
@@ -216,14 +219,22 @@ function Main() {
                 )}
               />
             </Grid>
-            <Grid item sx={{ marginBottom: "0.8rem" }}>
+            <Grid
+              item
+              sx={{ marginBottom: "0.8rem" }}
+              xs={12}
+              sm={12}
+              md={4}
+              lg={4}
+              xl={4}
+            >
               <Autocomplete
                 value={valueCategoriesNames}
                 onChange={findStoresByCategory}
                 disablePortal
                 id="combo-box-demo"
                 options={categoriesNames}
-                sx={{ width: 200, marginLeft: "1.6rem" }}
+                sx={{ width: 200 }}
                 isOptionEqualToValue={(option, value) =>
                   option.value === value.value
                 }
@@ -232,12 +243,11 @@ function Main() {
                 )}
               />
             </Grid>
-            <Grid item>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Box
                 sx={{
                   "& button": { m: 1 },
                   marginTop: "0.6rem",
-                  marginLeft: "0.6rem",
                 }}
               >
                 <Button size="small" onClick={getOfferStores}>

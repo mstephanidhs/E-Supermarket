@@ -22,7 +22,7 @@ function ChangePasswordForm(props) {
   };
 
   return (
-    <Grid container justifyContent="center" alignItems="right">
+    <Grid container>
       <form>
         <Grid item>
           <TextField
