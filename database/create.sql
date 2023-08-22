@@ -119,6 +119,8 @@ create table reaction (
 CREATE TABLE productsinstore (
 	id INT NOT NULL auto_increment,
     product_name VARCHAR(250) NOT NULL,
+    category VARCHAR(250) NOT NULL,
+    subcategory VARCHAR(250) NOT NULL,
     product_id INT NOT NULL,
     price FLOAT NOT NULL,
     date_product DATE NOT NULL,

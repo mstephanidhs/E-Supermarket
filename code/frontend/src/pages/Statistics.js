@@ -1,19 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { monthToNumber } from "../util/monthToNumber";
 import FilterFirstGraph from "../components/statistics/FilterFirstGraph";
 
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, LinearProgress, Snackbar } from "@mui/material";
 import axios from "axios";
 import FirstGraph from "../components/statistics/FirstGraph";
+import FiltersSecondGraph from "../components/statistics/FiltersSecondGraph";
 
 function Statistics() {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [offerData, setOfferData] = useState([]);
 
+  const [valueCategory, setValueCategory] = useState({ label: "", id: "" });
+  const [valueSubCategory, setValueSubCategory] = useState({
+    label: "",
+    id: "",
+  });
+
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+
   const [error, setError] = useState({ flag: false, message: "" });
   const [openAlert, setOpenAlert] = useState(true);
+
+  const [loading, setLoading] = useState(true);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
@@ -70,6 +82,76 @@ function Statistics() {
     ],
   };
 
+  const handleCategoryChange = (event, input) => {
+    if (input === null) {
+      setValueCategory({ id: "", label: "" });
+      setValueSubCategory({ id: "", label: "" });
+      return;
+    }
+    setValueCategory({ ...input });
+    getSubCategories(input.id);
+  };
+  const handleSubCategoryChange = (event, input) => {
+    if (input === null) {
+      setValueSubCategory({ id: "", label: "" });
+      return;
+    }
+    setValueSubCategory({ ...input });
+  };
+
+  const getAllCategories = () => {
+    setLoading(true);
+
+    axios
+      .get("http://localhost:5000/categories/getAllCategories", config)
+      .then((res) => {
+        setCategories(res.data.categories);
+        setLoading(false);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+
+        setLoading(false);
+      });
+  };
+
+  const getSubCategories = (categoryId) => {
+    axios
+      .get(
+        `http://localhost:5000/categories/getSubCategories/${categoryId}`,
+        config
+      )
+      .then((res) => {
+        setSubCategories(res.data.subCategories);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+        setLoading(false);
+      });
+  };
+
+  const handleSubmit = () => {
+    setError({ flag: false, message: "" });
+    setOpenAlert(true);
+
+    if (valueCategory.label === "")
+      return setError({
+        flag: true,
+        message: "You must at least pick a category",
+      });
+
+    axios
+      .get("http://localhost:5000/statistics/medianOffers/1&2", config)
+      .then((res) => {})
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   return (
     <>
       {error.flag ? (
@@ -84,6 +166,19 @@ function Statistics() {
         handleOffersGraph={handleOffersGraph}
       />
       <FirstGraph offersChartData={offersChartData} />
+      {loading === true ? (
+        <LinearProgress />
+      ) : (
+        <FiltersSecondGraph
+          valueCategory={valueCategory}
+          valueSubCategory={valueSubCategory}
+          categories={categories}
+          subCategories={subCategories}
+          handleCategoryChange={handleCategoryChange}
+          handleSubCategoryChange={handleSubCategoryChange}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 }

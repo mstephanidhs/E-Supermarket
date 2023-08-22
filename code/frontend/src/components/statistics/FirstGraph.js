@@ -3,9 +3,7 @@ import { Chart as ChartJS } from "chart.js/auto";
 
 function FirstGraph({ offersChartData }) {
   return (
-    <div
-      style={{ width: 1000, height: 1000, margin: "auto", marginTop: "3rem" }}
-    >
+    <div style={{ width: 900, height: 500, margin: "auto", marginTop: "4rem" }}>
       <Line data={offersChartData} />
     </div>
   );
