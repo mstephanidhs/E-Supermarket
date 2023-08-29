@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import useGeolocation from "../hooks/useGeoLocation";
+import { useEffect, useState } from 'react';
+import useGeolocation from '../hooks/useGeoLocation';
 
-import axios from "axios";
+import axios from 'axios';
 
 import {
   Alert,
@@ -12,9 +12,9 @@ import {
   Snackbar,
   TextField,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
-import Map from "../components/Map/Map";
+import Map from '../components/Map/Map';
 
 function Main() {
   const location = useGeolocation();
@@ -24,14 +24,14 @@ function Main() {
   const [stores, setStores] = useState(null);
   const [storesNames, setStoresNames] = useState([]);
   const [categoriesNames, setCategoriesNames] = useState([]);
-  const [valueStoreName, setValueStoreName] = useState("");
-  const [valueCategoriesNames, setValueCategoriesNames] = useState("");
+  const [valueStoreName, setValueStoreName] = useState('');
+  const [valueCategoriesNames, setValueCategoriesNames] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const [error, setError] = useState({ flag: false, message: "" });
+  const [error, setError] = useState({ flag: false, message: '' });
   const [openAlert, setOpenAlert] = useState(true);
 
-  const token = "Bearer " + sessionStorage.getItem("token");
+  const token = 'Bearer ' + sessionStorage.getItem('token');
   const config = {
     headers: {
       authorization: token,
@@ -39,17 +39,17 @@ function Main() {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
 
     setOpenAlert(false);
   };
 
   const getAllStores = () => {
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
 
     axios
-      .get("http://localhost:5000/store/fetchAllStores", config)
+      .get('http://localhost:5000/store/fetchAllStores', config)
       .then((res) => {
         setStoresNames(res.data.allStores);
       })
@@ -65,11 +65,11 @@ function Main() {
   };
 
   const getAllCategories = () => {
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
 
     axios
-      .get("http://localhost:5000/categories/getAllCategories", config)
+      .get('http://localhost:5000/categories/getAllCategories', config)
       .then((res) => {
         setCategoriesNames(res.data.categories);
       })
@@ -87,12 +87,12 @@ function Main() {
   const getOfferStores = () => {
     setValueStoreName(null);
     setValueCategoriesNames(null);
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
     setLoading(true);
 
     axios
-      .get("http://localhost:5000/store/getOfferStores", config)
+      .get('http://localhost:5000/store/getOfferStores', config)
       .then((res) => {
         setStores(res.data.offerStores);
         setLoading(false);
@@ -124,7 +124,7 @@ function Main() {
     }
 
     setValueStoreName(newValue);
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
     setLoading(true);
 
@@ -154,8 +154,9 @@ function Main() {
       return;
     }
 
+    console.log(newValue);
     setValueCategoriesNames(newValue);
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
     setLoading(true);
 
@@ -180,7 +181,7 @@ function Main() {
     <>
       {error.flag ? (
         <Snackbar open={openAlert} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
+          <Alert onClose={handleClose} severity='error'>
             {error.message}
           </Alert>
         </Snackbar>
@@ -192,15 +193,15 @@ function Main() {
           <Grid
             container
             sx={{
-              marginTop: "4.8rem",
-              marginLeft: "6.4rem",
-              width: "100vh",
+              marginTop: '4.8rem',
+              marginLeft: '6.4rem',
+              width: '100vh',
             }}
             spacing={1}
           >
             <Grid
               item
-              sx={{ marginBottom: "0.8rem" }}
+              sx={{ marginBottom: '0.8rem' }}
               xs={12}
               sm={4}
               md={4}
@@ -211,17 +212,17 @@ function Main() {
                 value={valueStoreName}
                 onChange={findStoresByName}
                 disablePortal
-                id="combo-box-demo"
+                id='combo-box-demo'
                 options={storesNames}
                 sx={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Find Store" />
+                  <TextField {...params} label='Find Store' />
                 )}
               />
             </Grid>
             <Grid
               item
-              sx={{ marginBottom: "0.8rem" }}
+              sx={{ marginBottom: '0.8rem' }}
               xs={12}
               sm={12}
               md={4}
@@ -232,25 +233,25 @@ function Main() {
                 value={valueCategoriesNames}
                 onChange={findStoresByCategory}
                 disablePortal
-                id="combo-box-demo"
+                id='combo-box-demo'
                 options={categoriesNames}
                 sx={{ width: 200 }}
                 isOptionEqualToValue={(option, value) =>
                   option.value === value.value
                 }
                 renderInput={(params) => (
-                  <TextField {...params} label="Select Category" />
+                  <TextField {...params} label='Select Category' />
                 )}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Box
                 sx={{
-                  "& button": { m: 1 },
-                  marginTop: "0.6rem",
+                  '& button': { m: 1 },
+                  marginTop: '0.6rem',
                 }}
               >
-                <Button size="small" onClick={getOfferStores}>
+                <Button size='small' onClick={getOfferStores}>
                   Clear filters
                 </Button>
               </Box>
