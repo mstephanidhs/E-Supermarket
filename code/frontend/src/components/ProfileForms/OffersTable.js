@@ -6,29 +6,53 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 function OffersTable({ offers }) {
   const columns = [
     {
-      field: 'id',
-      headerName: 'Offer ID',
-      width: 80,
-    },
-    {
       field: 'product_name',
       headerName: 'Product Name',
       width: 270,
+      headerAlign: 'center',
+      align: 'center',
     },
     {
       field: 'price',
       headerName: 'Product Price',
       width: 130,
+      headerAlign: 'center',
+      align: 'center',
     },
     {
       field: 'store_name',
       headerName: 'Store Name',
-      width: 130,
+      width: 150,
+      headerAlign: 'center',
+      align: 'center',
     },
     {
       field: 'date_offer',
       headerName: 'Date Published',
       width: 180,
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'stock',
+      headerName: 'In Stock',
+      width: 100,
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'likes',
+      headerName: 'Likes',
+      width: 100,
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'dislikes',
+      headerName: 'Dislikes',
+      width: 100,
+      headerAlign: 'center',
+      align: 'center',
     },
   ];
 

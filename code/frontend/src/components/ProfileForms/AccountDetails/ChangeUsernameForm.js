@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from '@mui/material';
 
 function ChangeUsernameForm(props) {
   return (
@@ -6,21 +6,20 @@ function ChangeUsernameForm(props) {
       <form>
         <Grid item>
           <TextField
-            variant="outlined"
-            margin="normal"
-            label="New Username"
-            fullWidth
+            variant='outlined'
+            margin='normal'
+            label='New Username'
             required
-            style={{ marginBottom: "2rem" }}
+            style={{ marginBottom: '2rem' }}
             onChange={(e) => props.setUsername(e.target.value)}
           ></TextField>
         </Grid>
         <Grid item>
           <Button
-            type="button"
-            variant="contained"
+            type='button'
+            variant='contained'
             onClick={() => props.validateUsername()}
-            sx={{ width: "12rem" }}
+            sx={{ width: '12rem' }}
           >
             Change Username
           </Button>

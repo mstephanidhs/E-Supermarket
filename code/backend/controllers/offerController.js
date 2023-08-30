@@ -13,8 +13,18 @@ const db = mysql.createConnection({
 exports.fetchOffersByUser = (req, res) => {
   const userId = req.params.userId;
 
-  const offersByUserQuery =
-    'SELECT o.offer_id as id, p.product_name, o.price, s.store_name, o.date_offer FROM offer o INNER JOIN product p ON o.product = p.product_id INNER JOIN store s ON s.store_id = o.store WHERE o.user_id = ?;';
+  const offersByUserQuery = `
+    SELECT
+	    p.product_name, o.price, o.date_offer, o.stock, s.store_name, o.offer_id as id,  
+      SUM(r.is_like = 1) AS likes,
+      SUM(r.is_like = 0) AS dislikes
+    FROM offer o
+    INNER JOIN product p ON o.product = p.product_id
+    INNER JOIN store s ON o.store = s.store_id
+    LEFT JOIN reaction r ON o.offer_id = r.offer_id
+    WHERE o.user_id = ?
+    GROUP BY o.offer_id;
+  `;
 
   db.query(offersByUserQuery, [userId], async (error, result) => {
     if (error) {
@@ -22,11 +32,17 @@ exports.fetchOffersByUser = (req, res) => {
       return;
     }
 
-    const offersByUser = result.map((offer) => ({
-      ...offer,
-      date_offer: modifyDatetimeField(offer.date_offer),
-      price: offer.price + '€',
-    }));
+    const offersByUser = result.map((offer) => {
+      const stock = readBitField(offer.stock);
+      return {
+        ...offer,
+        date_offer: modifyDatetimeField(offer.date_offer),
+        price: offer.price + '€',
+        likes: offer.likes === null ? '-' : offer.likes,
+        dislikes: offer.dislikes === null ? '-' : offer.dislikes,
+        stock: stock === true ? 'Yes' : 'No',
+      };
+    });
 
     return res.status(200).json({
       message: 'User offers are fetched!',
@@ -62,6 +78,8 @@ exports.offersByStore = (req, res) => {
         date_offer: modifyDatetimeField(offer.date_offer),
         price: offer.price + '€',
         stock: stock === true ? 'Yes' : 'No',
+        likes: offer.likes === null ? '-' : offer.likes,
+        dislikes: offer.dislikes === null ? '-' : offer.dislikes,
       };
     });
 

@@ -65,6 +65,7 @@ function StoreOffers() {
     axios
       .get(`http://localhost:5000/offer/offersByStore/${storeId}`, config)
       .then((res) => {
+        console.log(res.data);
         setStoreOffers(res.data.offersByStore);
         setLoading(false);
       })

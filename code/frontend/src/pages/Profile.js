@@ -2,23 +2,14 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import {
-  Alert,
-  Grid,
-  Snackbar,
-  Paper,
-  Chip,
-  CircularProgress,
-} from '@mui/material';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { Alert, Snackbar, CircularProgress } from '@mui/material';
 
-import ChangeUsernameForm from '../components/ProfileForms/AccountDetails/ChangeUsernameForm';
-import ChangePasswordForm from '../components/ProfileForms/AccountDetails/ChangePasswordForm';
 import OffersTable from '../components/ProfileForms/OffersTable';
 import PerformanceForm from '../components/ProfileForms/AccountPerformance/PerformanceForm';
 
 import { passwordStrength } from '../util/checkPassword';
 import Reactions from '../components/ProfileForms/AccountPerformance/Reactions';
+import AccountDetailsForm from '../components/ProfileForms/AccountDetails/AccountDetailsForm';
 
 function Profile() {
   const [username, setUsername] = useState('');
@@ -116,6 +107,7 @@ function Profile() {
         config
       )
       .then((res) => {
+        console.log(res.data);
         setOffers(res.data.offersByUser);
         setLoading(false);
       })
@@ -235,9 +227,6 @@ function Profile() {
       )
       .then((res) => {
         if (res.status === 200) {
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
           return setAlert({
             flag: true,
             message: res.data.message,
@@ -265,47 +254,14 @@ function Profile() {
           </Alert>
         </Snackbar>
       ) : null}
-      <div
-        style={{
-          textAlign: 'center',
-          width: '100vh',
-          margin: '0 auto',
-          marginTop: '10vh',
-        }}
-      >
-        <Paper elevation={3} style={{ padding: '2rem', borderRadius: '20px' }}>
-          <Chip
-            label='Account Details'
-            color='primary'
-            variant='outlined'
-            icon={<AccountBoxIcon />}
-            size='medium'
-            style={{
-              marginTop: '0.6rem',
-              marginBottom: '3rem',
-              fontWeight: 600,
-              letterSpacing: '0.75px',
-              padding: '0 0.6rem',
-            }}
-          />
-          <Grid container spacing={12}>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <ChangeUsernameForm
-                setUsername={setUsername}
-                validateUsername={validateUsername}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <ChangePasswordForm
-                setOldPassword={setOldPassword}
-                setNewPassword={setNewPassword}
-                setRePassword={setRePassword}
-                validatePassword={validatePassword}
-              />
-            </Grid>
-          </Grid>
-        </Paper>
-      </div>
+      <AccountDetailsForm
+        setUsername={setUsername}
+        validateUsername={validateUsername}
+        setOldPassword={setOldPassword}
+        setNewPassword={setNewPassword}
+        setRePassword={setRePassword}
+        validatePassword={validatePassword}
+      />
       {loading ? (
         <CircularProgress />
       ) : (

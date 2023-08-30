@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import {
   Card,
@@ -9,9 +9,9 @@ import {
   CardActions,
   Button,
   IconButton,
-} from "@mui/material";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+} from '@mui/material';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 function OfferCard({
   offer,
@@ -29,33 +29,33 @@ function OfferCard({
     <>
       <div
         style={{
-          textAlign: "center",
-          width: "40rem",
-          margin: "3rem auto",
+          textAlign: 'center',
+          width: '40rem',
+          margin: '3rem auto',
         }}
       >
         <Card elevation={3} sx={{ maxWidth: 500 }}>
           <Typography
             gutterBottom
-            variant="h6"
-            component="div"
-            color="primary"
-            style={{ marginTop: "1rem", fontWeight: "600" }}
+            variant='h6'
+            component='div'
+            color='primary'
+            style={{ marginTop: '1rem', fontWeight: '600' }}
           >
             {offer.product_name}
           </Typography>
           <CardMedia
-            sx={{ height: 260, marginTop: "1rem" }}
+            sx={{ height: 260, marginTop: '1rem' }}
             image={offer.img}
-            title="product image"
+            title='product image'
           />
           <CardContent>
             <Typography
               gutterBottom
-              variant="h6"
-              component="div"
-              color="primary"
-              style={{ margin: "1rem 0" }}
+              variant='h6'
+              component='div'
+              color='primary'
+              style={{ margin: '1rem 0' }}
             >
               Offer Details
             </Typography>
@@ -67,7 +67,7 @@ function OfferCard({
                 <strong>Date:</strong> {offer.date_offer}
               </Grid>
               <Grid item xs={4}>
-                <strong>In Stock:</strong> {stock === true ? "Yes" : "No"}
+                <strong>In Stock:</strong> {stock === true ? 'Yes' : 'No'}
               </Grid>
               <Grid item xs={4}>
                 <strong>Likes:</strong> {likes}
@@ -86,17 +86,17 @@ function OfferCard({
           <CardActions>
             <Grid
               container
-              justifyContent="space-between"
-              style={{ margin: "0.5rem" }}
+              justifyContent='space-between'
+              style={{ margin: '0.5rem' }}
             >
               <Grid item>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ fontSize: "14px" }}
+                  variant='contained'
+                  color='primary'
+                  style={{ fontSize: '14px' }}
                   onClick={changeStock}
                 >
-                  {stock === true ? "Sold Out" : "In Stock"}
+                  {stock === true ? 'Sold Out' : 'In Stock'}
                 </Button>
               </Grid>
             </Grid>

@@ -8,21 +8,29 @@ function Reactions({ reactions }) {
       field: 'product_name',
       headerName: 'Product Name',
       width: 270,
+      headerAlign: 'center',
+      align: 'center',
     },
     {
       field: 'price',
       headerName: 'Product Price',
       width: 130,
+      headerAlign: 'center',
+      align: 'center',
     },
     {
       field: 'store_name',
       headerName: 'Store Name',
       width: 130,
+      headerAlign: 'center',
+      align: 'center',
     },
     {
       field: 'is_like',
       headerName: 'Like',
       width: 130,
+      headerAlign: 'center',
+      align: 'center',
     },
   ];
   return (

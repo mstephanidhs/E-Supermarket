@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Button, InputAdornment, TextField, Grid } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { Button, InputAdornment, TextField, Grid } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function ChangePasswordForm(props) {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -22,29 +22,28 @@ function ChangePasswordForm(props) {
   };
 
   return (
-    <Grid container>
+    <Grid container sx={{ width: '15rem' }}>
       <form>
         <Grid item>
           <TextField
-            variant="outlined"
-            margin="normal"
-            label="Current Password"
-            type={showOldPassword ? "text" : "password"}
-            fullWidth
+            variant='outlined'
+            margin='normal'
+            label='Current Password'
+            type={showOldPassword ? 'text' : 'password'}
             required
-            style={{ marginBottom: "1rem" }}
+            style={{ marginBottom: '1rem' }}
             onChange={(e) => props.setOldPassword(e.target.value)}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   {showOldPassword ? (
                     <VisibilityIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
+                      style={{ fontSize: '16px', cursor: 'pointer' }}
                       onClick={handleVisibilityOldPassword}
                     />
                   ) : (
                     <VisibilityOffIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
+                      style={{ fontSize: '16px', cursor: 'pointer' }}
                       onClick={handleVisibilityOldPassword}
                     />
                   )}
@@ -55,25 +54,24 @@ function ChangePasswordForm(props) {
         </Grid>
         <Grid item>
           <TextField
-            variant="outlined"
-            margin="normal"
-            label="New Password"
-            type={showNewPassword ? "text" : "password"}
-            fullWidth
+            variant='outlined'
+            margin='normal'
+            label='New Password'
+            type={showNewPassword ? 'text' : 'password'}
             required
-            style={{ marginBottom: "1rem" }}
+            style={{ marginBottom: '1rem' }}
             onChange={(e) => props.setNewPassword(e.target.value)}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   {showNewPassword ? (
                     <VisibilityIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
+                      style={{ fontSize: '16px', cursor: 'pointer' }}
                       onClick={handleVisibilityNewPassword}
                     />
                   ) : (
                     <VisibilityOffIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
+                      style={{ fontSize: '16px', cursor: 'pointer' }}
                       onClick={handleVisibilityNewPassword}
                     />
                   )}
@@ -84,25 +82,24 @@ function ChangePasswordForm(props) {
         </Grid>
         <Grid item>
           <TextField
-            variant="outlined"
-            margin="normal"
-            label="Re-enter Password"
-            type={showRePassword ? "text" : "password"}
-            fullWidth
+            variant='outlined'
+            margin='normal'
+            label='Re-enter Password'
+            type={showRePassword ? 'text' : 'password'}
             required
-            style={{ marginBottom: "2rem" }}
+            style={{ marginBottom: '2rem' }}
             onChange={(e) => props.setRePassword(e.target.value)}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   {showRePassword ? (
                     <VisibilityIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
+                      style={{ fontSize: '16px', cursor: 'pointer' }}
                       onClick={handleVisibilityRePassword}
                     />
                   ) : (
                     <VisibilityOffIcon
-                      style={{ fontSize: "16px", cursor: "pointer" }}
+                      style={{ fontSize: '16px', cursor: 'pointer' }}
                       onClick={handleVisibilityRePassword}
                     />
                   )}
@@ -113,11 +110,10 @@ function ChangePasswordForm(props) {
         </Grid>
         <Grid item>
           <Button
-            type="button"
-            fullWidth
-            variant="contained"
+            type='button'
+            variant='contained'
             onClick={() => props.validatePassword()}
-            sx={{ width: "12rem" }}
+            sx={{ width: '12rem' }}
           >
             Change Password
           </Button>

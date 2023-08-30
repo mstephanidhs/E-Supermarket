@@ -195,7 +195,7 @@ function Main() {
             sx={{
               marginTop: '4.8rem',
               marginLeft: '6.4rem',
-              width: '100vh',
+              width: '45rem',
             }}
             spacing={1}
           >
