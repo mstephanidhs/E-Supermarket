@@ -1,14 +1,7 @@
-const mysql = require('mysql2');
 const { modifyDatetimeField } = require('./../utils/modifeDatetimeField');
 const { readBitField } = require('../utils/readBitField');
 
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.DATABASE_PORT,
-});
+const { db } = require('./../lib/dbConfig');
 
 exports.fetchOffersByUser = (req, res) => {
   const userId = req.params.userId;
@@ -54,13 +47,22 @@ exports.fetchOffersByUser = (req, res) => {
 exports.offersByStore = (req, res) => {
   const storeId = req.params.storeId;
 
-  const offersByStoreQuery = `SELECT
-      p.product_name, o.price, o.date_offer, o.stock, s.store_name, s.store_id, o.offer_id, 
-        SUM(r.is_like = 1) AS likes,
-        SUM(r.is_like = 0) AS dislikes
+  const offersByStoreQuery = `
+  SELECT
+      u.username,
+      p.product_name, 
+      o.price, 
+      o.date_offer, 
+      o.stock, 
+      s.store_name, 
+      s.store_id, 
+      o.offer_id, 
+      SUM(r.is_like = 1) AS likes,
+      SUM(r.is_like = 0) AS dislikes
     FROM offer o
     INNER JOIN product p ON o.product = p.product_id
     INNER JOIN store s ON o.store = s.store_id
+    INNER JOIN user u ON u.user_id = o.user_id
     LEFT JOIN reaction r ON o.offer_id = r.offer_id
     WHERE o.store = ? 
     GROUP BY o.offer_id;`;
@@ -156,7 +158,7 @@ exports.addOffer = (req, res) => {
   let userScore = 0;
 
   const offerExistsQuery =
-    'SELECT * FROM offer WHERE store = ? AND product = ?';
+    'SELECT MIN(price) AS price FROM offer WHERE store = ? AND product = ?';
 
   db.query(offerExistsQuery, [storeId, productId], async (error, result) => {
     if (error) {
@@ -164,7 +166,7 @@ exports.addOffer = (req, res) => {
       return;
     }
 
-    if (result.length > 0) {
+    if (result[0].price !== null) {
       if (price > result[0].price - result[0].price * 0.2) {
         return res.status(422).json({
           message:
@@ -183,6 +185,7 @@ exports.addOffer = (req, res) => {
       }
 
       if (result.length > 0) {
+        console.log('adasd');
         if (price < result[0].AveragePrice - result[0].AveragePrice * 0.2) {
           userScore = 50;
         }

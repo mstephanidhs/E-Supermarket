@@ -1,24 +1,16 @@
-const mysql = require("mysql2");
-
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.DATABASE_PORT,
-});
+const { db } = require('./../lib/dbConfig');
 
 exports.uploadStores = (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
   const jsonData = JSON.parse(req.file.buffer.toString());
   const action = req.body.action;
 
-  const deleteStoreTableQuery = "DELETE FROM store;";
+  const deleteStoreTableQuery = 'DELETE FROM store;';
   const insertStoresQuery =
-    "INSERT IGNORE INTO store(store_name, longitude, latitude) VALUES (?, ?, ?);";
+    'INSERT IGNORE INTO store(store_name, longitude, latitude) VALUES (?, ?, ?);';
 
-  if (action === "Delete") {
+  if (action === 'Delete') {
     db.query(deleteStoreTableQuery, async (error, result) => {
       if (error) {
         console.log(error.message);
@@ -47,20 +39,20 @@ exports.uploadStores = (req, res) => {
 
   return res
     .status(200)
-    .json({ message: "Stores were inserted successfully!" });
+    .json({ message: 'Stores were inserted successfully!' });
 };
 
 exports.uploadProducts = (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
   const jsonData = JSON.parse(req.file.buffer.toString());
   const action = req.body.action;
 
-  const deleteProductTableQuery = "DELETE FROM product;";
+  const deleteProductTableQuery = 'DELETE FROM product;';
   const insertProductsQuery =
-    "INSERT IGNORE INTO product(product_id, product_name, category, subcategory, img) VALUES (?, ?, ?, ?, ?);";
+    'INSERT IGNORE INTO product(product_id, product_name, category, subcategory, img) VALUES (?, ?, ?, ?, ?);';
 
-  if (action === "Delete") {
+  if (action === 'Delete') {
     db.query(deleteProductTableQuery, async (error, result) => {
       if (error) {
         console.log(error.message);
@@ -84,20 +76,20 @@ exports.uploadProducts = (req, res) => {
 
   return res
     .status(200)
-    .json({ message: "Products were inserted successfully!" });
+    .json({ message: 'Products were inserted successfully!' });
 };
 
 exports.uploadPrices = (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
   const jsonData = JSON.parse(req.file.buffer.toString());
   const action = req.body.action;
 
-  const deleteProductsInStoreTableQuery = "DELETE FROM productsinstor;";
+  const deleteProductsInStoreTableQuery = 'DELETE FROM productsinstor;';
   const insertProductsInStoreQuery =
-    "INSERT IGNORE INTO productsinstor(product_name, product_id, price, date_product) VALUES (?, ?, ?, ?);";
+    'INSERT IGNORE INTO productsinstor(product_name, product_id, price, date_product) VALUES (?, ?, ?, ?);';
 
-  if (action === "Delete") {
+  if (action === 'Delete') {
     db.query(deleteProductsInStoreTableQuery, async (error, result) => {
       if (error) {
         console.log(error.message);
@@ -128,5 +120,5 @@ exports.uploadPrices = (req, res) => {
 
   return res
     .status(200)
-    .json({ message: "Products Prices were inserted successfully!" });
+    .json({ message: 'Products Prices were inserted successfully!' });
 };

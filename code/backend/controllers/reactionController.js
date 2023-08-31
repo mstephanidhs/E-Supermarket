@@ -1,25 +1,17 @@
-const mysql = require("mysql2");
-const { readBitField } = require("../utils/readBitField");
-
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.DATABASE_PORT,
-});
+const { readBitField } = require('../utils/readBitField');
+const { db } = require('./../lib/dbConfig');
 
 exports.insertReaction = (req, res) => {
   const { userId, offerId, isLike } = req.body;
 
   const insertReactionQuery =
-    "INSERT INTO reaction(user_id, offer_id, is_like) VALUES (?, ?, ?)";
+    'INSERT INTO reaction(user_id, offer_id, is_like) VALUES (?, ?, ?)';
 
   const substractScoreQuery =
-    "UPDATE score SET current_score = CASE WHEN current_score > 0 THEN current_score - 1 ELSE current_score END WHERE user_id = ?";
+    'UPDATE score SET current_score = CASE WHEN current_score > 0 THEN current_score - 1 ELSE current_score END WHERE user_id = ?';
 
   const addScoreQuery =
-    "UPDATE score SET current_score = current_score + 5 WHERE user_id = ?";
+    'UPDATE score SET current_score = current_score + 5 WHERE user_id = ?';
 
   db.query(
     insertReactionQuery,
@@ -41,7 +33,7 @@ exports.insertReaction = (req, res) => {
 
           return res
             .status(200)
-            .json({ message: "Reaction inserted successfully!" });
+            .json({ message: 'Reaction inserted successfully!' });
         }
       );
     }
@@ -52,7 +44,7 @@ exports.getMyReaction = (req, res) => {
   const { userId, offerId } = req.params;
 
   const getMyReactionQuery =
-    "SELECT r.is_like FROM reaction r INNER JOIN user u ON r.user_id = u.user_id WHERE u.user_id = ? AND r.offer_id = ?";
+    'SELECT r.is_like FROM reaction r INNER JOIN user u ON r.user_id = u.user_id WHERE u.user_id = ? AND r.offer_id = ?';
 
   db.query(getMyReactionQuery, [userId, offerId], async (error, result) => {
     if (error) {
@@ -61,7 +53,7 @@ exports.getMyReaction = (req, res) => {
     }
 
     return res.status(200).json({
-      message: "Reaction fetched successfully!",
+      message: 'Reaction fetched successfully!',
       reaction: result.length > 0 ? readBitField(result[0].is_like) : [],
     });
   });
@@ -71,7 +63,7 @@ exports.changeReaction = (req, res) => {
   const { userId, offerId, reaction } = req.body;
 
   const changeReactionQuery =
-    "UPDATE reaction SET is_like = ? WHERE offer_id = ? AND user_id = ?";
+    'UPDATE reaction SET is_like = ? WHERE offer_id = ? AND user_id = ?';
 
   db.query(
     changeReactionQuery,
@@ -84,7 +76,7 @@ exports.changeReaction = (req, res) => {
 
       return res
         .status(200)
-        .json({ message: "Reaction updated successfully!" });
+        .json({ message: 'Reaction updated successfully!' });
     }
   );
 };

@@ -1,19 +1,11 @@
-const schedule = require("node-schedule");
-const mysql = require("mysql2");
-
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.DATABASE_PORT,
-});
+const schedule = require('node-schedule');
+const { db } = require('./../lib/dbConfig');
 
 exports.initializeTokens = () => {
-  schedule.scheduleJob("0 0 1 * *", async () => {
+  schedule.scheduleJob('0 0 1 * *', async () => {
     try {
-      const totalUsersQuery = "SELECT count(user_id) AS totalUsers FROM user;";
-      const createTotalTokensQuery = "UPDATE totaltokens SET total_tokens = ?";
+      const totalUsersQuery = 'SELECT count(user_id) AS totalUsers FROM user;';
+      const createTotalTokensQuery = 'UPDATE totaltokens SET total_tokens = ?';
 
       const [totalUsers] = await db.promise().query(totalUsersQuery);
 
@@ -21,20 +13,20 @@ exports.initializeTokens = () => {
         .promise()
         .query(createTotalTokensQuery, [totalUsers[0].totalUsers * 100]);
     } catch (error) {
-      console.error("Error perfoming monthly task: ", error);
+      console.error('Error perfoming monthly task: ', error);
     }
   });
 };
 
 exports.distributeTokens = () => {
-  schedule.scheduleJob("50 23 28 * *", async () => {
+  schedule.scheduleJob('50 23 28 * *', async () => {
     try {
-      const getTotalTokensQuery = "SELECT total_tokens FROM totaltokens";
-      const getUsersScores = "SELECT current_score, user_id FROM score";
+      const getTotalTokensQuery = 'SELECT total_tokens FROM totaltokens';
+      const getUsersScores = 'SELECT current_score, user_id FROM score';
       const getTotalScoreOfUsersQuery =
-        "SELECT sum(current_score) AS totalScore FROM score;";
+        'SELECT sum(current_score) AS totalScore FROM score;';
       const updateUserTokensQuery =
-        "UPDATE tokens SET total_tokens = total_tokens + ?, previous_month_tokens = current_tokens, current_tokens = ? WHERE user_id = ?";
+        'UPDATE tokens SET total_tokens = total_tokens + ?, previous_month_tokens = current_tokens, current_tokens = ? WHERE user_id = ?';
 
       const [result] = await db.promise().query(getTotalTokensQuery);
       const totalTokens = result[0].total_tokens * 0.8;
@@ -53,7 +45,7 @@ exports.distributeTokens = () => {
           .query(updateUserTokensQuery, [userTokens, userTokens, row.user_id]);
       }
     } catch (error) {
-      console.error("Error perfoming monthly task: ", error);
+      console.error('Error perfoming monthly task: ', error);
     }
   });
 };

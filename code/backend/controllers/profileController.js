@@ -1,17 +1,9 @@
-const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const { passwordStrength } = require('../utils/checkPassword');
 const { readBitField } = require('../utils/readBitField');
-
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.DATABASE_PORT,
-});
+const { db } = require('./../lib/dbConfig');
 
 exports.changeUsername = (req, res) => {
   const { newName } = req.body;
