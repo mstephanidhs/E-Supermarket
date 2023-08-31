@@ -1,26 +1,33 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import { useAuth } from "../context/Auth";
-
-import axios from "axios";
-import { CircularProgress } from "@mui/material";
-import OfferCard from "../components/OfferCard";
+import axios from 'axios';
+import { CircularProgress, Alert, Snackbar } from '@mui/material';
+import OfferCard from '../components/OfferCard';
 
 function Offer() {
   const { offerId } = useParams();
-  const auth = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [offer, setOffer] = useState({});
   const [stock, setStock] = useState(null);
+  const [score, setScore] = useState(null);
   const [likes, setLikes] = useState(null);
   const [dislikes, setDislikes] = useState(null);
-  const [likeColor, setLikeColor] = useState("");
-  const [dislikeColor, setDislikeColor] = useState("");
-  const [disable, setDisable] = useState();
+  const [likeColor, setLikeColor] = useState('');
+  const [dislikeColor, setDislikeColor] = useState('');
+  const [disable, setDisable] = useState(false);
 
-  const token = "Bearer " + sessionStorage.getItem("token");
+  const [success, setSuccess] = useState({ flag: false, message: '' });
+  const [openAlert, setOpenAlert] = useState(true);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+
+    setOpenAlert(false);
+  };
+
+  const token = 'Bearer ' + sessionStorage.getItem('token');
   const config = {
     headers: {
       authorization: token,
@@ -28,123 +35,84 @@ function Offer() {
   };
 
   const handleDislike = () => {
-    if (dislikeColor === "primary") return;
+    setDislikeColor('primary');
+    setDislikes((prevDislikes) => prevDislikes + 1);
+    setLoading(true);
 
-    if (likeColor !== "primary") {
-      setDislikeColor("primary");
-      setLoading(true);
-      setDislikes((prevDislikes) => prevDislikes + 1);
-
-      axios
-        .post(
-          "http://localhost:5000/reaction/insertReaction",
-          {
-            userId: sessionStorage.getItem("userId"),
-            offerId: offer.offer_id,
-            isLike: 0,
-          },
-          config
-        )
-        .then((res) => {
-          setLoading(false);
-        })
-        .catch((error) => {
-          if (error.response) console.log(error.response.data.message);
+    axios
+      .post(
+        'http://localhost:5000/reaction/insertReaction',
+        {
+          offerUserId: offer.user_id,
+          reactionUserId: parseInt(sessionStorage.getItem('userId')),
+          offerId: offer.offer_id,
+          isLike: 0,
+        },
+        config
+      )
+      .then((res) => {
+        setDisable(true);
+        setLoading(false);
+        setScore((prevScore) => prevScore - 1);
+        setSuccess({
+          flag: true,
+          message: 'You just disliked the specific offer!',
         });
-    }
-
-    if (likeColor === "primary") {
-      setLikeColor("");
-      setDislikeColor("primary");
-      setLikes((prevLikes) => prevLikes - 1);
-      setDislikes((prevDislikes) => prevDislikes + 1);
-
-      axios
-        .put(
-          `http://localhost:5000/reaction/changeReaction`,
-          {
-            userId: sessionStorage.getItem("userId"),
-            offerId: offer.offer_id,
-            reaction: 0,
-          },
-          config
-        )
-        .then((res) => {
-          setLoading(false);
-        })
-        .catch((error) => {
-          if (error.response) console.log(error.response.data.message);
-        });
-    }
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
   };
 
   const handleLike = () => {
-    if (likeColor === "primary") return;
+    setSuccess({ flag: false, message: '' });
+    setOpenAlert(true);
 
-    if (dislikeColor !== "primary") {
-      setLikeColor("primary");
-      setLoading(true);
-      setLikes((prevLikes) => prevLikes + 1);
+    setLikeColor('primary');
+    setLikes((prevLikes) => prevLikes + 1);
+    setLoading(true);
 
-      axios
-        .post(
-          "http://localhost:5000/reaction/insertReaction",
-          {
-            userId: sessionStorage.getItem("userId"),
-            offerId: offer.offer_id,
-            isLike: 1,
-          },
-          config
-        )
-        .then((res) => {
-          setLoading(false);
-        })
-        .catch((error) => {
-          if (error.response) console.log(error.response.data.message);
+    axios
+      .post(
+        'http://localhost:5000/reaction/insertReaction',
+        {
+          offerUserId: offer.user_id,
+          reactionUserId: parseInt(sessionStorage.getItem('userId')),
+          offerId: offer.offer_id,
+          isLike: 1,
+        },
+        config
+      )
+      .then((res) => {
+        setDisable(true);
+        setLoading(false);
+        setScore((prevScore) => prevScore + 5);
+        setSuccess({
+          flag: true,
+          message: 'You just liked the specific offer!',
         });
-    }
-
-    if (dislikeColor === "primary") {
-      setLikeColor("primary");
-      setDislikeColor("");
-      setLikes((prevLikes) => prevLikes + 1);
-      setDislikes((prevDislikes) => prevDislikes - 1);
-
-      axios
-        .put(
-          `http://localhost:5000/reaction/changeReaction`,
-          {
-            userId: sessionStorage.getItem("userId"),
-            offerId: offer.offer_id,
-            reaction: 1,
-          },
-          config
-        )
-        .then((res) => {
-          setLoading(false);
-        })
-        .catch((error) => {
-          if (error.response) console.log(error.response.data.message);
-        });
-    }
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
+      })
+      .catch((error) => {
+        if (error.response) console.log(error.response.data.message);
+      });
   };
 
   const changeStock = () => {
-    if (stock === false) {
-      getReaction();
-      setDisable(false);
-    } else {
-      setDislikeColor("");
-      setLikeColor("");
-      setDisable(true);
-    }
+    setSuccess({ flag: false, message: '' });
+    setOpenAlert(true);
 
     setStock((prevStock) => !prevStock);
     setLoading(true);
 
     axios
       .put(
-        "http://localhost:5000/offer/changeStockOffer",
+        'http://localhost:5000/offer/changeStockOffer',
         {
           stock: !stock,
           offerId: offer.offer_id,
@@ -153,6 +121,13 @@ function Offer() {
       )
       .then((res) => {
         setLoading(false);
+        setSuccess({
+          flag: true,
+          message: 'The stock of the product was updated successfully!',
+        });
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
       })
       .catch((error) => {
         if (error.response) console.log(error.response.data.message);
@@ -163,11 +138,11 @@ function Offer() {
     axios(`http://localhost:5000/offer/${offerId}`, config)
       .then((res) => {
         setOffer(res.data.offer);
-        setStock(res.data.offer.stock === "Yes" ? true : false);
+        setScore(res.data.offer.score);
+        setStock(res.data.offer.stock === 'Yes' ? true : false);
         setLikes(res.data.offer.likes);
         setDislikes(res.data.offer.dislikes);
-        setDisable(res.data.offer.stock === "Yes" ? false : true);
-        if (res.data.offer.stock === "Yes") getReaction();
+        getReaction();
         setLoading(false);
       })
       .catch((error) => {
@@ -179,14 +154,16 @@ function Offer() {
     axios
       .get(
         `http://localhost:5000/reaction/getMyReaction/${sessionStorage.getItem(
-          "userId"
+          'userId'
         )}&${offerId}`
       )
       .then((res) => {
-        if (typeof res.data.reaction === "boolean") {
+        console.log(res.data);
+        if (typeof res.data.reaction === 'boolean') {
           res.data.reaction === true
-            ? setLikeColor("primary")
-            : setDislikeColor("primary");
+            ? setLikeColor('primary')
+            : setDislikeColor('primary');
+          setDisable(true);
         }
       })
       .catch((error) => {
@@ -200,10 +177,18 @@ function Offer() {
 
   return (
     <>
+      {success.flag ? (
+        <Snackbar open={openAlert} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='success'>
+            {success.message}
+          </Alert>
+        </Snackbar>
+      ) : null}
       {loading ? (
         <CircularProgress />
       ) : (
         <OfferCard
+          score={score}
           offer={offer}
           stock={stock}
           likes={likes}

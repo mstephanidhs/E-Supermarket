@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
   Card,
   CardContent,
@@ -14,6 +12,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 function OfferCard({
+  score,
   offer,
   stock,
   changeStock,
@@ -79,7 +78,7 @@ function OfferCard({
                 <strong>Username:</strong> {offer.username}
               </Grid>
               <Grid item xs={5}>
-                <strong>User Score:</strong> {offer.score}
+                <strong>User Score:</strong> {score}
               </Grid>
             </Grid>
           </CardContent>

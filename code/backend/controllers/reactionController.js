@@ -2,7 +2,9 @@ const { readBitField } = require('../utils/readBitField');
 const { db } = require('./../lib/dbConfig');
 
 exports.insertReaction = (req, res) => {
-  const { userId, offerId, isLike } = req.body;
+  const { offerUserId, reactionUserId, offerId, isLike } = req.body;
+
+  console.log(reactionUserId);
 
   const insertReactionQuery =
     'INSERT INTO reaction(user_id, offer_id, is_like) VALUES (?, ?, ?)';
@@ -15,7 +17,7 @@ exports.insertReaction = (req, res) => {
 
   db.query(
     insertReactionQuery,
-    [userId, offerId, isLike],
+    [reactionUserId, offerId, isLike],
     async (error, result) => {
       if (error) {
         console.log(error.message);
@@ -24,7 +26,7 @@ exports.insertReaction = (req, res) => {
 
       db.query(
         isLike === 1 ? addScoreQuery : substractScoreQuery,
-        [userId],
+        [offerUserId],
         async (error, result) => {
           if (error) {
             console.log(error.message);

@@ -96,7 +96,7 @@ exports.offerById = (req, res) => {
   const offerId = req.params.offerId;
 
   const offerByIdQuery =
-    'SELECT count(CASE WHEN r.is_like = 1 THEN 1 END) OVER(PARTITION BY o.offer_id) AS likes, count(CASE WHEN r.is_like = 0 THEN 1 END) OVER(PARTITION BY o.offer_id) AS dislikes, p.product_name, o.price, o.date_offer, o.stock, p.img, u.username, o.offer_id FROM offer o INNER JOIN product p ON o.product = p.product_id LEFT JOIN reaction r ON r.offer_id = o.offer_id INNER JOIN user u ON o.user_id = u.user_id WHERE o.offer_id = ?';
+    'SELECT count(CASE WHEN r.is_like = 1 THEN 1 END) OVER(PARTITION BY o.offer_id) AS likes, count(CASE WHEN r.is_like = 0 THEN 1 END) OVER(PARTITION BY o.offer_id) AS dislikes, p.product_name, o.price, o.date_offer, o.stock, p.img, u.username, o.offer_id, o.user_id FROM offer o INNER JOIN product p ON o.product = p.product_id LEFT JOIN reaction r ON r.offer_id = o.offer_id INNER JOIN user u ON o.user_id = u.user_id WHERE o.offer_id = ?';
 
   db.query(offerByIdQuery, [offerId], async (error, result) => {
     if (error) {
