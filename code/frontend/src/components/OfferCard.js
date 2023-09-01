@@ -1,10 +1,10 @@
 import {
   Card,
+  CardActions,
   CardContent,
   CardMedia,
-  Typography,
   Grid,
-  CardActions,
+  Typography,
   Button,
   IconButton,
 } from '@mui/material';
@@ -12,107 +12,193 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 function OfferCard({
-  score,
   offer,
+  likes,
+  dislikes,
+  score,
   stock,
   changeStock,
   handleLike,
-  likes,
-  dislikes,
-  handleDislike,
-  likeColor,
-  dislikeColor,
   disable,
+  likeColor,
+  handleDislike,
+  dislikeColor,
 }) {
   return (
-    <>
-      <div
-        style={{
-          textAlign: 'center',
-          width: '40rem',
-          margin: '3rem auto',
-        }}
-      >
-        <Card elevation={3} sx={{ maxWidth: 500 }}>
-          <Typography
-            gutterBottom
-            variant='h6'
-            component='div'
-            color='primary'
-            style={{ marginTop: '1rem', fontWeight: '600' }}
-          >
-            {offer.product_name}
-          </Typography>
-          <CardMedia
-            sx={{ height: 260, marginTop: '1rem' }}
-            image={offer.img}
-            title='product image'
-          />
-          <CardContent>
-            <Typography
-              gutterBottom
-              variant='h6'
-              component='div'
-              color='primary'
-              style={{ margin: '1rem 0' }}
-            >
-              Offer Details
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <strong>Price:</strong> {offer.price}
+    <div
+      style={{
+        textAlign: 'center',
+        width: '40rem',
+        margin: '3rem auto',
+      }}
+    >
+      <Card elevation={3} sx={{ maxWidth: 800, height: 500, borderRadius: 5 }}>
+        <Grid container spacing={8}>
+          <Grid item xs={6}>
+            <CardMedia
+              sx={{ height: 400, width: 400, marginTop: '1rem' }}
+              image={offer.img}
+              title='product image'
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant='p'
+                component='div'
+                color='primary'
+                style={{
+                  marginTop: '4rem',
+                  textAlign: 'left',
+                  fontWeight: '700',
+                }}
+              >
+                {offer.product_name}
+              </Typography>
+              <Grid container>
+                <Grid item sx={{ marginTop: '1rem' }}>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    style={{
+                      textAlign: 'left',
+                      fontWeight: '500',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {offer.price}, {''}
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    style={{
+                      fontSize: '11px',
+                    }}
+                  >
+                    {offer.date_offer}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <strong>Date:</strong> {offer.date_offer}
+              <Typography
+                gutterBottom
+                variant='p'
+                component='div'
+                style={{
+                  marginTop: '2.5rem',
+                  fontSize: '18px',
+                  fontWeight: '500',
+                }}
+                color='primary'
+              >
+                Offer Details
+              </Typography>
+              <Grid container justifyContent='space-between'>
+                <Grid item xs={6}>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    component='div'
+                    style={{
+                      textAlign: 'left',
+                      marginTop: '1rem',
+                    }}
+                  >
+                    Likes: {likes}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    component='div'
+                    style={{
+                      marginTop: '1rem',
+                    }}
+                  >
+                    Disikes: {dislikes}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    component='div'
+                    style={{
+                      textAlign: 'left',
+                      marginTop: '1rem',
+                    }}
+                  >
+                    Username: {offer.username}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    component='div'
+                    style={{
+                      marginTop: '1rem',
+                    }}
+                  >
+                    User Score: {score}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    gutterBottom
+                    variant='p'
+                    component='div'
+                    style={{
+                      marginTop: '1rem',
+                      textAlign: 'left',
+                    }}
+                  >
+                    In Stock: {stock === true ? 'Yes' : 'No'}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <strong>In Stock:</strong> {stock === true ? 'Yes' : 'No'}
+            </CardContent>
+            <CardActions>
+              <Grid
+                container
+                justifyContent='space-between'
+                style={{ marginTop: '0.5rem' }}
+              >
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    style={{ fontSize: '14px' }}
+                    onClick={changeStock}
+                  >
+                    {stock === true ? 'Sold Out' : 'In Stock'}
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <strong>Likes:</strong> {likes}
-              </Grid>
-              <Grid item xs={4}>
-                <strong>Disikes:</strong> {dislikes}
-              </Grid>
-              <Grid item xs={4}>
-                <strong>Username:</strong> {offer.username}
-              </Grid>
-              <Grid item xs={5}>
-                <strong>User Score:</strong> {score}
-              </Grid>
-            </Grid>
-          </CardContent>
-          <CardActions>
-            <Grid
-              container
-              justifyContent='space-between'
-              style={{ margin: '0.5rem' }}
-            >
               <Grid item>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  style={{ fontSize: '14px' }}
-                  onClick={changeStock}
+                <IconButton
+                  onClick={handleLike}
+                  disabled={disable}
+                  sx={{ marginTop: '0.5rem' }}
                 >
-                  {stock === true ? 'Sold Out' : 'In Stock'}
-                </Button>
+                  <ThumbUpOffAltIcon color={likeColor} />
+                </IconButton>
               </Grid>
-            </Grid>
-            <Grid item>
-              <IconButton onClick={handleLike} disabled={disable}>
-                <ThumbUpOffAltIcon color={likeColor} />
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <IconButton onClick={handleDislike} disabled={disable}>
-                <ThumbDownOffAltIcon color={dislikeColor} />
-              </IconButton>
-            </Grid>
-          </CardActions>
-        </Card>
-      </div>
-    </>
+              <Grid item>
+                <IconButton
+                  onClick={handleDislike}
+                  disabled={disable}
+                  sx={{ marginTop: '0.5rem' }}
+                >
+                  <ThumbDownOffAltIcon color={dislikeColor} />
+                </IconButton>
+              </Grid>
+            </CardActions>
+          </Grid>
+        </Grid>
+      </Card>
+    </div>
   );
 }
 
