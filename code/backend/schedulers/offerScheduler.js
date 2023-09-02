@@ -7,11 +7,11 @@ exports.offerScheduler = () => {
       // 7 days before the current day
       const now = new Date();
       now.setDate(now.getDate() - 7);
+      let yesterdayAvgFlag = false;
+      let previousWeekAvgFlag = false;
 
-      // get all the offers that their date doesn't belong in the current week
       const getOffersQuery =
         'SELECT product, price, offer_id FROM offer WHERE date_offer <= ?';
-      // get the yesterday's average
       const yesterdayAVGQuery =
         'SELECT price FROM productsinstore WHERE product_id = ? AND DATE(date_product) = DATE(NOW() - INTERVAL 1 DAY);';
       // get the average of the day that is closer to the current date
@@ -29,22 +29,24 @@ exports.offerScheduler = () => {
           .promise()
           .query(yesterdayAVGQuery, [offer.product]);
 
-        const yesterdayAVG = result1[0].price;
+        if (result1.length !== 0) {
+          const yesterdayAVG = result1[0].price;
+          yesterdayAvgFlag =
+            offer.price < yesterdayAVG - yesterdayAVG * 0.2 ?? true;
+        }
 
         const [result2] = await db
           .promise()
           .query(weekAVGQuery, [offer.product]);
 
-        const weekAVG = result2[0].pricel;
-
-        if (
-          offer.price < yesterdayAVG - yesterdayAVG * 0.2 ||
-          offer.price < weekAVG - weekAVG * 0.2
-        ) {
-          await db.promise().query(updateDateQuery, [offer.offer_id]);
-        } else {
-          await db.promise().query(deleteOfferQuery, [offer.offer_id]);
+        if (result2.length !== 0) {
+          const weekAVG = result2[0].AveragePrice;
+          previousWeekAvgFlag = offer.price < weekAVG - weekAVG * 0.2 ?? true;
         }
+
+        if (previousWeekAvgFlag === true || yesterdayAVGQuery === true)
+          await db.promise().query(updateDateQuery, [offer.offer_id]);
+        else await db.promise().query(deleteOfferQuery, [offer.offer_id]);
       }
     } catch (error) {
       console.error('Error perfoming daily task: ', error);
