@@ -64,9 +64,9 @@ app.use('/uploadFiles', require('./routes/files'));
 app.use('/statistics', require('./routes/statistics'));
 
 //======= SCHEDULERS =======
-// offerScheduler();
-// initializeTokens();
-// distributeTokens();
+offerScheduler();
+initializeTokens();
+distributeTokens();
 scoreScheduler();
 
 // Start the server
