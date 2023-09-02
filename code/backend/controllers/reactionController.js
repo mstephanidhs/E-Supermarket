@@ -9,6 +9,7 @@ exports.insertReaction = (req, res) => {
   const insertReactionQuery =
     'INSERT INTO reaction(user_id, offer_id, is_like) VALUES (?, ?, ?)';
 
+  // the score cannot be < 0, so first check its value
   const substractScoreQuery =
     'UPDATE score SET current_score = CASE WHEN current_score > 0 THEN current_score - 1 ELSE current_score END WHERE user_id = ?';
 

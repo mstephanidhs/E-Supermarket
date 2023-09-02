@@ -12,6 +12,7 @@ exports.changeUsername = (req, res) => {
 
   const nameQuery = 'SELECT user_id FROM user WHERE username = ?';
 
+  // it is safer to check the data given from the user in the backend
   db.query(nameQuery, [newName.trim()], async (error, result) => {
     if (error) {
       console.log(error.message);

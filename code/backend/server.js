@@ -46,10 +46,6 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 // Basically, make sure that the data coming from the front-end are in json form
 app.use(express.json());
 
-// Define Routes
-// app.use("/", require("./routes/pages"));
-// app.use("/auth", require("./routes/auth"));
-
 //======= MIDDLEWARES =======
 
 // routing
@@ -64,9 +60,9 @@ app.use('/uploadFiles', require('./routes/files'));
 app.use('/statistics', require('./routes/statistics'));
 
 //======= SCHEDULERS =======
-// offerScheduler();
-// initializeTokens();
-// distributeTokens();
+offerScheduler();
+initializeTokens();
+distributeTokens();
 scoreScheduler();
 
 // Start the server

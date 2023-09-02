@@ -4,12 +4,17 @@ const { db } = require('./../lib/dbConfig');
 exports.offerScheduler = () => {
   schedule.scheduleJob('59 23 * * *', async () => {
     try {
+      // 7 days before the current day
       const now = new Date();
       now.setDate(now.getDate() - 7);
 
-      const getOffersQuery = 'SELECT * FROM offer WHERE date_offer <= ?';
+      // get all the offers that their date doesn't belong in the current week
+      const getOffersQuery =
+        'SELECT product, price, offer_id FROM offer WHERE date_offer <= ?';
+      // get the yesterday's average
       const yesterdayAVGQuery =
         'SELECT price FROM productsinstore WHERE product_id = ? AND DATE(date_product) = DATE(NOW() - INTERVAL 1 DAY);';
+      // get the average of the day that is closer to the current date
       const weekAVGQuery =
         'SELECT price AS AveragePrice FROM productsinstore WHERE product_id = ? AND date_product >= DATE(NOW() - INTERVAL 1 WEEK) AND date_product < DATE(NOW()) ORDER BY ABS(DATEDIFF(NOW(), date_product)) ASC LIMIT 1;';
       const updateDateQuery =
@@ -18,6 +23,7 @@ exports.offerScheduler = () => {
 
       const [offers] = await db.promise().query(getOffersQuery, [now]);
 
+      // iterate through every offer
       for (const offer of offers) {
         const [result1] = await db
           .promise()

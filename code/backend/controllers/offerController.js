@@ -25,6 +25,7 @@ exports.fetchOffersByUser = (req, res) => {
       return;
     }
 
+    // format the data, in order to be displayed correct in the frontend
     const offersByUser = result.map((offer) => {
       const stock = readBitField(offer.stock);
       return {
