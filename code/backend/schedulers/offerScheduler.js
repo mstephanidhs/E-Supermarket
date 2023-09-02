@@ -1,12 +1,14 @@
 const schedule = require('node-schedule');
 const { db } = require('./../lib/dbConfig');
 
+// this scheduler will activate every day at exactly 11:59:59 PM
 exports.offerScheduler = () => {
   schedule.scheduleJob('59 23 * * *', async () => {
     try {
       // 7 days before the current day
       const now = new Date();
       now.setDate(now.getDate() - 7);
+      // flags that check if any of the 2 conditions (based on the score) are valid
       let yesterdayAvgFlag = false;
       let previousWeekAvgFlag = false;
 
@@ -29,7 +31,9 @@ exports.offerScheduler = () => {
           .promise()
           .query(yesterdayAVGQuery, [offer.product]);
 
+        // in case yesterday was an avg found
         if (result1.length !== 0) {
+          // check the condition
           const yesterdayAVG = result1[0].price;
           yesterdayAvgFlag =
             offer.price < yesterdayAVG - yesterdayAVG * 0.2 ?? true;
@@ -39,12 +43,15 @@ exports.offerScheduler = () => {
           .promise()
           .query(weekAVGQuery, [offer.product]);
 
+        // in case yesterday was an avg found
         if (result2.length !== 0) {
+          // check the condition
           const weekAVG = result2[0].AveragePrice;
           previousWeekAvgFlag = offer.price < weekAVG - weekAVG * 0.2 ?? true;
         }
 
-        if (previousWeekAvgFlag === true || yesterdayAVGQuery === true)
+        // if any of the conditions were true, perform an update otherwise a deletion
+        if (previousWeekAvgFlag === true || yesterdayAvgFlag === true)
           await db.promise().query(updateDateQuery, [offer.offer_id]);
         else await db.promise().query(deleteOfferQuery, [offer.offer_id]);
       }
