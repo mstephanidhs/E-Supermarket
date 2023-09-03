@@ -7,9 +7,14 @@ exports.uploadStores = (req, res) => {
   const action = req.body.action;
 
   const deleteStoreTableQuery = 'DELETE FROM store;';
+  // IGNORE keyword
+  // in case the user selects update and a store is already inside the table
+  // ignore the unique constaint, don't insert the specific row and move on to the next one
   const insertStoresQuery =
     'INSERT IGNORE INTO store(store_name, longitude, latitude) VALUES (?, ?, ?);';
 
+  // in case the user selected deletion
+  // delete all the stores inside the table in the db
   if (action === 'Delete') {
     db.query(deleteStoreTableQuery, async (error, result) => {
       if (error) {
@@ -19,6 +24,7 @@ exports.uploadStores = (req, res) => {
     });
   }
 
+  // afterwards insert/update the data
   for (item of jsonData) {
     let storeName = item.properties.name
       ? item.properties.name
@@ -37,9 +43,7 @@ exports.uploadStores = (req, res) => {
     );
   }
 
-  return res
-    .status(200)
-    .json({ message: 'Stores were inserted successfully!' });
+  return res.status(200).json({ message: 'Stores were updated successfully!' });
 };
 
 exports.uploadProducts = (req, res) => {
@@ -76,7 +80,7 @@ exports.uploadProducts = (req, res) => {
 
   return res
     .status(200)
-    .json({ message: 'Products were inserted successfully!' });
+    .json({ message: 'Products were updated successfully!' });
 };
 
 exports.uploadPrices = (req, res) => {
@@ -120,5 +124,5 @@ exports.uploadPrices = (req, res) => {
 
   return res
     .status(200)
-    .json({ message: 'Products Prices were inserted successfully!' });
+    .json({ message: 'Products Prices were updated successfully!' });
 };
