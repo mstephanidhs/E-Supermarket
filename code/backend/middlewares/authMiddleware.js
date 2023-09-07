@@ -34,12 +34,12 @@ exports.verifyToken = (req, res, next) => {
     } catch (error) {
       console.log('Error decoding JWT: ', error.message);
       return res.status(401).json({
-        message: 'You need to provide valid authentication credentials',
+        message: error.message,
       });
     }
   } else {
     return res.status(401).json({
-      message: 'You need to provide valid authentication credentials',
+      message: 'There is something wrong with the authentication process',
     });
   }
 };

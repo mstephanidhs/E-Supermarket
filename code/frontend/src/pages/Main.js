@@ -21,7 +21,7 @@ function Main() {
 
   const userLocation = [location.coordinates.lat, location.coordinates.lng];
 
-  const [stores, setStores] = useState(null);
+  const [stores, setStores] = useState([]);
   const [storesNames, setStoresNames] = useState([]);
   const [categoriesNames, setCategoriesNames] = useState([]);
   const [valueStoreName, setValueStoreName] = useState('');
@@ -98,13 +98,13 @@ function Main() {
         setLoading(false);
       })
       .catch((error) => {
-        if (error.response)
+        if (error.response) {
+          setLoading(false);
           return setError({
             flag: true,
             message: error.response.data.message,
           });
-
-        setLoading(false);
+        }
       });
   };
 
