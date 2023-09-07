@@ -1,20 +1,11 @@
-const mysql = require("mysql2");
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 
-const { passwordStrength } = require("./../utils/checkPassword");
-const { createToken } = require("./../utils/createToken");
-const { readBitField } = require("../utils/readBitField");
+const { passwordStrength } = require('./../utils/checkPassword');
+const { createToken } = require('./../utils/createToken');
+const { readBitField } = require('../utils/readBitField');
+const { db } = require('./../lib/dbConfig');
 
 const expirationDate = 3 * 24 * 60 * 60;
-
-//start the connection
-const db = mysql.createConnection({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.DATABASE_PORT,
-});
 
 // Login Controller
 exports.login = async (req, res) => {
@@ -23,11 +14,11 @@ exports.login = async (req, res) => {
 
   // check if both fields have been filled
   if (!email || !password)
-    return res.status(400).json({ message: "All form fields are required!" });
+    return res.status(400).json({ message: 'All form fields are required!' });
 
   // check if the email given is correct
   const query =
-    "SELECT isadmin, password, user_id, username FROM user WHERE email = ?";
+    'SELECT isadmin, password, user_id, username FROM user WHERE email = ?';
   db.query(query, [email.trim()], async (error, result) => {
     if (error) {
       console.log(error.message);
@@ -35,11 +26,11 @@ exports.login = async (req, res) => {
     }
 
     if (result.length === 0)
-      return res.status(401).json({ message: "Incorrect email!" });
+      return res.status(401).json({ message: 'Incorrect email!' });
 
     const isMatch = await bcrypt.compare(password, result[0].password);
     if (!isMatch)
-      return res.status(401).json({ message: "Incorrect password!" });
+      return res.status(401).json({ message: 'Incorrect password!' });
 
     const role = readBitField(result[0].isadmin);
 
@@ -48,9 +39,9 @@ exports.login = async (req, res) => {
     const token = createToken(result[0].user_id, expirationDate);
 
     res.status(200).json({
-      message: "Login successful!",
+      message: 'Login successful!',
       token,
-      role: role === true ? "admin" : "user",
+      role: role === true ? 'admin' : 'user',
       name: result[0].username,
       userId: result[0].user_id,
     });
@@ -64,19 +55,19 @@ exports.register = async (req, res) => {
 
   // check if every field has been filled
   if (!username || !email || !password || !rePassword)
-    return res.status(400).json({ message: "All form fields are required!" });
+    return res.status(400).json({ message: 'All form fields are required!' });
   else if (password !== rePassword)
-    return res.status(401).json({ message: "The passwords do not match!" });
+    return res.status(401).json({ message: 'The passwords do not match!' });
   else {
     const strength = passwordStrength(password);
     if (strength < 4)
       return res
         .status(401)
-        .json({ message: "Password is not strong enough!" });
+        .json({ message: 'Password is not strong enough!' });
   }
 
   // check if email is used
-  const emailQuery = "SELECT email FROM user WHERE email = ?";
+  const emailQuery = 'SELECT email FROM user WHERE email = ?';
   db.query(emailQuery, [email.trim()], async (error, result) => {
     if (error) {
       console.log(error.message);
@@ -84,9 +75,9 @@ exports.register = async (req, res) => {
     }
 
     if (result.length > 0)
-      return res.status(409).json({ message: "Email is already in use!" });
+      return res.status(409).json({ message: 'Email is already in use!' });
 
-    const usernameQuery = "SELECT username FROM user WHERE username = ?";
+    const usernameQuery = 'SELECT username FROM user WHERE username = ?';
     db.query(usernameQuery, [username.trim()], async (error, result) => {
       if (error) {
         console.log(error.message);
@@ -94,14 +85,14 @@ exports.register = async (req, res) => {
       }
 
       if (result.length > 0)
-        return res.status(409).json({ message: "Username is already in use!" });
+        return res.status(409).json({ message: 'Username is already in use!' });
     });
 
     // if none of the above conditions are true, register the user
     const hashedPassword = await bcrypt.hash(password, 8);
 
     const newUserQuery =
-      "INSERT INTO user (username, email, password, isadmin) VALUES (?, ?, ?, ?)";
+      'INSERT INTO user (username, email, password, isadmin) VALUES (?, ?, ?, ?)';
     db.query(
       newUserQuery,
       [username, email, hashedPassword, 0],
@@ -112,7 +103,7 @@ exports.register = async (req, res) => {
         }
 
         const findNewUserQuery =
-          "SELECT user_id, username FROM user WHERE email = ?";
+          'SELECT user_id, username FROM user WHERE email = ?';
         db.query(findNewUserQuery, [email], async (error, result) => {
           if (error) {
             console.log(error.message);
@@ -124,9 +115,9 @@ exports.register = async (req, res) => {
           const userName = result[0].username;
 
           const addTokensQuery =
-            "INSERT INTO tokens (user_id, current_tokens, previous_month_tokens, total_tokens) VALUES (?, 0, 0, 0)";
+            'INSERT INTO tokens (user_id, current_tokens, previous_month_tokens, total_tokens) VALUES (?, 0, 0, 0)';
           const addScoreQuery =
-            "INSERT INTO score (user_id, current_score, past_score) VALUES (?, 0, 0)";
+            'INSERT INTO score (user_id, current_score, past_score) VALUES (?, 0, 0)';
 
           db.query(addTokensQuery, [userId], async (error, result) => {
             if (error) {
@@ -141,9 +132,9 @@ exports.register = async (req, res) => {
               }
 
               res.status(200).json({
-                message: "Register successful!",
+                message: 'Register successful!',
                 token,
-                role: "user",
+                role: 'user',
                 name: userName,
               });
             });
@@ -158,19 +149,19 @@ exports.forgotPassword = async (req, res) => {
   const { email, newPass, rePass } = req.body;
 
   if (!email || !newPass || !rePass)
-    return res.status(400).json({ error: "All form fields are required!" });
+    return res.status(400).json({ error: 'All form fields are required!' });
   else if (newPass !== rePass)
-    return res.status(401).json({ error: "The passwords do not match!" });
+    return res.status(401).json({ error: 'The passwords do not match!' });
   else {
     const strength = passwordStrength(newPass);
     if (strength < 4)
       return res
         .status(401)
-        .json({ message: "Password is not strong enough!" });
+        .json({ message: 'Password is not strong enough!' });
   }
 
   // check if the email provided is correct
-  const emailQuery = "SELECT user_id FROM user WHERE email = ?";
+  const emailQuery = 'SELECT user_id FROM user WHERE email = ?';
   db.query(emailQuery, [email.trim()], async (error, result) => {
     if (error) {
       console.log(error.message);
@@ -178,11 +169,11 @@ exports.forgotPassword = async (req, res) => {
     }
 
     if (result.length === 0)
-      return res.status(401).json({ message: "Incorrect email!" });
+      return res.status(401).json({ message: 'Incorrect email!' });
 
     const hashedPassword = await bcrypt.hash(newPass, 8);
     const changePasswordQuery =
-      "UPDATE user SET password = ? WHERE user_id = ?";
+      'UPDATE user SET password = ? WHERE user_id = ?';
 
     db.query(
       changePasswordQuery,
@@ -195,7 +186,7 @@ exports.forgotPassword = async (req, res) => {
 
         return res
           .status(200)
-          .json({ message: "Password changed successfully!" });
+          .json({ message: 'Password changed successfully!' });
       }
     );
   });

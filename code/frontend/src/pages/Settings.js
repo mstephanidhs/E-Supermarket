@@ -1,33 +1,30 @@
-import { Paper } from "@mui/material";
-import { useState } from "react";
+import { useState } from 'react';
 
-import axios from "axios";
-import { Alert, Snackbar } from "@mui/material";
+import axios from 'axios';
+import { Alert, Snackbar } from '@mui/material';
 
-import Stores from "../components/Settings/Stores";
-import Products from "../components/Settings/Products";
-import Prices from "../components/Settings/Prices";
+import SettingsForm from '../components/Settings/SettingsForm';
 
 function Settings() {
   const [selectedStoreFile, setSelectedStoreFile] = useState(null);
   const [selectedProductFile, setSelectedProductFile] = useState(null);
   const [selectedPricesFile, setSelectedPricesFile] = useState(null);
 
-  const [storeAction, setStoreAction] = useState("");
-  const [productAction, setProductAction] = useState("");
-  const [pricesAction, setPricesAction] = useState("");
+  const [storeAction, setStoreAction] = useState('');
+  const [productAction, setProductAction] = useState('');
+  const [pricesAction, setPricesAction] = useState('');
 
   const [alert, setAlert] = useState({
     flag: false,
-    message: "",
-    severity: "error",
+    message: '',
+    severity: 'error',
   });
   const [openAlert, setOpenAlert] = useState(true);
 
-  const token = "Bearer " + sessionStorage.getItem("token");
+  const token = 'Bearer ' + sessionStorage.getItem('token');
   const config = {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
       authorization: token,
     },
   };
@@ -52,7 +49,7 @@ function Settings() {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
 
     setOpenAlert(false);
   };
@@ -70,34 +67,34 @@ function Settings() {
   const handleStoreUpload = (e) => {
     e.preventDefault();
 
-    setAlert({ flag: false, message: "", severity: "error" });
+    setAlert({ flag: false, message: '', severity: 'error' });
     setOpenAlert(true);
 
     if (selectedStoreFile === null)
       return setAlert({
-        severity: "error",
+        severity: 'error',
         flag: true,
-        message: "You need to upload a file!",
+        message: 'You need to upload a file!',
       });
 
-    if (storeAction === "")
+    if (storeAction === '')
       return setAlert({
-        severity: "error",
+        severity: 'error',
         flag: true,
-        message: "You need to select an action!",
+        message: 'You need to select an action!',
       });
 
     const formData = new FormData();
-    formData.append("storeFile", selectedStoreFile);
-    formData.append("action", storeAction);
+    formData.append('storeFile', selectedStoreFile);
+    formData.append('action', storeAction);
 
     axios
-      .post("http://localhost:5000/uploadFiles/stores", formData, config)
+      .post('http://localhost:5000/uploadFiles/stores', formData, config)
       .then((res) => {
         return setAlert({
           flag: true,
           message: res.data.message,
-          severity: "success",
+          severity: 'success',
         });
       })
       .catch((error) => {
@@ -108,34 +105,34 @@ function Settings() {
   const handleProductUpload = (e) => {
     e.preventDefault();
 
-    setAlert({ flag: false, message: "", severity: "error" });
+    setAlert({ flag: false, message: '', severity: 'error' });
     setOpenAlert(true);
 
     if (selectedProductFile === null)
       return setAlert({
-        severity: "error",
+        severity: 'error',
         flag: true,
-        message: "You need to upload a file!",
+        message: 'You need to upload a file!',
       });
 
-    if (productAction === "")
+    if (productAction === '')
       return setAlert({
-        severity: "error",
+        severity: 'error',
         flag: true,
-        message: "You need to select an action!",
+        message: 'You need to select an action!',
       });
 
     const formData = new FormData();
-    formData.append("productFile", selectedProductFile);
-    formData.append("action", productAction);
+    formData.append('productFile', selectedProductFile);
+    formData.append('action', productAction);
 
     axios
-      .post("http://localhost:5000/uploadFiles/products", formData, config)
+      .post('http://localhost:5000/uploadFiles/products', formData, config)
       .then((res) => {
         return setAlert({
           flag: true,
           message: res.data.message,
-          severity: "success",
+          severity: 'success',
         });
       })
       .catch((error) => {
@@ -146,34 +143,34 @@ function Settings() {
   const handlePricesUpload = (e) => {
     e.preventDefault();
 
-    setAlert({ flag: false, message: "", severity: "error" });
+    setAlert({ flag: false, message: '', severity: 'error' });
     setOpenAlert(true);
 
     if (selectedPricesFile === null)
       return setAlert({
-        severity: "error",
+        severity: 'error',
         flag: true,
-        message: "You need to upload a file!",
+        message: 'You need to upload a file!',
       });
 
-    if (pricesAction === "")
+    if (pricesAction === '')
       return setAlert({
-        severity: "error",
+        severity: 'error',
         flag: true,
-        message: "You need to select an action!",
+        message: 'You need to select an action!',
       });
 
     const formData = new FormData();
-    formData.append("pricesFile", selectedPricesFile);
-    formData.append("action", pricesAction);
+    formData.append('pricesFile', selectedPricesFile);
+    formData.append('action', pricesAction);
 
     axios
-      .post("http://localhost:5000/uploadFiles/prices", formData, config)
+      .post('http://localhost:5000/uploadFiles/prices', formData, config)
       .then((res) => {
         return setAlert({
           flag: true,
           message: res.data.message,
-          severity: "success",
+          severity: 'success',
         });
       })
       .catch((error) => {
@@ -190,35 +187,20 @@ function Settings() {
           </Alert>
         </Snackbar>
       ) : null}
-      <div
-        style={{
-          textAlign: "center",
-          width: "100vh",
-          margin: "0 auto",
-          marginTop: "10vh",
-        }}
-      >
-        <Paper elevation={3} style={{ padding: "2rem", borderRadius: "20px" }}>
-          <Stores
-            handleStoreFileChange={handleStoreFileChange}
-            handleStoreUpload={handleStoreUpload}
-            handleStoreActionChange={handleStoreActionChange}
-            storeAction={storeAction}
-          />
-          <Products
-            handleProductFileChange={handleProductFileChange}
-            productAction={productAction}
-            handleProductActionChange={handleProductActionChange}
-            handleProductUpload={handleProductUpload}
-          />
-          <Prices
-            handlePricesFileChange={handlePricesFileChange}
-            pricesAction={pricesAction}
-            handlePricesActionChange={handlePricesActionChange}
-            handlePricesUpload={handlePricesUpload}
-          />
-        </Paper>
-      </div>
+      <SettingsForm
+        handleStoreFileChange={handleStoreFileChange}
+        handleStoreUpload={handleStoreUpload}
+        handleStoreActionChange={handleStoreActionChange}
+        storeAction={storeAction}
+        handleProductFileChange={handleProductFileChange}
+        productAction={productAction}
+        handleProductActionChange={handleProductActionChange}
+        handleProductUpload={handleProductUpload}
+        handlePricesFileChange={handlePricesFileChange}
+        pricesAction={pricesAction}
+        handlePricesActionChange={handlePricesActionChange}
+        handlePricesUpload={handlePricesUpload}
+      />
     </>
   );
 }

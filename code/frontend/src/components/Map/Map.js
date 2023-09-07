@@ -1,12 +1,12 @@
-import useGeolocation from "../../hooks/useGeoLocation";
-import "leaflet/dist/leaflet.css";
-import "./../../static/css/map.css";
+import useGeolocation from '../../hooks/useGeoLocation';
+import 'leaflet/dist/leaflet.css';
+import './../../static/css/misc.css';
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import { Icon } from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import { Icon } from 'leaflet';
 
-import PopupContent from "./PopupContent";
+import PopupContent from './PopupContent';
 
 function Map({ stores, userLocation }) {
   const userCoordinates = {
@@ -15,17 +15,17 @@ function Map({ stores, userLocation }) {
   };
 
   const customIconUser = new Icon({
-    iconUrl: require("./../../static/img/userMarker.png"),
+    iconUrl: require('./../../static/img/userMarker.png'),
     iconSize: [38, 38],
   });
 
   const customIconRedMarker = new Icon({
-    iconUrl: require("./../../static/img/redMarker.png"),
+    iconUrl: require('./../../static/img/redMarker.png'),
     iconSize: [38, 38],
   });
 
   const customIconGreenMarker = new Icon({
-    iconUrl: require("./../../static/img/greenMarker.png"),
+    iconUrl: require('./../../static/img/greenMarker.png'),
     iconSize: [38, 38],
   });
 
@@ -33,13 +33,15 @@ function Map({ stores, userLocation }) {
     <MapContainer center={[38.246639, 21.734573]} zoom={11}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
 
+      {/* get user's location */}
       <Marker position={userLocation} icon={customIconUser}>
         <Popup>Your Location!</Popup>
       </Marker>
 
+      {/* iterate through the stores and create the corresponding markers and pop-ups */}
       <MarkerClusterGroup chunkedLoading>
         {stores.map((store, index) => {
           return (

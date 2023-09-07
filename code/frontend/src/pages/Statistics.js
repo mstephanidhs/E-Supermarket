@@ -1,50 +1,51 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { monthToNumber } from "../util/monthToNumber";
-import FilterFirstGraph from "../components/statistics/FilterFirstGraph";
+import { monthToNumber } from '../util/monthToNumber';
+import FilterFirstGraph from '../components/statistics/FilterFirstGraph';
 
-import { Alert, LinearProgress, Snackbar } from "@mui/material";
-import axios from "axios";
-import FirstGraph from "../components/statistics/FirstGraph";
-import FiltersSecondGraph from "../components/statistics/FiltersSecondGraph";
-import SecondGraph from "../components/statistics/SecondGraph";
+import { Alert, LinearProgress, Snackbar } from '@mui/material';
+import axios from 'axios';
+import FirstGraph from '../components/statistics/FirstGraph';
+import FiltersSecondGraph from '../components/statistics/FiltersSecondGraph';
+import SecondGraph from '../components/statistics/SecondGraph';
 
 function Statistics() {
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
   const [offerData, setOfferData] = useState([]);
   const [avgData, setAvgData] = useState([]);
 
-  const [valueCategory, setValueCategory] = useState({ label: "", id: "" });
+  const [valueCategory, setValueCategory] = useState({ label: '', id: '' });
   const [valueSubCategory, setValueSubCategory] = useState({
-    label: "",
-    id: "",
+    label: '',
+    id: '',
   });
 
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
 
-  const [error, setError] = useState({ flag: false, message: "" });
+  const [error, setError] = useState({ flag: false, message: '' });
   const [openAlert, setOpenAlert] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
 
     setOpenAlert(false);
   };
 
-  const token = "Bearer " + sessionStorage.getItem("token");
+  const token = 'Bearer ' + sessionStorage.getItem('token');
   const config = {
     headers: {
       authorization: token,
     },
   };
 
+  // get month and day picked from the user
   const handleDatePicker = (e) => {
     const userInput = e.$d;
-    const monthAndYear = String(userInput).split(" ");
+    const monthAndYear = String(userInput).split(' ');
     const month = monthAndYear[1];
     const year = monthAndYear[3];
 
@@ -53,13 +54,13 @@ function Statistics() {
   };
 
   const handleOffersGraph = () => {
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
 
-    if (month === "" || year === "")
+    if (month === '' || year === '')
       return setError({
         flag: true,
-        message: "You must pick a month and a year",
+        message: 'You must pick a month and a year',
       });
 
     axios
@@ -76,9 +77,9 @@ function Statistics() {
     labels: offerData.map((data) => data.day),
     datasets: [
       {
-        label: "Total Offers of each Day",
+        label: 'Total Offers of each Day',
         data: offerData.map((data) => data.offer_count),
-        borderColor: "black",
+        borderColor: 'black',
         borderWidth: 2,
       },
     ],
@@ -86,8 +87,8 @@ function Statistics() {
 
   const handleCategoryChange = (event, input) => {
     if (input === null) {
-      setValueCategory({ id: "", label: "" });
-      setValueSubCategory({ id: "", label: "" });
+      setValueCategory({ id: '', label: '' });
+      setValueSubCategory({ id: '', label: '' });
       return;
     }
     setValueCategory({ ...input });
@@ -95,7 +96,7 @@ function Statistics() {
   };
   const handleSubCategoryChange = (event, input) => {
     if (input === null) {
-      setValueSubCategory({ id: "", label: "" });
+      setValueSubCategory({ id: '', label: '' });
       return;
     }
     setValueSubCategory({ ...input });
@@ -105,7 +106,7 @@ function Statistics() {
     setLoading(true);
 
     axios
-      .get("http://localhost:5000/categories/getAllCategories", config)
+      .get('http://localhost:5000/categories/getAllCategories', config)
       .then((res) => {
         setCategories(res.data.categories);
         setLoading(false);
@@ -133,19 +134,19 @@ function Statistics() {
   };
 
   const handleSubmit = () => {
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
 
-    if (valueCategory.label === "")
+    if (valueCategory.label === '')
       return setError({
         flag: true,
-        message: "You must at least pick a category",
+        message: 'You must at least pick a category',
       });
 
     axios
       .get(
         `http://localhost:5000/statistics/medianOffers/${valueCategory.id}&${
-          valueSubCategory.label === "" ? "-1" : valueSubCategory.id
+          valueSubCategory.label === '' ? '-1' : valueSubCategory.id
         }`,
         config
       )
@@ -154,7 +155,7 @@ function Statistics() {
           setAvgData([]);
           return setError({
             flag: true,
-            message: "No offers were found",
+            message: 'No offers were found',
           });
         }
         setAvgData(res.data.finalOffers);
@@ -168,9 +169,9 @@ function Statistics() {
     labels: avgData.map((data) => data.day_of_month),
     datasets: [
       {
-        label: "Average Discount based on Category/Subcategory",
+        label: 'Average Discount based on Category/Subcategory',
         data: avgData.map((data) => data.AveragePrice),
-        borderColor: "black",
+        borderColor: 'black',
         borderWidth: 2,
       },
     ],
@@ -184,7 +185,7 @@ function Statistics() {
     <>
       {error.flag ? (
         <Snackbar open={openAlert} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
+          <Alert onClose={handleClose} severity='error'>
             {error.message}
           </Alert>
         </Snackbar>
