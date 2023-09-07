@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useAuth } from "../context/Auth";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useState } from 'react';
+import { useAuth } from '../context/Auth';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 import {
   AppBar,
@@ -12,16 +12,16 @@ import {
   MenuItem,
   ListItemIcon,
   Snackbar,
-} from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import CloseIcon from "@mui/icons-material/Close";
-import Person2Icon from "@mui/icons-material/Person2";
-import EditIcon from "@mui/icons-material/Edit";
-import LogoutIcon from "@mui/icons-material/Logout";
-import LeaderboardIcon from "@mui/icons-material/Leaderboard";
-import SettingsIcon from "@mui/icons-material/Settings";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
+} from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CloseIcon from '@mui/icons-material/Close';
+import Person2Icon from '@mui/icons-material/Person2';
+import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 function Navbar() {
   const [anchor, setAnchor] = useState(null);
@@ -39,7 +39,7 @@ function Navbar() {
     setOpenBook(true);
   };
   const handleCloseBook = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -48,27 +48,27 @@ function Navbar() {
 
   const handleCloseProfile = () => {
     setAnchor(null);
-    navigate("/myProfile");
+    navigate('/myProfile');
   };
   const handleCloseLogout = () => {
     setAnchor(null);
     auth.logout();
-    navigate("/login");
+    navigate('/login');
   };
   const handleClose = () => {
     setAnchor(null);
   };
   const handleLeaderboard = () => {
     setAnchor(null);
-    navigate("/leaderboard");
+    navigate('/leaderboard');
   };
   const handleSettings = () => {
     setAnchor(null);
-    navigate("/settings");
+    navigate('/settings');
   };
   const handleStatistics = () => {
     setAnchor(null);
-    navigate("/statistics");
+    navigate('/statistics');
   };
 
   const message = (
@@ -82,31 +82,31 @@ function Navbar() {
   const action = (
     <>
       <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
+        size='small'
+        aria-label='close'
+        color='inherit'
         onClick={handleCloseBook}
       >
-        <CloseIcon fontSize="small" />
+        <CloseIcon fontSize='small' />
       </IconButton>
     </>
   );
 
   return (
-    <AppBar position="static">
+    <AppBar position='static'>
       <Toolbar>
-        <IconButton size="large" edge="start" color="inherit" aria-label="logo">
+        <IconButton size='large' edge='start' color='inherit' aria-label='logo'>
           <ShoppingCartIcon />
         </IconButton>
         <Typography
           component={RouterLink}
-          to="/"
-          variant="h6"
+          to='/'
+          variant='h6'
           sx={{
             flexGrow: 1,
-            textDecoration: "none",
-            boxShadow: "none",
-            color: "white",
+            textDecoration: 'none',
+            boxShadow: 'none',
+            color: 'white',
           }}
         >
           E-Supermarket
@@ -116,10 +116,10 @@ function Navbar() {
           <div>
             <Button
               sx={{
-                color: "white",
-                fontWeight: "500",
-                letterSpacing: "1.1px",
-                marginRight: "0.4rem",
+                color: 'white',
+                fontWeight: '500',
+                letterSpacing: '1.1px',
+                marginRight: '0.4rem',
               }}
               onClick={handleClickBook}
               startIcon={<MenuBookIcon />}
@@ -134,61 +134,62 @@ function Navbar() {
             />
             <Button
               startIcon={<Person2Icon />}
-              id="basic-button"
-              color="inherit"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
+              id='basic-button'
+              color='inherit'
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup='true'
+              aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
               sx={{
-                fontWeight: "500",
-                letterSpacing: "1px",
+                fontWeight: '500',
+                letterSpacing: '1px',
               }}
             >
               {auth.user.name}
             </Button>
             <Menu
-              id="basic-menu"
+              id='basic-menu'
               anchorEl={anchor}
               open={open}
               onClose={handleClose}
               MenuListProps={{
-                "aria-labelledby": "basic-button",
+                'aria-labelledby': 'basic-button',
               }}
             >
               <MenuItem onClick={handleCloseProfile}>
                 <ListItemIcon>
-                  <EditIcon color="primary" />
+                  <EditIcon color='primary' />
                 </ListItemIcon>
                 Profile
               </MenuItem>
-              {sessionStorage.getItem("role") === "admin" ? (
+              {/* based on the user's role display the corresponding menu */}
+              {sessionStorage.getItem('role') === 'admin' ? (
                 <MenuItem onClick={handleLeaderboard}>
                   <ListItemIcon>
-                    <LeaderboardIcon color="primary" />
+                    <LeaderboardIcon color='primary' />
                   </ListItemIcon>
                   Leaderboard
                 </MenuItem>
               ) : null}
-              {sessionStorage.getItem("role") === "admin" ? (
+              {sessionStorage.getItem('role') === 'admin' ? (
                 <MenuItem onClick={handleStatistics}>
                   <ListItemIcon>
-                    <ShowChartIcon color="primary" />
+                    <ShowChartIcon color='primary' />
                   </ListItemIcon>
                   Statistics
                 </MenuItem>
               ) : null}
-              {sessionStorage.getItem("role") === "admin" ? (
+              {sessionStorage.getItem('role') === 'admin' ? (
                 <MenuItem onClick={handleSettings}>
                   <ListItemIcon>
-                    <SettingsIcon color="primary" />
+                    <SettingsIcon color='primary' />
                   </ListItemIcon>
                   Settings
                 </MenuItem>
               ) : null}
               <MenuItem onClick={handleCloseLogout}>
                 <ListItemIcon>
-                  <LogoutIcon color="primary" />
+                  <LogoutIcon color='primary' />
                 </ListItemIcon>
                 Logout
               </MenuItem>

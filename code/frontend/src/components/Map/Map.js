@@ -36,10 +36,12 @@ function Map({ stores, userLocation }) {
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
 
+      {/* get user's location */}
       <Marker position={userLocation} icon={customIconUser}>
         <Popup>Your Location!</Popup>
       </Marker>
 
+      {/* iterate through the stores and create the corresponding markers and pop-ups */}
       <MarkerClusterGroup chunkedLoading>
         {stores.map((store, index) => {
           return (

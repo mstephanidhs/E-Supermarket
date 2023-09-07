@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -7,16 +7,18 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
+  // get the current session storage (if it's set)
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const name = sessionStorage.getItem("name");
-    const role = sessionStorage.getItem("role");
-    const userId = sessionStorage.getItem("userId");
+    const token = sessionStorage.getItem('token');
+    const name = sessionStorage.getItem('name');
+    const role = sessionStorage.getItem('role');
+    const userId = sessionStorage.getItem('userId');
 
     if (!token || !name || !role || !userId) setUser(null);
     else setUser({ token, name, role, userId });
   }, []);
 
+  // on login
   const login = (token, name, role, userId) => {
     const userDetails = {
       token,
@@ -28,6 +30,7 @@ export const AuthProvider = ({ children }) => {
     setUser(userDetails);
   };
 
+  // clear session on logout
   const logout = () => {
     sessionStorage.clear();
     setUser(null);
