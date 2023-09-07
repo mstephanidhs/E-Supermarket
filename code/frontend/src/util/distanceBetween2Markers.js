@@ -1,3 +1,5 @@
+// a function that calculates the distance between 2 points
+// because the one provided from leaflet wasn't working
 const DegreesToRadius = (degrees) => {
   return degrees * (Math.PI / 180);
 };

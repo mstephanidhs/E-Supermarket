@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
+// hook to get user's location
 function useGeolocation() {
   const [location, setLocation] = useState({
     loaded: false,
-    coordinates: { lat: "", lng: "" },
+    coordinates: { lat: '', lng: '' },
   });
 
   const onSuccess = (location) => {
@@ -24,8 +25,8 @@ function useGeolocation() {
   };
 
   useEffect(() => {
-    if (!("geolocation" in navigator)) {
-      onError({ code: 0, message: "Geolocation not supported" });
+    if (!('geolocation' in navigator)) {
+      onError({ code: 0, message: 'Geolocation not supported' });
     }
 
     navigator.geolocation.getCurrentPosition(onSuccess, onError);

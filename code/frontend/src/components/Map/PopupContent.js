@@ -1,10 +1,11 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 
-import { Typography, Link } from "@mui/material";
+import { Typography, Link } from '@mui/material';
 
-import { getDistanceInMeters } from "../../util/distanceBetween2Markers";
+import { getDistanceInMeters } from '../../util/distanceBetween2Markers';
 
 function PopupContent({ store, userCoordinates }) {
+  // if the user is in 50m distance from the store
   const inDistance =
     getDistanceInMeters(
       userCoordinates.lat,
@@ -19,13 +20,13 @@ function PopupContent({ store, userCoordinates }) {
     <>
       <div>
         <Typography
-          variant="p"
+          variant='p'
           gutterBottom
           style={{
-            fontWeight: "600",
-            fontSize: "16px",
+            fontWeight: '600',
+            fontSize: '16px',
           }}
-          color="primary"
+          color='primary'
         >
           {store.store_name}
         </Typography>
@@ -34,7 +35,7 @@ function PopupContent({ store, userCoordinates }) {
         <>
           <br />
           <Link
-            style={{ fontSize: "12px" }}
+            style={{ fontSize: '12px' }}
             component={RouterLink}
             to={`/viewStoreOffers/${store.store_id}/${inDistance}`}
           >
@@ -46,7 +47,7 @@ function PopupContent({ store, userCoordinates }) {
         <>
           <br />
           <Link
-            style={{ fontSize: "12px" }}
+            style={{ fontSize: '12px' }}
             component={RouterLink}
             to={`/addStoreOffer/${store.store_id}`}
           >

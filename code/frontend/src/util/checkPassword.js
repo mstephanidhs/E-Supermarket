@@ -1,3 +1,5 @@
+// check the strength of the password
+// some checks happen both in the backend and frontend just to be safier
 exports.passwordStrength = function (password) {
   let strength = 0;
 

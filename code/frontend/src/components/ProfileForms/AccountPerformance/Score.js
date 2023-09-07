@@ -1,35 +1,35 @@
-import { Chip, Grid, TextField, InputAdornment } from "@mui/material";
-import ScoreboardIcon from "@mui/icons-material/Scoreboard";
-import TodayIcon from "@mui/icons-material/Today";
-import ScoreIcon from "@mui/icons-material/Score";
+import { Chip, Grid, TextField, InputAdornment } from '@mui/material';
+import ScoreboardIcon from '@mui/icons-material/Scoreboard';
+import TodayIcon from '@mui/icons-material/Today';
+import ScoreIcon from '@mui/icons-material/Score';
 
 function Score({ currentScore, totalScore }) {
   return (
     <>
       <Chip
-        label="Your Score"
-        color="primary"
-        variant="outlined"
+        label='Your Score'
+        color='primary'
+        variant='outlined'
         icon={<ScoreboardIcon />}
-        size="medium"
+        size='medium'
         style={{
-          marginTop: "1.6rem",
-          marginBottom: "3rem",
+          marginTop: '1.6rem',
+          marginBottom: '3rem',
           fontWeight: 600,
-          letterSpacing: "0.75px",
-          padding: "0 0.6rem",
+          letterSpacing: '0.75px',
+          padding: '0 0.6rem',
         }}
       />
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
           <TextField
-            variant="outlined"
+            variant='outlined'
             disabled
             label="Current Month's Score"
-            style={{ marginBottom: "2rem", width: "18rem" }}
+            style={{ marginBottom: '2rem', width: '18rem' }}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   <TodayIcon style={{ fontSize: 18 }} />
                 </InputAdornment>
               ),
@@ -37,15 +37,15 @@ function Score({ currentScore, totalScore }) {
             value={currentScore}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
           <TextField
-            variant="outlined"
+            variant='outlined'
             disabled
-            label="Total Score"
-            style={{ marginBottom: "2rem", width: "18rem" }}
+            label='Total Score'
+            style={{ marginBottom: '2rem', width: '18rem' }}
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   <ScoreIcon style={{ fontSize: 18 }} />
                 </InputAdornment>
               ),

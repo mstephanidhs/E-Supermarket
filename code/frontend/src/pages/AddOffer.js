@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import axios from "axios";
-import { useAuth } from "../context/Auth";
-import Filters from "../components/AddOffer/Filters";
+import axios from 'axios';
+import { useAuth } from '../context/Auth';
+import Filters from '../components/AddOffer/Filters';
 
 import {
   LinearProgress,
@@ -14,9 +14,9 @@ import {
   DialogContent,
   DialogActions,
   Button,
-} from "@mui/material";
-import OfferForm from "../components/AddOffer/OfferForm";
-import { containsOnlyNumbers } from "../util/containsOnlyNumbers";
+} from '@mui/material';
+import OfferForm from '../components/AddOffer/OfferForm';
+import { containsOnlyNumbers } from '../util/containsOnlyNumbers';
 
 function AddOffer() {
   const { storeId } = useParams();
@@ -28,17 +28,17 @@ function AddOffer() {
   const [subCategories, setSubCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState({ id: "", label: "" });
-  const [price, setPrice] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState({ id: '', label: '' });
+  const [price, setPrice] = useState('');
 
-  const [error, setError] = useState({ flag: false, message: "" });
+  const [error, setError] = useState({ flag: false, message: '' });
   const [openAlert, setOpenAlert] = useState(true);
   const [open, setOpen] = useState(false);
-  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogMessage, setDialogMessage] = useState('');
 
   const [openForm, setOpenForm] = useState(false);
 
-  const token = "Bearer " + sessionStorage.getItem("token");
+  const token = 'Bearer ' + sessionStorage.getItem('token');
   const config = {
     headers: {
       authorization: token,
@@ -46,7 +46,7 @@ function AddOffer() {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
 
     setOpenAlert(false);
   };
@@ -62,7 +62,7 @@ function AddOffer() {
 
   const getAllCategories = () => {
     axios
-      .get("http://localhost:5000/categories/getAllCategories", config)
+      .get('http://localhost:5000/categories/getAllCategories', config)
       .then((res) => {
         setCategories(res.data.categories);
         setLoading(false);
@@ -104,7 +104,7 @@ function AddOffer() {
 
   const getAllProducts = () => {
     axios
-      .get("http://localhost:5000/categories/allProducts", config)
+      .get('http://localhost:5000/categories/allProducts', config)
       .then((res) => {
         setAllProducts(res.data.allProducts);
       })
@@ -119,27 +119,27 @@ function AddOffer() {
   }, []);
 
   const handleSubmit = () => {
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
-    setDialogMessage("");
+    setDialogMessage('');
 
     if (price.length === 0)
       return setError({
         flag: true,
-        message: "Invalid Form, you must fill the price field!",
+        message: 'Invalid Form, you must fill the price field!',
       });
 
     if (containsOnlyNumbers(price) === false)
       return setError({
         flag: true,
-        message: "The price field must contain only digits!",
+        message: 'The price field must contain only digits!',
       });
 
     axios
       .post(
         `http://localhost:5000/offer/addOffer`,
         {
-          userId: sessionStorage.getItem("userId"),
+          userId: sessionStorage.getItem('userId'),
           productId: selectedProduct.id,
           price: parseFloat(price),
           storeId,
@@ -171,7 +171,7 @@ function AddOffer() {
     <>
       <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle>
-          {"Yor Offer has been submitted successfully!"}
+          {'Your Offer has been submitted successfully!'}
         </DialogTitle>
         <DialogContent>{dialogMessage}</DialogContent>
         <DialogActions>
@@ -180,7 +180,7 @@ function AddOffer() {
       </Dialog>
       {error.flag ? (
         <Snackbar open={openAlert} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
+          <Alert onClose={handleClose} severity='error'>
             {error.message}
           </Alert>
         </Snackbar>

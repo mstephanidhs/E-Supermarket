@@ -1,27 +1,29 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Snackbar } from '@mui/material';
 
-import ChangePasswordForm from "../../components/SignForms/ChangePasswordForm";
-import { passwordStrength } from "../../util/checkPassword";
+import ChangePasswordForm from '../../components/SignForms/ChangePasswordForm';
+import { passwordStrength } from '../../util/checkPassword';
 
 function ChangePassword() {
-  const [email, setEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
-  const [error, setError] = useState({ flag: false, message: "" });
+  const [email, setEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const [error, setError] = useState({ flag: false, message: '' });
   const [openAlert, setOpenAlert] = useState(true);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === 'clickaway') return;
 
     setOpenAlert(false);
   };
 
   const validateForm = () => {
-    setError({ flag: false, message: "" });
+    setError({ flag: false, message: '' });
     setOpenAlert(true);
 
+    // validate the form before submitting
+    // and display the corresponding messages where is necessary
     if (
       email.length === 0 &&
       newPassword.length === 0 &&
@@ -29,37 +31,37 @@ function ChangePassword() {
     )
       return setError({
         flag: true,
-        message: "Invalid Form, you must fill the fields!",
+        message: 'Invalid Form, you must fill the fields!',
       });
 
     if (email.length === 0)
       return setError({
         flag: true,
-        message: "Invalid Form, Email field cannot be empty!",
+        message: 'Invalid Form, Email field cannot be empty!',
       });
 
     if (newPassword.length === 0)
       return setError({
         flag: true,
-        message: "Invalid Form, New Password field cannot be empty!",
+        message: 'Invalid Form, New Password field cannot be empty!',
       });
 
     if (rePassword.length === 0)
       return setError({
         flag: true,
-        message: "Invalid Form, Re-Password field cannot be empty!",
+        message: 'Invalid Form, Re-Password field cannot be empty!',
       });
 
     if (passwordStrength(newPassword) !== 4)
       return setError({
         flag: true,
-        message: "Password is not strong enough!",
+        message: 'Password is not strong enough!',
       });
 
     if (newPassword !== rePassword)
       return setError({
         flag: true,
-        message: "Passwords do not match!",
+        message: 'Passwords do not match!',
       });
   };
 
@@ -67,7 +69,7 @@ function ChangePassword() {
     <>
       {error.flag ? (
         <Snackbar open={openAlert} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="error">
+          <Alert onClose={handleClose} severity='error'>
             {error.message}
           </Alert>
         </Snackbar>

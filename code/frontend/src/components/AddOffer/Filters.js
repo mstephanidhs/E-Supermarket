@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Autocomplete, TextField, Grid, Button } from "@mui/material";
+import { Autocomplete, TextField, Grid, Button } from '@mui/material';
 
 function Filters({
   categories,
@@ -14,31 +14,31 @@ function Filters({
   setOpenForm,
   setSelectedProduct,
 }) {
-  const [valueCategory, setValueCategory] = useState({ label: "", id: "" });
+  const [valueCategory, setValueCategory] = useState({ label: '', id: '' });
   const [valueSubCategory, setValueSubCategory] = useState({
-    label: "",
-    id: "",
+    label: '',
+    id: '',
   });
   const [valueProduct, setValueProduct] = useState({
-    label: "",
-    id: "",
+    label: '',
+    id: '',
   });
   const [searchProduct, setSearchProduct] = useState({
-    label: "",
-    id: "",
+    label: '',
+    id: '',
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
 
   const handleCategoryChange = (event, input) => {
-    setSearchProduct({ id: "", label: "" });
+    setSearchProduct({ id: '', label: '' });
     setOpenForm(false);
-    setValueSubCategory({ id: "", label: "" });
-    setValueProduct({ id: "", label: "" });
+    setValueSubCategory({ id: '', label: '' });
+    setValueProduct({ id: '', label: '' });
 
     if (input === null) {
       setSubCategories([]);
-      setValueCategory({ id: "", label: "" });
+      setValueCategory({ id: '', label: '' });
       setIsDisabled(true);
       return;
     }
@@ -48,13 +48,13 @@ function Filters({
   };
 
   const handleSubCategoryChange = (event, input) => {
-    setSearchProduct({ id: "", label: "" });
-    setValueProduct({ id: "", label: "" });
+    setSearchProduct({ id: '', label: '' });
+    setValueProduct({ id: '', label: '' });
 
     setOpenForm(false);
 
     if (input === null) {
-      setValueSubCategory({ id: "", label: "" });
+      setValueSubCategory({ id: '', label: '' });
       setProducts([]);
       setIsDisabled(true);
       return;
@@ -65,9 +65,9 @@ function Filters({
   };
 
   const handleProductChange = (event, input) => {
-    setSearchProduct({ id: "", label: "" });
+    setSearchProduct({ id: '', label: '' });
     if (input === null) {
-      setValueProduct({ id: "", label: "" });
+      setValueProduct({ id: '', label: '' });
       setIsDisabled(true);
       setOpenForm(false);
 
@@ -82,14 +82,14 @@ function Filters({
   const handleAllProductChange = (event, input) => {
     if (input === null) {
       setOpenForm(false);
-      setSearchProduct({ id: "", label: "" });
+      setSearchProduct({ id: '', label: '' });
       return;
     }
 
     setOpenForm(true);
-    setValueCategory({ id: "", label: "" });
-    setValueSubCategory({ id: "", label: "" });
-    setValueProduct({ id: "", label: "" });
+    setValueCategory({ id: '', label: '' });
+    setValueSubCategory({ id: '', label: '' });
+    setValueProduct({ id: '', label: '' });
     setSelectedProduct({ ...input });
     setSearchProduct({ ...input });
   };
@@ -103,8 +103,8 @@ function Filters({
       <Grid
         container
         spacing={2}
-        alignItems="center"
-        sx={{ marginTop: "3.2rem", marginLeft: "6.4rem", width: "130vh" }}
+        alignItems='center'
+        sx={{ marginTop: '3.2rem', marginLeft: '6.4rem', width: '55rem' }}
       >
         <Grid item xs={12} sm={3} md={3} lg={3} xl={3}>
           <Autocomplete
@@ -115,7 +115,7 @@ function Filters({
             isOptionEqualToValue={(option, value) =>
               option.value === value.value
             }
-            renderInput={(params) => <TextField {...params} label="Category" />}
+            renderInput={(params) => <TextField {...params} label='Category' />}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
@@ -128,7 +128,7 @@ function Filters({
               option.value === value.value
             }
             renderInput={(params) => (
-              <TextField {...params} label="Subcategory" />
+              <TextField {...params} label='Subcategory' />
             )}
           />
         </Grid>
@@ -141,14 +141,14 @@ function Filters({
             isOptionEqualToValue={(option, value) =>
               option.value === value.value
             }
-            renderInput={(params) => <TextField {...params} label="Product" />}
+            renderInput={(params) => <TextField {...params} label='Product' />}
           />
         </Grid>
         <Grid item xs={12} sm={3} md={3} lg={3} xl={3}>
           <Button
-            variant="contained"
+            variant='contained'
             onClick={handleSubmit}
-            sx={{ width: "6rem", marginLeft: "6rem" }}
+            sx={{ width: '6rem', marginLeft: '6rem' }}
             disabled={isDisabled}
           >
             Search
@@ -162,9 +162,9 @@ function Filters({
         onChange={handleAllProductChange}
         isOptionEqualToValue={(option, value) => option.value === value.value}
         renderInput={(params) => (
-          <TextField {...params} label="Quick Product Search" />
+          <TextField {...params} label='Quick Product Search' />
         )}
-        style={{ marginLeft: "7.38rem", marginTop: "2.4rem" }}
+        style={{ marginLeft: '7.38rem', marginTop: '2.4rem' }}
       />
     </>
   );
