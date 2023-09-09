@@ -16,7 +16,7 @@ function AccountDetailsForm({
     <div
       style={{
         textAlign: 'center',
-        width: '100vh',
+        width: '50vw',
         margin: '0 auto',
         marginTop: '10vh',
       }}
@@ -37,13 +37,13 @@ function AccountDetailsForm({
           }}
         />
         <Grid container spacing={12} justifyContent='center'>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
             <ChangeUsernameForm
               setUsername={setUsername}
               validateUsername={validateUsername}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
             <ChangePasswordForm
               setOldPassword={setOldPassword}
               setNewPassword={setNewPassword}

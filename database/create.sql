@@ -24,7 +24,7 @@ CREATE TABLE category (
 CREATE TABLE subcategory (
     subcategory_id VARCHAR(250) NOT NULL,
     subcategory_name VARCHAR(250) NOT NULL,
-    parent_id VARCHAR(250),
+    parent_id VARCHAR(250) NOT NULL,
     PRIMARY KEY (subcategory_id),
     FOREIGN KEY (parent_id) REFERENCES category(category_id)
     ON DELETE CASCADE
@@ -38,8 +38,10 @@ CREATE TABLE product (
     product_name VARCHAR(250),
     category VARCHAR(250),
     subcategory VARCHAR(250),
-    img  TEXT,
-    CONSTRAINT pk_product PRIMARY KEY (product_id),
+    img TEXT,
+    PRIMARY KEY (product_id),
+    FOREIGN KEY (category) REFERENCES category(category_id),
+    FOREIGN KEY (subcategory) REFERENCES subcategory(subcategory_id)
 );
 
 
@@ -86,14 +88,15 @@ CREATE TABLE tokens (
 
 CREATE TABLE offer (
     offer_id INT NOT NULL auto_increment,
-    user_id INT,
-    product INT,
-    price FLOAT,
-    store INT,
+    user_id INT NOT NULL,
+    product INT NOT NULL,
+    price FLOAT NOT NULL,
+    store INT NOT NULL,
     date_offer DATETIME DEFAULT CURRENT_TIMESTAMP,
     stock BIT(1) DEFAULT 1,
     PRIMARY KEY (offer_id),
-    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+    ON DELETE CASCADE,
     FOREIGN KEY (product) REFERENCES product(product_id)
     ON DELETE CASCADE,
     FOREIGN KEY (store) REFERENCES store(store_id)
@@ -104,11 +107,12 @@ CREATE TABLE offer (
 -------- reaction --------
 
 create table reaction (
-    reaction_id NOT NULL auto_increment,
-    user_id INT,
-    offer_id INT,
-    is_like BIT,
+    reaction_id INT NOT NULL auto_increment,
+    user_id INT NOT NULL,
+    offer_id INT NOT NULL,
+    is_like BIT NOT NULL,
     date_reaction DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (reaction_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (offer_id) REFERENCES offer(offer_id)
     ON DELETE CASCADE

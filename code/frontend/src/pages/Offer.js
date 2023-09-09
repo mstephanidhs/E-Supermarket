@@ -137,6 +137,8 @@ function Offer() {
   const fetchOffer = () => {
     axios(`http://localhost:5000/offer/${offerId}`, config)
       .then((res) => {
+        if (res.data.offer.user_id == sessionStorage.getItem('userId'))
+          setDisable(true);
         setOffer(res.data.offer);
         setScore(res.data.offer.score);
         setStock(res.data.offer.stock === 'Yes' ? true : false);
@@ -158,7 +160,10 @@ function Offer() {
         )}&${offerId}`
       )
       .then((res) => {
-        console.log(res.data);
+        // if (isCurrentUserOffer === true) {
+        //   console.log('hello');
+        //   return;
+        // }
         if (typeof res.data.reaction === 'boolean') {
           res.data.reaction === true
             ? setLikeColor('primary')

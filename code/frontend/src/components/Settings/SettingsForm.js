@@ -22,9 +22,8 @@ function SettingsForm({
     <div
       style={{
         textAlign: 'center',
-        width: '100vh',
-        margin: '0 auto',
-        marginTop: '10vh',
+        width: '50vw',
+        margin: '10vh auto',
       }}
     >
       <Paper elevation={3} style={{ padding: '2rem', borderRadius: '20px' }}>

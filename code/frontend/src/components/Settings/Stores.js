@@ -35,14 +35,14 @@ function Stores({
       <div>
         <form onSubmit={handleStoreUpload}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <input
                 type='file'
                 accept='.json'
                 onChange={handleStoreFileChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl style={{ width: '8rem' }}>
                   <InputLabel>Action</InputLabel>

@@ -21,7 +21,7 @@ function Score({ currentScore, totalScore }) {
         }}
       />
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
           <TextField
             variant='outlined'
             disabled
@@ -37,7 +37,7 @@ function Score({ currentScore, totalScore }) {
             value={currentScore}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
           <TextField
             variant='outlined'
             disabled

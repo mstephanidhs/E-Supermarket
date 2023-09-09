@@ -136,6 +136,7 @@ exports.register = async (req, res) => {
                 token,
                 role: 'user',
                 name: userName,
+                userId,
               });
             });
           });

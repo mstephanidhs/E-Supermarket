@@ -154,7 +154,6 @@ function Main() {
       return;
     }
 
-    console.log(newValue);
     setValueCategoriesNames(newValue);
     setError({ flag: false, message: '' });
     setOpenAlert(true);
@@ -165,6 +164,12 @@ function Main() {
       .then((res) => {
         setStores(res.data.storesByCategory);
         setLoading(false);
+        if (res.data.storesByCategory.length === 0)
+          return setError({
+            flag: true,
+            message:
+              'There are no offers for products in the specific category!',
+          });
       })
       .catch((error) => {
         if (error.response)

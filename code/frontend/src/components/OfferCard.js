@@ -189,7 +189,7 @@ function OfferCard({
                 <IconButton
                   onClick={handleDislike}
                   disabled={disable}
-                  sx={{ marginTop: '0.5rem' }}
+                  sx={{ marginTop: '0.5rem', marginRight: '0.5rem' }}
                 >
                   <ThumbDownOffAltIcon color={dislikeColor} />
                 </IconButton>

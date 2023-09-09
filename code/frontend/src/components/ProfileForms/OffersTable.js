@@ -60,7 +60,7 @@ function OffersTable({ offers }) {
     <div
       style={{
         textAlign: 'center',
-        width: '140vh',
+        width: '80vw',
         margin: '4.8rem auto',
       }}
     >

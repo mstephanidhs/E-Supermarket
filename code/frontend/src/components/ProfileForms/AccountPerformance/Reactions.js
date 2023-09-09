@@ -34,7 +34,7 @@ function Reactions({ reactions }) {
     },
   ];
   return (
-    <div style={{ textAlign: 'center', width: '120vh', margin: '4.8rem auto' }}>
+    <div style={{ textAlign: 'center', width: '60vw', margin: '4.8rem auto' }}>
       <Paper elevation={2} style={{ padding: '2.2rem', borderRadius: '20px' }}>
         <Chip
           label='Your Reactions'

@@ -107,7 +107,6 @@ function Profile() {
         config
       )
       .then((res) => {
-        console.log(res.data);
         setOffers(res.data.offersByUser);
         setLoading(false);
       })

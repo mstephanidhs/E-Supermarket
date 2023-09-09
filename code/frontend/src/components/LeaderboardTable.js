@@ -40,7 +40,7 @@ function LeaderBoardTable({ leaderboardUsers }) {
     <div
       style={{
         textAlign: 'center',
-        width: '115vh',
+        width: '55vw',
         margin: '4.8rem auto',
       }}
     >

@@ -2,7 +2,7 @@ const { db } = require('./../lib/dbConfig');
 
 exports.getOfferStores = (req, res) => {
   const offerStoresQuery =
-    'SELECT s.store_id, s.store_name, s.latitude, s.longitude FROM store s INNER JOIN offer o ON o.store = s.store_id;';
+    'SELECT DISTINCT s.store_id, s.store_name, s.latitude, s.longitude FROM store s INNER JOIN offer o ON o.store = s.store_id;';
 
   db.query(offerStoresQuery, async (error, result) => {
     if (error) {
