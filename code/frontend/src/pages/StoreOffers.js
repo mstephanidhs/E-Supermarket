@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/system';
 
 const StyledSnackbarContent = styled('div')({
-  backgroundColor: '#3f51b5', // Change this to your desired color
+  backgroundColor: '#3f51b5',
   color: '#fff',
   borderRadius: '4px',
   padding: '0.6rem 1.6rem',
@@ -42,10 +42,12 @@ function StoreOffers() {
   };
 
   const deleteOffer = (offerId) => {
+    // check how many offers the specific store has
     const storesFlag = storeOffers.length === 1 ? true : false;
     axios
       .delete(`http://localhost:5000/offer/deleteOffer/${offerId}`, config)
       .then((res) => {
+        // if admin deleted the last one, then redirect him to the main page
         if (storesFlag === true) {
           navigate('/');
           return;

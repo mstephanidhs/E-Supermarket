@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 
-import LeaderBoardTable from "../components/LeaderboardTable";
-import { useEffect, useState } from "react";
-import { LinearProgress } from "@mui/material";
+import LeaderBoardTable from '../components/LeaderboardTable';
+import { useEffect, useState } from 'react';
+import { LinearProgress } from '@mui/material';
 
 function Leaderboard() {
   const [leaderboardUsers, setLeaderboardUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const token = "Bearer " + sessionStorage.getItem("token");
+  const token = 'Bearer ' + sessionStorage.getItem('token');
   const config = {
     headers: {
       authorization: token,
@@ -19,9 +19,9 @@ function Leaderboard() {
     setLoading(true);
 
     axios
-      .get("http://localhost:5000/leaderboard/getUsers", config)
+      .get('http://localhost:5000/leaderboard/getUsers', config)
       .then((res) => {
-        setLeaderboardUsers(res.data.result);
+        setLeaderboardUsers(res.data.usersPoints);
         setLoading(false);
       })
       .catch((error) => {

@@ -14,7 +14,7 @@ function LeaderBoardTable({ leaderboardUsers }) {
       align: 'center',
     },
     {
-      field: 'past_score',
+      field: 'score_sum',
       headerName: 'Total Score',
       width: 120,
       headerAlign: 'center',

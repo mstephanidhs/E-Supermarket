@@ -86,9 +86,9 @@ function Statistics() {
   };
 
   const handleCategoryChange = (event, input) => {
+    setValueSubCategory({ id: '', label: '' });
     if (input === null) {
       setValueCategory({ id: '', label: '' });
-      setValueSubCategory({ id: '', label: '' });
       return;
     }
     setValueCategory({ ...input });
