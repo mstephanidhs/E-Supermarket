@@ -116,8 +116,8 @@ exports.getScores = (req, res) => {
 
     res.status(200).json({
       message: 'Score fetched successfully!',
-      current_score: result[0].current_score,
-      past_score: result[0].past_score,
+      current_score: result.length === 0 ? 0 : result[0].current_score,
+      past_score: result.length === 0 ? 0 : result[0].past_score,
     });
   });
 };
@@ -136,8 +136,9 @@ exports.getTokens = (req, res) => {
 
     res.status(200).json({
       message: 'Tokens fetched successfully!',
-      total_tokens: result[0].total_tokens,
-      previous_month_tokens: result[0].previous_month_tokens,
+      total_tokens: result.length === 0 ? 0 : result[0].total_tokens,
+      previous_month_tokens:
+        result.length === 0 ? 0 : result[0].previous_month_tokens,
     });
   });
 };
