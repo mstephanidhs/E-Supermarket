@@ -84,7 +84,7 @@ function SignUp() {
       });
 
     axios
-      .post('http://localhost:5000/auth/register', {
+      .post('http://localhost:4000/auth/register', {
         username,
         email,
         password,

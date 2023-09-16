@@ -51,7 +51,7 @@ function Profile() {
   const getReactions = () => {
     axios
       .get(
-        `http://localhost:5000/profile/GetReactions/${sessionStorage.getItem(
+        `http://localhost:4000/profile/GetReactions/${sessionStorage.getItem(
           'userId'
         )}`,
         config
@@ -67,7 +67,7 @@ function Profile() {
   const getScore = () => {
     axios
       .get(
-        `http://localhost:5000/profile/GetScores/${sessionStorage.getItem(
+        `http://localhost:4000/profile/GetScores/${sessionStorage.getItem(
           'userId'
         )}`,
         config
@@ -84,7 +84,7 @@ function Profile() {
   const getTokens = () => {
     axios
       .get(
-        `http://localhost:5000/profile/GetTokens/${sessionStorage.getItem(
+        `http://localhost:4000/profile/GetTokens/${sessionStorage.getItem(
           'userId'
         )}`,
         config
@@ -101,7 +101,7 @@ function Profile() {
   const offersByUserID = () => {
     axios
       .get(
-        `http://localhost:5000/offer/offersByUser/${sessionStorage.getItem(
+        `http://localhost:4000/offer/offersByUser/${sessionStorage.getItem(
           'userId'
         )}`,
         config
@@ -134,7 +134,7 @@ function Profile() {
 
     axios
       .put(
-        'http://localhost:5000/profile/changeUsername',
+        'http://localhost:4000/profile/changeUsername',
         {
           newName: username,
         },
@@ -216,7 +216,7 @@ function Profile() {
 
     axios
       .put(
-        'http://localhost:5000/profile/changePassword',
+        'http://localhost:4000/profile/changePassword',
         {
           oldPass: oldPassword,
           newPass: newPassword,

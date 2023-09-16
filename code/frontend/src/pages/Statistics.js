@@ -64,7 +64,7 @@ function Statistics() {
       });
 
     axios
-      .get(`http://localhost:5000/statistics/${month}&${year}`, config)
+      .get(`http://localhost:4000/statistics/${month}&${year}`, config)
       .then((res) => {
         setOfferData(res.data.offers);
       })
@@ -106,7 +106,7 @@ function Statistics() {
     setLoading(true);
 
     axios
-      .get('http://localhost:5000/categories/getAllCategories', config)
+      .get('http://localhost:4000/categories/getAllCategories', config)
       .then((res) => {
         setCategories(res.data.categories);
         setLoading(false);
@@ -121,7 +121,7 @@ function Statistics() {
   const getSubCategories = (categoryId) => {
     axios
       .get(
-        `http://localhost:5000/categories/getSubCategories/${categoryId}`,
+        `http://localhost:4000/categories/getSubCategories/${categoryId}`,
         config
       )
       .then((res) => {
@@ -145,7 +145,7 @@ function Statistics() {
 
     axios
       .get(
-        `http://localhost:5000/statistics/medianOffers/${valueCategory.id}&${
+        `http://localhost:4000/statistics/medianOffers/${valueCategory.id}&${
           valueSubCategory.label === '' ? '-1' : valueSubCategory.id
         }`,
         config

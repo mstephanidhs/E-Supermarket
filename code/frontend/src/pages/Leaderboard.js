@@ -19,7 +19,7 @@ function Leaderboard() {
     setLoading(true);
 
     axios
-      .get('http://localhost:5000/leaderboard/getUsers', config)
+      .get('http://localhost:4000/leaderboard/getUsers', config)
       .then((res) => {
         setLeaderboardUsers(res.data.usersPoints);
         setLoading(false);

@@ -41,7 +41,7 @@ function Offer() {
 
     axios
       .post(
-        'http://localhost:5000/reaction/insertReaction',
+        'http://localhost:4000/reaction/insertReaction',
         {
           offerUserId: offer.user_id,
           reactionUserId: parseInt(sessionStorage.getItem('userId')),
@@ -77,7 +77,7 @@ function Offer() {
 
     axios
       .post(
-        'http://localhost:5000/reaction/insertReaction',
+        'http://localhost:4000/reaction/insertReaction',
         {
           offerUserId: offer.user_id,
           reactionUserId: parseInt(sessionStorage.getItem('userId')),
@@ -112,7 +112,7 @@ function Offer() {
 
     axios
       .put(
-        'http://localhost:5000/offer/changeStockOffer',
+        'http://localhost:4000/offer/changeStockOffer',
         {
           stock: !stock,
           offerId: offer.offer_id,
@@ -135,7 +135,7 @@ function Offer() {
   };
 
   const fetchOffer = () => {
-    axios(`http://localhost:5000/offer/${offerId}`, config)
+    axios(`http://localhost:4000/offer/${offerId}`, config)
       .then((res) => {
         if (res.data.offer.user_id == sessionStorage.getItem('userId'))
           setDisable(true);
@@ -155,7 +155,7 @@ function Offer() {
   const getReaction = () => {
     axios
       .get(
-        `http://localhost:5000/reaction/getMyReaction/${sessionStorage.getItem(
+        `http://localhost:4000/reaction/getMyReaction/${sessionStorage.getItem(
           'userId'
         )}&${offerId}`
       )

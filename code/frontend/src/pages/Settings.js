@@ -89,7 +89,7 @@ function Settings() {
     formData.append('action', storeAction);
 
     axios
-      .post('http://localhost:5000/uploadFiles/stores', formData, config)
+      .post('http://localhost:4000/uploadFiles/stores', formData, config)
       .then((res) => {
         return setAlert({
           flag: true,
@@ -127,7 +127,7 @@ function Settings() {
     formData.append('action', productAction);
 
     axios
-      .post('http://localhost:5000/uploadFiles/products', formData, config)
+      .post('http://localhost:4000/uploadFiles/products', formData, config)
       .then((res) => {
         return setAlert({
           flag: true,
@@ -165,7 +165,7 @@ function Settings() {
     formData.append('action', pricesAction);
 
     axios
-      .post('http://localhost:5000/uploadFiles/prices', formData, config)
+      .post('http://localhost:4000/uploadFiles/prices', formData, config)
       .then((res) => {
         return setAlert({
           flag: true,

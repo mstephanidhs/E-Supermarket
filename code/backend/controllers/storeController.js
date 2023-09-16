@@ -43,8 +43,21 @@ exports.fetchStores = (req, res) => {
 exports.fetchStoresByName = (req, res) => {
   const storeName = req.params.storeName;
 
-  const fetchStoresByNameQuery =
-    'SELECT s.store_id, s.store_name, s.latitude, s.longitude, o.offer_id FROM store s LEFT JOIN offer o ON s.store_id =  o.store WHERE s.store_name = ?;';
+  const fetchStoresByNameQuery = `
+  SELECT
+    s.store_id,
+    s.store_name,
+    s.latitude,
+    s.longitude,
+  GROUP_CONCAT(o.offer_id) AS offer_id
+    FROM (
+      SELECT DISTINCT store_id, store_name, latitude, longitude
+      FROM store
+      WHERE store_name = ?
+    ) s
+  LEFT JOIN offer o ON s.store_id = o.store
+  GROUP BY s.store_id, s.store_name, s.latitude, s.longitude;
+  `;
 
   db.query(fetchStoresByNameQuery, [storeName], async (error, result) => {
     if (error) {

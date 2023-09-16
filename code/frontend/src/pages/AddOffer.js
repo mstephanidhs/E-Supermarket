@@ -62,7 +62,7 @@ function AddOffer() {
 
   const getAllCategories = () => {
     axios
-      .get('http://localhost:5000/categories/getAllCategories', config)
+      .get('http://localhost:4000/categories/getAllCategories', config)
       .then((res) => {
         setCategories(res.data.categories);
         setLoading(false);
@@ -77,7 +77,7 @@ function AddOffer() {
   const getSubCategories = (categoryId) => {
     axios
       .get(
-        `http://localhost:5000/categories/getSubCategories/${categoryId}`,
+        `http://localhost:4000/categories/getSubCategories/${categoryId}`,
         config
       )
       .then((res) => {
@@ -91,7 +91,7 @@ function AddOffer() {
   const getProducts = (categoryId, subCategoryId) => {
     axios
       .get(
-        `http://localhost:5000/categories/products/${categoryId}&${subCategoryId}`,
+        `http://localhost:4000/categories/products/${categoryId}&${subCategoryId}`,
         config
       )
       .then((res) => {
@@ -104,7 +104,7 @@ function AddOffer() {
 
   const getAllProducts = () => {
     axios
-      .get('http://localhost:5000/categories/allProducts', config)
+      .get('http://localhost:4000/categories/allProducts', config)
       .then((res) => {
         setAllProducts(res.data.allProducts);
       })
@@ -137,7 +137,7 @@ function AddOffer() {
 
     axios
       .post(
-        `http://localhost:5000/offer/addOffer`,
+        `http://localhost:4000/offer/addOffer`,
         {
           userId: sessionStorage.getItem('userId'),
           productId: selectedProduct.id,

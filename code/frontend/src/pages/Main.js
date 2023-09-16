@@ -49,7 +49,7 @@ function Main() {
     setOpenAlert(true);
 
     axios
-      .get('http://localhost:5000/store/fetchAllStores', config)
+      .get('http://localhost:4000/store/fetchAllStores', config)
       .then((res) => {
         setStoresNames(res.data.allStores);
       })
@@ -69,7 +69,7 @@ function Main() {
     setOpenAlert(true);
 
     axios
-      .get('http://localhost:5000/categories/getAllCategories', config)
+      .get('http://localhost:4000/categories/getAllCategories', config)
       .then((res) => {
         setCategoriesNames(res.data.categories);
       })
@@ -92,7 +92,7 @@ function Main() {
     setLoading(true);
 
     axios
-      .get('http://localhost:5000/store/getOfferStores', config)
+      .get('http://localhost:4000/store/getOfferStores', config)
       .then((res) => {
         setStores(res.data.offerStores);
         setLoading(false);
@@ -129,8 +129,9 @@ function Main() {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/store/${newValue}`, config)
+      .get(`http://localhost:4000/store/${newValue}`, config)
       .then((res) => {
+        console.log(res.data.storesByName);
         setStores(res.data.storesByName);
         setLoading(false);
       })
@@ -160,7 +161,7 @@ function Main() {
     setLoading(true);
 
     axios
-      .get(`http://localhost:5000/store/category/${newValue.id}`, config)
+      .get(`http://localhost:4000/store/category/${newValue.id}`, config)
       .then((res) => {
         setStores(res.data.storesByCategory);
         setLoading(false);

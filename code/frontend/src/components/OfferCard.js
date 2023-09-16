@@ -42,7 +42,7 @@ function OfferCard({
             />
           </Grid>
           <Grid item xs={6}>
-            <CardContent>
+            <CardContent style={{ marginLeft: '1.5rem' }}>
               <Typography
                 gutterBottom
                 variant='p'
@@ -169,7 +169,7 @@ function OfferCard({
                   <Button
                     variant='contained'
                     color='primary'
-                    style={{ fontSize: '14px' }}
+                    style={{ fontSize: '14px', marginLeft: '2rem' }}
                     onClick={changeStock}
                   >
                     {stock === true ? 'Sold Out' : 'In Stock'}

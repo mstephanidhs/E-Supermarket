@@ -45,7 +45,7 @@ function StoreOffers() {
     // check how many offers the specific store has
     const storesFlag = storeOffers.length === 1 ? true : false;
     axios
-      .delete(`http://localhost:5000/offer/deleteOffer/${offerId}`, config)
+      .delete(`http://localhost:4000/offer/deleteOffer/${offerId}`, config)
       .then((res) => {
         // if admin deleted the last one, then redirect him to the main page
         if (storesFlag === true) {
@@ -65,7 +65,7 @@ function StoreOffers() {
 
   const getOffersByStore = () => {
     axios
-      .get(`http://localhost:5000/offer/offersByStore/${storeId}`, config)
+      .get(`http://localhost:4000/offer/offersByStore/${storeId}`, config)
       .then((res) => {
         setStoreOffers(res.data.offersByStore);
         setLoading(false);
