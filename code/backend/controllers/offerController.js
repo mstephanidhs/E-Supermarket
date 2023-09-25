@@ -186,7 +186,6 @@ exports.addOffer = (req, res) => {
       }
 
       if (result.length > 0) {
-        console.log('adasd');
         if (price < result[0].AveragePrice - result[0].AveragePrice * 0.2) {
           userScore = 50;
         }

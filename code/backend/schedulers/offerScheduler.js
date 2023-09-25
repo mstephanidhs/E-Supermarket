@@ -1,7 +1,7 @@
 const schedule = require('node-schedule');
 const { db } = require('./../lib/dbConfig');
 
-// this scheduler will activate every day at exactly 11:59:59 PM
+// this scheduler will activate every day at exactly 11:59 PM
 exports.offerScheduler = () => {
   schedule.scheduleJob('59 23 * * *', async () => {
     try {
@@ -31,7 +31,7 @@ exports.offerScheduler = () => {
           .promise()
           .query(yesterdayAVGQuery, [offer.product]);
 
-        // in case yesterday was an avg found
+        // in case yesterday an avg was found
         if (result1.length !== 0) {
           // check the condition
           const yesterdayAVG = result1[0].price;

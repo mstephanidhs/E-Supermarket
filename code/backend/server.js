@@ -43,12 +43,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // Use this after the variable declaration
 
-// Handle OPTIONS request for /store/fetchAllStores
-app.options('/auth/login', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.sendStatus(200);
-});
+// app.options('/auth/login', (req, res) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.sendStatus(200);
+// });
 
 // Parse JSON bodies (as sent by API clients)
 // Basically, make sure that the data coming from the front-end are in json form

@@ -84,7 +84,7 @@ exports.medianOffers = (req, res) => {
         const offersPreviousWeek = result.map((item) => {
           return {
             ...item,
-            AveragePrice: averagePrice - item.AveragePrice,
+            AveragePrice: Math.abs(item.AveragePrice - averagePrice),
           };
         });
 

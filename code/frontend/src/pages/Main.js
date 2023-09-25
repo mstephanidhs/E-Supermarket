@@ -173,13 +173,13 @@ function Main() {
           });
       })
       .catch((error) => {
-        if (error.response)
+        if (error.response) {
+          setLoading(false);
           return setError({
             flag: true,
             message: error.response.data.message,
           });
-
-        setLoading(false);
+        }
       });
   };
 
